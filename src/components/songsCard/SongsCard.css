@@ -1,0 +1,31 @@
+.songs-card-container {
+  display: flex;
+  margin: 10px;
+  justify-content: center;
+}
+.songs-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  background: black;
+  border-radius: 10px;
+}
+.songs-image-wrapper {
+  width: 100%;
+  height: 170px;
+  border-radius: inherit;
+}
+
+img.songs-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-top-right-radius: inherit;
+  border-top-left-radius: inherit;
+}
+
+.songs-title-wrapper{
+  margin: 10px 0;
+  padding: 0 10px;
+}
