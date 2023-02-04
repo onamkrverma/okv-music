@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 
-const apiKey = 'AIzaSyCXBLVd5-n1nHCwweBsPTYvXruGzd_oZaA';
+const apiKey = process.env.REACT_APP_YT_API;
 const baseUrl = 'https://www.googleapis.com/youtube/v3';
 
 export const songsApi = createApi({

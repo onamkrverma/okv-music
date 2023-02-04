@@ -17,7 +17,7 @@ const Header = () => {
   return (
     <div className='header-section'>
       <div className="header-container container">
-        <div className="header-logo">YTMusic</div>
+        <div className="header-logo">OKV Music</div>
         <div className="header-search-wrapper">
           <input
            type="text" 
