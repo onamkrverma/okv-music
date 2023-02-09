@@ -1,0 +1,18 @@
+.search-result-container{
+  margin-top: 65px;
+}
+
+@media (max-width:426px){
+  .search-result-container{
+    margin-top: 0;
+  }
+  .search-result-container .songs-card-wrapper{
+    width: 100%;
+  }
+  .search-result-container .songs-image-wrapper{
+    height: 180px;
+  }
+  .search-result-container .songs-image-wrapperr{
+    margin: 15px 0;
+  }
+}

@@ -22,7 +22,7 @@ const SearchResult = () => {
   },[data])
 
   return (
-    <div className='search-result-container'>
+    <div className='search-result-container '>
       <Header/>
       <SongsList title={'Search result'} songsData={searchResult?.items} searchResult={'searchResult'}/>
     </div>
