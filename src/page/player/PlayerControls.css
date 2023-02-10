@@ -1,0 +1,65 @@
+.player-controls-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.player-progress-bar-wrapper {
+  width: 80%;
+  height: 5px;
+  background: gray;
+  border-radius: 5px;
+}
+
+.player-progress {
+  width: 0%;
+  height: 100%;
+  background: white;
+  border-radius: inherit;
+}
+
+
+.player-durations-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: 5px 0;
+}
+
+.audio-play-pause {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+
+.loading-spin {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  transition: rotate 3s ease-in-out;
+  animation: rotate 3s infinite;
+
+}
+
+.svg-circle {
+  stroke-dasharray: 15 10;
+  stroke: gray;
+  stroke-width: 5px;
+
+
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg)
+  }
+
+  100% {
+    transform: rotate(360deg)
+  }
+}

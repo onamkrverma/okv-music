@@ -13,7 +13,7 @@ export const songsApi = createApi({
       query: (songId) => ({
         url:'videos',
         params: {
-          part: 'snippet',
+          part: ['snippet','contentDetails'],
           id: songId,
           key: apiKey,
         },
