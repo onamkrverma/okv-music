@@ -41,14 +41,29 @@ export const songsApi = createApi({
         params: {
           part: 'snippet',
           q:searchQuery,
+          type: 'video',
           maxResults: '20',
           key: apiKey,
         },
         method: 'GET'
       })
+    }),
+    getSearchRelatedItems: builder.query({
+      query: (videoId) => ({
+        url:'search' ,
+        params: {
+          part: 'snippet',
+          relatedToVideoId : videoId,
+          type: 'video',
+          maxResults: '10',
+          key: apiKey,
+        },
+        method: 'GET'
+      })
     })
+
   }),
 
 }) 
 
-export const {useGetPlaylistItemsQuery,useGetSongsByIdQuery,useGetSearchItemsQuery} = songsApi
+export const {useGetPlaylistItemsQuery,useGetSongsByIdQuery,useGetSearchItemsQuery,useGetSearchRelatedItemsQuery} = songsApi

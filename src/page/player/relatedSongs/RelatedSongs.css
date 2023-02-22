@@ -1,0 +1,87 @@
+.related-songs-container {
+  height: 500px;
+  overflow-y: scroll;
+}
+
+.relate-songs-heading {
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.related-songs-info-wrapper {
+  display: flex;
+  margin: 10px;
+}
+
+.related-songs-image-wrapper {
+  width: 100px;
+  height: 55px;
+  border-radius: 8px;
+}
+
+.related-songs-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.related-songs-title-channel-wrapper {
+  margin-left: 10px;
+  color: var(--primary-text-color);
+}
+
+.related-songs-channel-wrapper {
+  opacity: 0.7;
+  font-size: 14px;
+  margin: 5px;
+}
+
+.mobile-next {
+  display: none;
+}
+
+@media (max-width:769px) {
+  .related-songs-section {
+    position: fixed;
+    bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .relate-songs-heading {
+    display: none;
+  }
+
+  .mobile-next {
+    display: block;
+    text-align: center;
+    border-top: 5px solid var(--primary-text-color);
+    padding-top: 5px;
+    border-radius: 5px;
+    background: rgb(0 0 0 / 80%);
+    backdrop-filter: blur(6px);
+
+  }
+
+  .related-songs-container {
+    height: 0;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .related-songs-mobile {
+    display: flex;
+    height: 250px;
+    flex-direction: column;
+    background: rgb(0 0 0 / 70%);
+    backdrop-filter: blur(6px);
+    border-radius: 10px;
+    
+  }
+
+
+
+}
