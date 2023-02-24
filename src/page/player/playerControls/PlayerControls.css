@@ -60,8 +60,7 @@
   height: 100%;
   position: absolute;
   top: 0;
-  transition: rotate 3s ease-in-out;
-  animation: rotate 3s infinite;
+  animation: rotate 3s linear infinite;
 
 }
 

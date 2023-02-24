@@ -1,11 +1,14 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './PlayerControls.css';
 import { BsFillSkipEndFill, BsFillSkipStartFill, BsFillVolumeUpFill, BsPauseCircleFill, BsPlayCircleFill } from 'react-icons/bs';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
-const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration }) => {
+const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songsList,setAlertMessage,audioEnded }) => {
 
   const [isPlaying, setIsPlaying] = useState(false);
+  const { id } = useParams()
+
 
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying)
@@ -32,6 +35,64 @@ const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration }) => 
     audioRef.current.volume = e.target.valueAsNumber;
   }
 
+  const navigate = useNavigate()
+  const mapVideoId = songsList.map((songs) => songs.id.videoId)
+  const index = mapVideoId.findIndex((x) => x === id)
+
+  const handlePrev = () => {
+    console.log(songsList)
+    console.log('current', id)
+    console.log(index)
+    
+    if (index > 0) {
+      console.log(mapVideoId[index - 1])
+      navigate(`/play/${mapVideoId[index - 1]}`)
+    }
+    else{
+      console.log('you reached at first')
+      setAlertMessage('you reached at first')
+      setTimeout(()=>{
+        setAlertMessage('')
+      },3000)
+    }
+
+  }
+
+  const handleNext = () => {
+    console.log(songsList)
+    console.log('current', id)
+    const mapVideoId = songsList.map((songs) => songs.id.videoId)
+    const index = mapVideoId.findIndex((x) => x === id)
+    console.log(index)
+    
+
+    if (index < mapVideoId.length-1) {
+      console.log(mapVideoId[index + 1])
+      navigate(`/play/${mapVideoId[index + 1]}`)
+    }
+    else{
+      console.log('you reached at end')
+      setAlertMessage('you reached at end')
+      setTimeout(()=>{
+        setAlertMessage('')
+      },3000)
+    }
+  }
+
+
+  
+
+  
+
+  
+    
+ 
+  
+
+
+
+
+
 
   return (
     <div className='player-controls-container'>
@@ -43,7 +104,7 @@ const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration }) => 
         <p>
           {parseInt(((audioRef.current?.currentTime) / 60) % 60) + ':' + parseInt(((audioRef.current?.currentTime) % 60))}
         </p>
-        {audioLoading ? '0:00' : <p>
+        {!audioRef.current?.duration ? '0:00' : <p>
           {/* {audioDuration?.slice(2, audioDuration.length - 1).replaceAll(/[A-Z]/ig, ':')} */}
           {parseInt(((audioRef.current?.duration) / 60) % 60) + ':' + parseInt(((audioRef.current?.duration) % 60))}
 
@@ -52,14 +113,14 @@ const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration }) => 
 
       <div className="audio-controls-wrapper absolute-center">
 
-        <div className="audio-prev-wrapper next-prev-icons" style={{opacity:'0.5'}}>
+        <div className="audio-prev-wrapper next-prev-icons" style={{ opacity: index === 0 && '0.5' }} onClick={handlePrev}>
           <BsFillSkipStartFill style={{ width: '100%', height: '100%' }} />
         </div>
 
 
         <div className="audio-play-pause-wrapper">
           <div className="audio-play-pause  cur-pointer" onClick={handlePlayPause}>
-            {!isPlaying ? <BsPlayCircleFill style={{ width: '100%', height: '100%', opacity: audioLoading && '0.9' }} />
+            {!isPlaying  ? <BsPlayCircleFill style={{ width: '100%', height: '100%', opacity: audioLoading && '0.9' }} />
               : <BsPauseCircleFill style={{ width: '100%', height: '100%' }} />
             }
           </div>
@@ -74,7 +135,7 @@ const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration }) => 
 
         </div>
 
-        <div className="audio-next-wrapper next-prev-icons " style={{opacity:'0.5'}}>
+        <div className="audio-next-wrapper next-prev-icons " style={{ opacity: index === (mapVideoId.length - 1) && '0.5' }} onClick={handleNext}>
           <BsFillSkipEndFill style={{ width: '100%', height: '100%' }} />
         </div>
       </div>
@@ -95,6 +156,9 @@ const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration }) => 
           />
         </div>
       </div>
+
+         
+
     </div>
   )
 }

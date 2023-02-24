@@ -55,6 +55,7 @@ export const songsApi = createApi({
           part: 'snippet',
           relatedToVideoId : videoId,
           type: 'video',
+          videoCategoryId: '10',
           maxResults: '10',
           key: apiKey,
         },

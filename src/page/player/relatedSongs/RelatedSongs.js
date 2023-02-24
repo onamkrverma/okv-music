@@ -1,45 +1,59 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { BsPlayCircleFill } from 'react-icons/bs';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGetSearchRelatedItemsQuery } from '../../../reduxtool/services/songsApi'
 import './RelatedSongs.css'
 
-const RelatedSongs = ({ videoId }) => {
+const RelatedSongs = ({ videoId, songsList, setSongsList }) => {
+  const { id } = useParams()
   const [relatedSongs, setRelatedSongs] = useState([])
   const [isUpClick, setIsUpClick] = useState(false)
-  const { data, isLoading, isError } = useGetSearchRelatedItemsQuery(videoId)
- 
+  const { data, isLoading, isError } = useGetSearchRelatedItemsQuery(videoId, { skip: songsList.length > 11 })
+
 
   useEffect(() => {
-    if(data){
-      setRelatedSongs(data.items)
+    if (data) {
+      setRelatedSongs(data.items) 
+      const relatedEtag  = relatedSongs.map((song)=>song.etag);
+      const uniqueEtag = data.items.filter((val)=> relatedEtag.indexOf(val.etag) < 0)
+      // console.log(uniqueEtag)
+      setSongsList([...relatedSongs, ...uniqueEtag])
+
     }
   }, [data])
 
 
+  // console.log('relatedSongs',relatedSongs)
+  // console.log(songsList)
+
 
   const navigate = useNavigate();
 
-  const handleRedirect = (videoId)=>{
+  const handleRedirect = (videoId) => {
     navigate(`/play/${videoId}`)
+
   }
 
 
   return (
     <div className='related-songs-section'>
       <div className="relate-songs-heading">Related Songs</div>
-      <div className="relate-songs-heading mobile-next" onClick={()=>setIsUpClick(!isUpClick)}>
+      <div className="relate-songs-heading mobile-next" onClick={() => setIsUpClick(!isUpClick)}>
         Up Next Songs
       </div>
-      <div className={`related-songs-container ${isUpClick ? 'related-songs-mobile':''}`}>
+      <div className={`related-songs-container ${isUpClick ? 'related-songs-mobile' : ''}`}>
 
-        {relatedSongs?.map((songs) =>
-          <div className="related-songs-info-wrapper cur-pointer" key={songs.etag} onClick={()=>handleRedirect(songs.id.videoId)}>
+        {songsList?.map((songs, index) =>
+          <div className="related-songs-info-wrapper cur-pointer" key={songs.etag} onClick={() => handleRedirect(songs.id.videoId)}>
             <div className="related-songs-image-wrapper">
               <img
                 src={songs.snippet.thumbnails.default.url}
                 className='related-songs-image'
                 alt="related-song"
               />
+              {(id === songs.id.videoId) && <div className="playing-status-wrapper">
+                <BsPlayCircleFill style={{width:'100%',height:'100%'}}/>
+              </div>}
             </div>
             <div className="related-songs-title-channel-wrapper">
               <div className="related-songs-title-wrapper">
