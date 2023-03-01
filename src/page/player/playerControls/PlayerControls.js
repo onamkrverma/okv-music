@@ -1,24 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import './PlayerControls.css';
 import { BsFillSkipEndFill, BsFillSkipStartFill, BsFillVolumeUpFill, BsPauseCircleFill, BsPlayCircleFill } from 'react-icons/bs';
 import { useNavigate, useParams } from 'react-router-dom';
 
 
-const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songsList,setAlertMessage,audioEnded }) => {
+const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songsList, setAlertMessage, audioEnded, handleNext, isPlaying, setIsPlaying }) => {
 
-  const [isPlaying, setIsPlaying] = useState(false);
+
   const { id } = useParams()
 
 
-  const handlePlayPause = () => {
-    setIsPlaying(!isPlaying)
-    if (isPlaying) {
-      audioRef.current.pause();
+  useEffect(() => {
+    try {
+
+      if (isPlaying) {
+        audioRef.current.pause();
+      }
+      else {
+        audioRef.current.play();
+      }
     }
-    else {
-      audioRef.current.play();
+    catch (error) {
+      console.log(error)
+      setAlertMessage(error.message)
     }
-  }
+
+  }, [isPlaying])
+
+
+
+
 
 
 
@@ -43,51 +54,45 @@ const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songs
     console.log(songsList)
     console.log('current', id)
     console.log(index)
-    
+
+
     if (index > 0) {
       console.log(mapVideoId[index - 1])
       navigate(`/play/${mapVideoId[index - 1]}`)
+      setIsPlaying(false)
     }
-    else{
+    else {
       console.log('you reached at first')
       setAlertMessage('you reached at first')
-      setTimeout(()=>{
+      setTimeout(() => {
         setAlertMessage('')
-      },3000)
+      }, 3000)
     }
 
   }
 
-  const handleNext = () => {
-    console.log(songsList)
-    console.log('current', id)
-    const mapVideoId = songsList.map((songs) => songs.id.videoId)
-    const index = mapVideoId.findIndex((x) => x === id)
-    console.log(index)
-    
 
-    if (index < mapVideoId.length-1) {
-      console.log(mapVideoId[index + 1])
-      navigate(`/play/${mapVideoId[index + 1]}`)
-    }
-    else{
-      console.log('you reached at end')
-      setAlertMessage('you reached at end')
-      setTimeout(()=>{
-        setAlertMessage('')
-      },3000)
-    }
+
+  // audio controls from web media api
+
+  navigator.mediaSession.setActionHandler('play', () => { setIsPlaying(false) });
+  navigator.mediaSession.setActionHandler('pause', () => { setIsPlaying(true) });
+
+  if (index > 0) {
+    navigator.mediaSession.setActionHandler('previoustrack', () => { handlePrev() });
+  }
+  else {
+    // Unset the "previoustrack" action handler at the end of a list.
+    navigator.mediaSession.setActionHandler('previoustrack', null);
   }
 
-
-  
-
-  
-
-  
-    
- 
-  
+  if (index < mapVideoId.length - 1) {
+    navigator.mediaSession.setActionHandler('nexttrack', () => { handleNext() });
+  }
+  else {
+    // Unset the "nexttrack" action handler at the end of a playlist.
+    navigator.mediaSession.setActionHandler('nexttrack', null);
+  }
 
 
 
@@ -119,13 +124,13 @@ const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songs
 
 
         <div className="audio-play-pause-wrapper">
-          <div className="audio-play-pause  cur-pointer" onClick={handlePlayPause}>
-            {!isPlaying  ? <BsPlayCircleFill style={{ width: '100%', height: '100%', opacity: audioLoading && '0.9' }} />
+          <div className="audio-play-pause  cur-pointer" onClick={() => setIsPlaying(!isPlaying)}>
+            {isPlaying ? <BsPlayCircleFill style={{ width: '100%', height: '100%', opacity: audioLoading && '0.9' }} />
               : <BsPauseCircleFill style={{ width: '100%', height: '100%' }} />
             }
           </div>
 
-          {audioLoading &&
+          {(audioLoading || !audioRef.current?.duration) &&
             <div className="loading-spin">
               <svg style={{ width: '100%', height: '100%' }}>
                 <circle cx="35" cy="35" r="30" fill='transparent' className='svg-circle'></circle>
@@ -157,7 +162,7 @@ const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songs
         </div>
       </div>
 
-         
+
 
     </div>
   )

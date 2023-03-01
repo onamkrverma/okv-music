@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { baseUrl } from '../../api/getAudio';
 import Header from '../../components/header/Header';
 import { useGetSongsByIdQuery } from '../../reduxtool/services/songsApi';
@@ -8,39 +8,44 @@ import PlayerControls from './playerControls/PlayerControls';
 import RelatedSongs from './relatedSongs/RelatedSongs';
 
 
-
 const Player = () => {
   const [songUrl, setSongUrl] = useState('');
   const [songsInfo, setSongsInfo] = useState([]);
   const [audioLoading, setAudioLoading] = useState(true);
   const [songsList, setSongsList] = useState([]);
   const [alertMessage, setAlertMessage] = useState('');
-  const [audioEnded, setAudioEnded] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const { id } = useParams()
-  const { data, isLoading, isError } = useGetSongsByIdQuery(id);
+  const { data, isError } = useGetSongsByIdQuery(id);
 
   const [progress, setProgress] = useState(0);
 
   const audioRef = useRef();
+  const navigate = useNavigate()
 
-
+  // get songs url
   const getSongUrl = async () => {
     try {
-      const response = await fetch(`${baseUrl}/song?id=${id}`, {
+      const response = await fetch(`${baseUrl}/song/${id}`, {
         method: "GET",
       })
       const data = await response.json()
       // console.log(data)
       setSongUrl(data)
-      // setAudioLoading(false)
+      setAudioLoading(false)
 
     } catch (error) {
       console.log(error)
       console.log(error.message)
+      setAlertMessage(error.message)
+      setTimeout(() => {
+        setAlertMessage('')
+      }, 300);
     }
   }
   useEffect(() => {
     getSongUrl();
+    // eslint-disable-next-line
   }, [id])
 
   useEffect(() => {
@@ -48,8 +53,6 @@ const Player = () => {
       setSongsInfo(data.items)
     }
   }, [data])
-
-
 
 
   const onPlaying = () => {
@@ -60,12 +63,63 @@ const Player = () => {
 
   }
 
-
+  //  reset state on song changed
   useEffect(() => {
     setProgress(0)
+    setAudioLoading(true)
   }, [id])
 
- 
+  useEffect(() => {
+
+  }, [songUrl])
+
+
+  // console.log({ isPlaying, audioLoading })
+
+
+
+  const handleNext = () => {
+    // console.log(songsList)
+    console.log('current', id)
+    const mapVideoId = songsList.map((songs) => songs.id.videoId)
+    const index = mapVideoId.findIndex((x) => x === id)
+    console.log(index)
+
+
+    if (index < mapVideoId.length - 1) {
+      console.log(mapVideoId[index + 1])
+      navigate(`/play/${mapVideoId[index + 1]}`)
+      setIsPlaying(false)
+    }
+    else {
+      console.log('you reached at end')
+      setAlertMessage('you reached at end')
+      setTimeout(() => {
+        setAlertMessage('')
+      }, 3000)
+    }
+  }
+
+
+  // web media session 
+
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: songsInfo[0]?.snippet?.title,
+      album: songsInfo[0]?.snippet?.channelTitle,
+      artwork: [
+        { src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`, sizes: '96x96', type: 'image/png' },
+        { src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`, sizes: '128x128', type: 'image/png' },
+        { src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`, sizes: '192x192', type: 'image/png' },
+        { src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`, sizes: '256x256', type: 'image/png' },
+        { src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`, sizes: '384x384', type: 'image/png' },
+        { src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`, sizes: '512x512', type: 'image/png' },
+      ]
+    });
+  }
+
+
+
 
 
 
@@ -92,8 +146,8 @@ const Player = () => {
             </div>
           </div>
 
-          <audio src={songUrl} ref={audioRef} onTimeUpdate={onPlaying}
-            onCanPlay={() => setAudioLoading(false)} onEnded={()=>setAudioEnded(true)}/>
+          <audio src={songUrl} ref={audioRef} onTimeUpdate={onPlaying} 
+            onCanPlay={() => setAudioLoading(false)} onEnded={handleNext} autoPlay />
 
           <PlayerControls audioRef={audioRef}
             progress={progress} audioLoading={audioLoading}
@@ -101,7 +155,9 @@ const Player = () => {
             songsList={songsList}
             alertMessage={alertMessage}
             setAlertMessage={setAlertMessage}
-            audioEnded={audioEnded}
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+            handleNext={handleNext}
           />
 
           {alertMessage && <div className="alert-message-wrapper">
@@ -113,7 +169,7 @@ const Player = () => {
         {isError && <div>{isError}</div>}
 
 
-        <RelatedSongs videoId={id} songsList={songsList} setSongsList={setSongsList} />
+        <RelatedSongs videoId={id} songsList={songsList} setSongsList={setSongsList} setIsPlaying={setIsPlaying} />
       </div>
 
 

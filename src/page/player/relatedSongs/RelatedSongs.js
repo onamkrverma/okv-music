@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useGetSearchRelatedItemsQuery } from '../../../reduxtool/services/songsApi'
 import './RelatedSongs.css'
 
-const RelatedSongs = ({ videoId, songsList, setSongsList }) => {
+const RelatedSongs = ({ videoId, songsList, setSongsList,setIsPlaying }) => {
   const { id } = useParams()
   const [relatedSongs, setRelatedSongs] = useState([])
   const [isUpClick, setIsUpClick] = useState(false)
@@ -31,6 +31,7 @@ const RelatedSongs = ({ videoId, songsList, setSongsList }) => {
 
   const handleRedirect = (videoId) => {
     navigate(`/play/${videoId}`)
+    setIsPlaying(false)
 
   }
 

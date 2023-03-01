@@ -47,7 +47,7 @@ const songsData = useSelector((state)=>state.songsSlice.songsData)
   return (
     <div className='home-section'>
       <Header />
-      <HeroBanner newSongs={songsData.newSongs?.items} />
+      <HeroBanner trendingSongs={songsData.trendingSongs?.items} />
       <SongsList title={'Trending Songs'} songsData={songsData.trendingSongs?.items} />
       <SongsList title={'New Released Songs'} songsData={songsData.newSongs?.items} />
       <SongsList title={'Bollywood HitsList'} songsData={songsData.bollywoodHitsSongs?.items} />

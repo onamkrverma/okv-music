@@ -5,7 +5,7 @@ import NextArrow from './NextArrow';
 import PrevArrow from './PrevArrow';
 import { useNavigate } from 'react-router-dom';
 
-const HeroBanner = ({ newSongs }) => {
+const HeroBanner = ({ trendingSongs }) => {
   const navigate = useNavigate()
 
   const settings = {
@@ -32,7 +32,7 @@ const HeroBanner = ({ newSongs }) => {
   return (
     <div className='heroBanner-section container'>
       <Slider {...settings}>
-        {newSongs?.slice(0,5).map((songs) =>
+        {trendingSongs?.slice(0,5).map((songs) =>
           <div className="heroBanner-wrapper " key={songs.etag} onClick={()=>handleRedirect(songs.snippet.resourceId.videoId)}>
             <div className="hero-image-wrapper">
               <img
