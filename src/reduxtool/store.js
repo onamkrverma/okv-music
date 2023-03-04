@@ -3,11 +3,13 @@ import { setupListeners } from '@reduxjs/toolkit/dist/query'
 
 import { songsApi } from './services/songsApi'
 import songsSlice from './slice/songsSlice'
+import currentSongSlice from './slice/currentSongSlice'
 
 export const store = configureStore({
   reducer: {
     [songsApi.reducerPath] : songsApi.reducer,
     songsSlice,
+    currentSongSlice,
   },
 
   middleware:(getDefaultMiddleware)=>

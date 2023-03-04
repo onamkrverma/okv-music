@@ -2,13 +2,15 @@ import React, { useEffect, useRef } from 'react'
 import './PlayerControls.css';
 import { BsFillSkipEndFill, BsFillSkipStartFill, BsFillVolumeUpFill, BsPauseCircleFill, BsPlayCircleFill } from 'react-icons/bs';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
-const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songsList, setAlertMessage, audioEnded, handleNext, isPlaying, setIsPlaying }) => {
+const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songsList, setAlertMessage, audioEnded, handleNext, handlePrev, isPlaying, setIsPlaying }) => {
 
 
   const { id } = useParams()
-
+  // const currentSong = useSelector((state)=>state.currentSongSlice.currentSongInfo)
+  // const {id} = currentSong;
 
   useEffect(() => {
     try {
@@ -50,26 +52,26 @@ const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songs
   const mapVideoId = songsList.map((songs) => songs.id.videoId)
   const index = mapVideoId.findIndex((x) => x === id)
 
-  const handlePrev = () => {
-    console.log(songsList)
-    console.log('current', id)
-    console.log(index)
+  // const handlePrev = () => {
+  //   console.log(songsList)
+  //   console.log('current', id)
+  //   console.log(index)
 
 
-    if (index > 0) {
-      console.log(mapVideoId[index - 1])
-      navigate(`/play/${mapVideoId[index - 1]}`)
-      setIsPlaying(false)
-    }
-    else {
-      console.log('you reached at first')
-      setAlertMessage('you reached at first')
-      setTimeout(() => {
-        setAlertMessage('')
-      }, 3000)
-    }
+  //   if (index > 0) {
+  //     console.log(mapVideoId[index - 1])
+  //     navigate(`/play/${mapVideoId[index - 1]}`)
+  //     // setIsPlaying(false)
+  //   }
+  //   else {
+  //     console.log('you reached at first')
+  //     setAlertMessage('you reached at first')
+  //     setTimeout(() => {
+  //       setAlertMessage('')
+  //     }, 3000)
+  //   }
 
-  }
+  // }
 
 
 
@@ -118,7 +120,7 @@ const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songs
 
       <div className="audio-controls-wrapper absolute-center">
 
-        <div className="audio-prev-wrapper next-prev-icons" style={{ opacity: index === 0 && '0.5' }} onClick={handlePrev}>
+        <div className="audio-prev-wrapper next-prev-icons" style={{ opacity: index <= 0 && '0.5' }} onClick={handlePrev}>
           <BsFillSkipStartFill style={{ width: '100%', height: '100%' }} />
         </div>
 
@@ -140,7 +142,7 @@ const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songs
 
         </div>
 
-        <div className="audio-next-wrapper next-prev-icons " style={{ opacity: index === (mapVideoId.length - 1) && '0.5' }} onClick={handleNext}>
+        <div className="audio-next-wrapper next-prev-icons " style={{ opacity: index >= (mapVideoId.length - 1) && '0.5' }} onClick={handleNext}>
           <BsFillSkipEndFill style={{ width: '100%', height: '100%' }} />
         </div>
       </div>

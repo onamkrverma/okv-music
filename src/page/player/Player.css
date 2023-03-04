@@ -1,11 +1,31 @@
+.player-page-section{
+  /* position: fixed; */
+  width: 100%;
+  bottom: 0px;
+  background: #04152d;
+  z-index: 10;
+  height: fit-content;
+}
+
+.top-player-controll-wrapper {
+  margin: 10px 0px 0px 10px;
+}
+.player-minimize-wrapper{
+  width: 25px;
+  height: 25px;
+  color: white;
+}
+
 .player-section {
   display: flex;
   justify-content: space-around;
-  margin-top: 65px;
+  padding: 25px 0;
   flex-wrap: wrap;
   gap: 20px;
   position: relative;
 }
+
+
 
 .player-container {
   display: flex;

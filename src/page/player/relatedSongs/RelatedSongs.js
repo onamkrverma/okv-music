@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { BsPlayCircleFill } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetSearchRelatedItemsQuery } from '../../../reduxtool/services/songsApi'
 import './RelatedSongs.css'
 
 const RelatedSongs = ({ videoId, songsList, setSongsList,setIsPlaying }) => {
   const { id } = useParams()
+  // const getRealated = JSON.parse(localStorage.getItem('related'));
+  // const currentSong = useSelector((state)=>state.currentSongSlice.currentSongInfo)
+  // const {id} = currentSong;
   const [relatedSongs, setRelatedSongs] = useState([])
   const [isUpClick, setIsUpClick] = useState(false)
   const { data, isLoading, isError } = useGetSearchRelatedItemsQuery(videoId, { skip: songsList.length > 11 })
+  // const { data, isLoading, isError } = useGetSearchRelatedItemsQuery
 
 
   useEffect(() => {
@@ -30,16 +35,25 @@ const RelatedSongs = ({ videoId, songsList, setSongsList,setIsPlaying }) => {
   const navigate = useNavigate();
 
   const handleRedirect = (videoId) => {
-    navigate(`/play/${videoId}`)
-    setIsPlaying(false)
+    navigate(`/play/${videoId}`,{replace:true})
+    localStorage.setItem('currentSong',JSON.stringify({id:videoId}))
+    // setIsPlaying(false)
 
+  }
+
+  const upNextRef = useRef()
+
+  window.onclick = (e)=>{
+    if(e.target !== upNextRef.current){
+      setIsUpClick(false)
+    }
   }
 
 
   return (
-    <div className='related-songs-section'>
+    <div className='related-songs-section' >
       <div className="relate-songs-heading">Related Songs</div>
-      <div className="relate-songs-heading mobile-next" onClick={() => setIsUpClick(!isUpClick)}>
+      <div className="relate-songs-heading mobile-next" ref={upNextRef} onClick={() => setIsUpClick(!isUpClick)}>
         Up Next Songs
       </div>
       <div className={`related-songs-container ${isUpClick ? 'related-songs-mobile' : ''}`}>

@@ -2,7 +2,7 @@
   "short_name": "OKV Music",
   "name": "OKV Music",
   "icons": [
-    
+   
     {
       "src": "logo144.png",
       "type": "image/png",
@@ -13,6 +13,12 @@
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "maskable"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
     },
     {
       "src": "logo512.png",

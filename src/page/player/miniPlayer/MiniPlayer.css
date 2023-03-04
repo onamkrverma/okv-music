@@ -1,0 +1,45 @@
+.mini-player-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background: #071120;
+  color: white;
+}
+
+.mini-player-image-wrapper {
+  width: 100px;
+  height: 55px;
+  border-radius: 8px;
+}
+
+.mini-player-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+
+}
+
+.mini-player-song-title-channel-wrapper.absolute-center {
+  flex-direction: column;
+  width: 50%;
+}
+
+.mini-player-song-title {
+  text-overflow: ellipsis;
+  width: 75%;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.mini-player-song-channel {
+  opacity: 0.7;
+  font-size: 14px;
+}
+
+.player-maximize-wrapper {
+  width: 25px;
+  height: 25px;
+}

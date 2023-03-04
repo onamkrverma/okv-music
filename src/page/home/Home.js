@@ -6,6 +6,7 @@ import SongsList from '../../components/songsList/SongsList';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSongs } from '../../reduxtool/slice/songsSlice';
 import HeroBanner from './heroBanner/HeroBanner';
+import Player from '../player/Player';
 
 const Home = () => {
 
@@ -16,7 +17,8 @@ const Home = () => {
   }
 const dispatch = useDispatch()
 const songsData = useSelector((state)=>state.songsSlice.songsData)
-
+const currentSong = useSelector((state)=>state.currentSongSlice.currentSongInfo)
+const {id} = currentSong;
 
 
  const newSongs  = useGetPlaylistItemsQuery(playlistId.newRelesedId,{skip: songsData.newSongs !== undefined}) ;
@@ -51,6 +53,8 @@ const songsData = useSelector((state)=>state.songsSlice.songsData)
       <SongsList title={'Trending Songs'} songsData={songsData.trendingSongs?.items} />
       <SongsList title={'New Released Songs'} songsData={songsData.newSongs?.items} />
       <SongsList title={'Bollywood HitsList'} songsData={songsData.bollywoodHitsSongs?.items} />
+
+    {/* {id && <Player/>} */}
     </div>
   )
 }

@@ -1,22 +1,36 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { BsChevronDown } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { baseUrl } from '../../api/getAudio';
 import Header from '../../components/header/Header';
 import { useGetSongsByIdQuery } from '../../reduxtool/services/songsApi';
+import { addSongId, addSongInfo } from '../../reduxtool/slice/currentSongSlice';
+import MiniPlayer from './miniPlayer/MiniPlayer';
 import './Player.css'
 import PlayerControls from './playerControls/PlayerControls';
 import RelatedSongs from './relatedSongs/RelatedSongs';
 
 
-const Player = () => {
+const Player = ({ onHome }) => {
   const [songUrl, setSongUrl] = useState('');
   const [songsInfo, setSongsInfo] = useState([]);
   const [audioLoading, setAudioLoading] = useState(true);
   const [songsList, setSongsList] = useState([]);
   const [alertMessage, setAlertMessage] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
-  const { id } = useParams()
-  const { data, isError } = useGetSongsByIdQuery(id);
+  const [onMiniPlayer, setOnMiniPlayer] = useState(false);
+   
+  // const { id } = JSON.parse(localStorage.getItem('currentSongInfo'));
+  // const dispatch = useDispatch();
+  // const currentSong = useSelector((state) => state.currentSongSlice.currentSongInfo)
+  // const { id } = currentSong;
+  // console.log(currentSong)
+  let { id } = useParams() ;
+  // if(!id){
+  //   id= currentSong.id
+  // }
+  const { data } = useGetSongsByIdQuery(id);
 
   const [progress, setProgress] = useState(0);
 
@@ -33,6 +47,7 @@ const Player = () => {
       // console.log(data)
       setSongUrl(data)
       setAudioLoading(false)
+      setIsPlaying(false)
 
     } catch (error) {
       console.log(error)
@@ -40,7 +55,7 @@ const Player = () => {
       setAlertMessage(error.message)
       setTimeout(() => {
         setAlertMessage('')
-      }, 300);
+      }, 3000);
     }
   }
   useEffect(() => {
@@ -53,6 +68,15 @@ const Player = () => {
       setSongsInfo(data.items)
     }
   }, [data])
+
+
+  // useEffect(() => {
+  //   if(songUrl || songsInfo){
+  //     dispatch(addSongInfo({id}))
+  //     localStorage.setItem('currentSongInfo',JSON.stringify({id}))
+  //   }
+  // }, [id])
+  
 
 
   const onPlaying = () => {
@@ -69,27 +93,27 @@ const Player = () => {
     setAudioLoading(true)
   }, [id])
 
-  useEffect(() => {
-
-  }, [songUrl])
+ 
 
 
   // console.log({ isPlaying, audioLoading })
 
-
+  const mapVideoId = songsList.map((songs) => songs.id.videoId)
+  const index = mapVideoId.findIndex((x) => x === id)
 
   const handleNext = () => {
     // console.log(songsList)
     console.log('current', id)
-    const mapVideoId = songsList.map((songs) => songs.id.videoId)
-    const index = mapVideoId.findIndex((x) => x === id)
+
     console.log(index)
 
 
     if (index < mapVideoId.length - 1) {
       console.log(mapVideoId[index + 1])
-      navigate(`/play/${mapVideoId[index + 1]}`)
-      setIsPlaying(false)
+      navigate(`/play/${mapVideoId[index + 1]}`,{replace:true})
+      // setCurrentSongInfo({ id: mapVideoId[index + 1] })
+      // dispatch(addSongInfo({ id: mapVideoId[index + 1] }))
+      // setIsPlaying(false)
     }
     else {
       console.log('you reached at end')
@@ -99,6 +123,36 @@ const Player = () => {
       }, 3000)
     }
   }
+
+
+  const handlePrev = () => {
+    console.log(songsList)
+    console.log('current', id)
+    console.log(index)
+
+
+    if (index > 0) {
+      console.log(mapVideoId[index - 1])
+      navigate(`/play/${mapVideoId[index - 1]}`)
+      // setCurrentSongInfo({ id: mapVideoId[index - 1] })
+      // dispatch(addSongInfo({ id: mapVideoId[index - 1] }))
+
+      // setIsPlaying(false)
+    }
+    else {
+      console.log('you reached at first')
+      setAlertMessage('you reached at first')
+      setTimeout(() => {
+        setAlertMessage('')
+      }, 3000)
+    }
+
+  }
+
+  // useEffect(() => {
+  //   localStorage.setItem('currentSongInfo', JSON.stringify(currentSong))
+  // }, [currentSong])
+
 
 
   // web media session 
@@ -123,12 +177,17 @@ const Player = () => {
 
 
 
-
   return (
     <div className="player-page-section">
-      <Header />
-      <div className='player-section '>
+      {/* <Header /> */}
+     {/* {!onMiniPlayer && <div className="top-player-controll-wrapper">
+        <div className="player-minimize-wrapper cur-pointer" onClick={() => setOnMiniPlayer(!onMiniPlayer)}>
+          <BsChevronDown style={{ width: '100%', height: '100%' }} />
+        </div>
+      </div>} */}
 
+
+      <div className='player-section ' >
         <div className="player-container">
           <div className="player-song-image-wrapper">
             <img
@@ -139,15 +198,18 @@ const Player = () => {
           </div>
           <div className="player-song-title-channel-wrapper absolute-center">
             <div className="player-song-title">
-              {songsInfo[0]?.snippet?.title}
+              {songsInfo[0]?.snippet?.title.slice(0, 70) + '...'}
             </div>
             <div className="player-song-channel">
               • {songsInfo[0]?.snippet?.channelTitle}
             </div>
           </div>
 
-          <audio src={songUrl} ref={audioRef} onTimeUpdate={onPlaying} 
-            onCanPlay={() => setAudioLoading(false)} onEnded={handleNext} autoPlay />
+          <audio src={songUrl} ref={audioRef} onTimeUpdate={onPlaying}
+            onCanPlay={()=>setAudioLoading(false)}
+            onEnded={handleNext} 
+            autoPlay />
+
 
           <PlayerControls audioRef={audioRef}
             progress={progress} audioLoading={audioLoading}
@@ -158,6 +220,7 @@ const Player = () => {
             isPlaying={isPlaying}
             setIsPlaying={setIsPlaying}
             handleNext={handleNext}
+            handlePrev={handlePrev}
           />
 
           {alertMessage && <div className="alert-message-wrapper">
@@ -166,11 +229,29 @@ const Player = () => {
             </div>
           </div>}
         </div>
-        {isError && <div>{isError}</div>}
+
 
 
         <RelatedSongs videoId={id} songsList={songsList} setSongsList={setSongsList} setIsPlaying={setIsPlaying} />
+
+
       </div>
+      
+     { onMiniPlayer && <MiniPlayer
+        songsInfo={songsInfo}
+        videoId={id}
+        isPlaying={isPlaying}
+        setIsPlaying={setIsPlaying}
+        handleNext={handleNext}
+        handlePrev={handlePrev}
+        audioLoading={audioLoading}
+        audioRef={audioRef}
+        songsList={songsList}
+        onMiniPlayer={onMiniPlayer}
+        setOnMiniplayer={setOnMiniPlayer}
+      />}
+      
+    
 
 
     </div>
