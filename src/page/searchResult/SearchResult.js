@@ -10,7 +10,7 @@ import './SearchResult.css'
 
 const SearchResult = () => {
   const { q } = useParams()
-  const { data } = useGetSearchItemsQuery(q)
+  const { data,isLoading } = useGetSearchItemsQuery(q)
   const currentSong = useSelector((state) => state.currentSongSlice.currentSongInfo)
   const { id } = currentSong;
 
@@ -19,11 +19,15 @@ const SearchResult = () => {
   // console.log(q)
   // console.log(searchResult)
 
+  
+
   useEffect(() => {
     if (data) {
       setSearchResult(data)
     }
   }, [data])
+
+
 
   return (
     <div className='search-result-container '>

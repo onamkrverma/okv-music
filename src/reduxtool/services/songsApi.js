@@ -42,7 +42,7 @@ export const songsApi = createApi({
           part: 'snippet',
           q:searchQuery,
           type: 'video',
-          maxResults: '20',
+          maxResults: '50',
           key: apiKey,
         },
         method: 'GET'

@@ -19,6 +19,7 @@ const Player = ({ onHome }) => {
   const [songsList, setSongsList] = useState([]);
   const [alertMessage, setAlertMessage] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
+  const [autoPlay, setAutoPlay] = useState(true)
   const [onMiniPlayer, setOnMiniPlayer] = useState(false);
    
   // const { id } = JSON.parse(localStorage.getItem('currentSongInfo'));
@@ -70,12 +71,14 @@ const Player = ({ onHome }) => {
   }, [data])
 
 
-  // useEffect(() => {
-  //   if(songUrl || songsInfo){
-  //     dispatch(addSongInfo({id}))
-  //     localStorage.setItem('currentSongInfo',JSON.stringify({id}))
-  //   }
-  // }, [id])
+  useEffect(() => {
+    if(songsInfo[0]?.snippet?.liveBroadcastContent === 'live'){
+      setAlertMessage("can't play live stream")
+      setTimeout(() => {
+        setAlertMessage('')
+      }, 3000)
+    }
+  }, [songsInfo])
   
 
 
@@ -133,7 +136,7 @@ const Player = ({ onHome }) => {
 
     if (index > 0) {
       console.log(mapVideoId[index - 1])
-      navigate(`/play/${mapVideoId[index - 1]}`)
+      navigate(`/play/${mapVideoId[index - 1]}`,{replace:true})
       // setCurrentSongInfo({ id: mapVideoId[index - 1] })
       // dispatch(addSongInfo({ id: mapVideoId[index - 1] }))
 
@@ -207,8 +210,8 @@ const Player = ({ onHome }) => {
 
           <audio src={songUrl} ref={audioRef} onTimeUpdate={onPlaying}
             onCanPlay={()=>setAudioLoading(false)}
-            onEnded={handleNext} 
-            autoPlay />
+            onEnded={()=> autoPlay && handleNext()} 
+            autoPlay={autoPlay}  />
 
 
           <PlayerControls audioRef={audioRef}
@@ -221,6 +224,8 @@ const Player = ({ onHome }) => {
             setIsPlaying={setIsPlaying}
             handleNext={handleNext}
             handlePrev={handlePrev}
+            autoPlay={autoPlay}
+            setAutoPlay={setAutoPlay}
           />
 
           {alertMessage && <div className="alert-message-wrapper">

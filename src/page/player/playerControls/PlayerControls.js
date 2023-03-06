@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 
-const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songsList, setAlertMessage, audioEnded, handleNext, handlePrev, isPlaying, setIsPlaying }) => {
+const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songsList, setAlertMessage, audioEnded, handleNext, handlePrev, isPlaying, setIsPlaying,autoPlay,setAutoPlay }) => {
 
 
   const { id } = useParams()
@@ -127,7 +127,7 @@ const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songs
 
         <div className="audio-play-pause-wrapper">
           <div className="audio-play-pause  cur-pointer" onClick={() => setIsPlaying(!isPlaying)}>
-            {isPlaying ? <BsPlayCircleFill style={{ width: '100%', height: '100%', opacity: audioLoading && '0.9' }} />
+            {(isPlaying || progress === 100 ) ? <BsPlayCircleFill style={{ width: '100%', height: '100%', opacity: audioLoading && '0.9' }} />
               : <BsPauseCircleFill style={{ width: '100%', height: '100%' }} />
             }
           </div>
@@ -155,6 +155,7 @@ const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songs
         <div className="audio-volume">
           <input
             type="range"
+            title='volume'
             className="volume-input cur-pointer"
             min={0.0}
             max={1.0}
@@ -162,6 +163,18 @@ const PlayerControls = ({ audioRef, progress, audioLoading, audioDuration, songs
             onChange={handleVolume}
           />
         </div>
+      </div>
+
+      <div className="audio-autoplay-wrapper">
+        <label className="audio-autoplay">
+          <input type="checkbox" title='autoplay'  aria-label='autoplay' placeholder='autoplay' checked={autoPlay} onChange={()=>setAutoPlay(!autoPlay)}/>
+          <span className='autoplay-slider' title='autoplay'>
+            <span className='autoplay-icons' >
+            {autoPlay ? <BsPlayCircleFill style={{ width: '100%', height: '100%' }} />
+            : <BsPauseCircleFill style={{ width: '100%', height: '100%' }} />}
+          </span>
+          </span>
+        </label>
       </div>
 
 
