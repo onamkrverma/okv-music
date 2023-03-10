@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BsChevronUp, BsFillSkipEndFill, BsFillSkipStartFill, BsPauseCircleFill, BsPlayCircleFill } from 'react-icons/bs';
+import { BsFillSkipEndFill, BsFillSkipStartFill, BsPauseCircleFill, BsPlayCircleFill } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSongInfo } from '../../../reduxtool/slice/currentSongSlice';

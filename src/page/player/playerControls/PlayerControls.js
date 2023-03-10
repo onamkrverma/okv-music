@@ -1,17 +1,12 @@
 import React, { useEffect, useRef } from 'react'
 import './PlayerControls.css';
 import { BsFillSkipEndFill, BsFillSkipStartFill, BsFillVolumeUpFill, BsPauseCircleFill, BsPlayCircleFill } from 'react-icons/bs';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+
 
 
 const PlayerControls = ({ audioRef, progress, audioLoading, setAlertMessage, handleNext,
    handlePrev, isPlaying, setIsPlaying,autoPlay,setAutoPlay, mapVideoId,currentIndex }) => {
 
-
-  // const { id } = useParams()
-  const currentSong = useSelector((state)=>state.currentSongSlice.currentSongInfo)
-  const {id} = currentSong;
 
   useEffect(() => {
     try {
@@ -49,35 +44,7 @@ const PlayerControls = ({ audioRef, progress, audioLoading, setAlertMessage, han
     audioRef.current.volume = e.target.valueAsNumber;
   }
 
-  const navigate = useNavigate()
-  // const mapVideoId = songsList.map((songs) => songs.id.videoId)
-  // const index = mapVideoId.findIndex((x) => x === id)
-
-  // const handlePrev = () => {
-  //   console.log(songsList)
-  //   console.log('current', id)
-  //   console.log(index)
-
-
-  //   if (index > 0) {
-  //     console.log(mapVideoId[index - 1])
-  //     navigate(`/play/${mapVideoId[index - 1]}`)
-  //     // setIsPlaying(false)
-  //   }
-  //   else {
-  //     console.log('you reached at first')
-  //     setAlertMessage('you reached at first')
-  //     setTimeout(() => {
-  //       setAlertMessage('')
-  //     }, 3000)
-  //   }
-
-  // }
-
-
-
-  // audio controls from web media api
-
+ 
   navigator.mediaSession.setActionHandler('play', () => { setIsPlaying(false) });
   navigator.mediaSession.setActionHandler('pause', () => { setIsPlaying(true) });
 

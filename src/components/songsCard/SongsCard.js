@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom'
 import { addSongInfo } from '../../reduxtool/slice/currentSongSlice';
 import './SongsCard.css'
 
 
 const SongsCard = ({ songs }) => {
-  const navigate = useNavigate();
  const dispatch =  useDispatch()
 
   const handleRedirect = (videoId) => {
-    // navigate(`/play/${videoId}`)
-    // setCurrentSongInfo({id:videoId})
-    // console.log('clicked')
     dispatch(addSongInfo(
       {id:videoId,
       onMiniPlayer: false

@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { BsChevronDown } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { baseUrl } from '../../api/getAudio';
-import Header from '../../components/header/Header';
 import { useGetSongsByIdQuery } from '../../reduxtool/services/songsApi';
-import { addSongId, addSongInfo } from '../../reduxtool/slice/currentSongSlice';
+import { addSongInfo } from '../../reduxtool/slice/currentSongSlice';
 import MiniPlayer from './miniPlayer/MiniPlayer';
 import './Player.css'
 import PlayerControls from './playerControls/PlayerControls';
@@ -14,7 +12,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import RelatedSongs from './relatedSongs/RelatedSongs';
 
 
-const Player = ({ onHome }) => {
+const Player = () => {
   const [songUrl, setSongUrl] = useState('');
   const [songsInfo, setSongsInfo] = useState([]);
   const [audioLoading, setAudioLoading] = useState(true);
@@ -28,17 +26,12 @@ const Player = ({ onHome }) => {
   const dispatch = useDispatch();
   const currentSong = useSelector((state) => state.currentSongSlice.currentSongInfo)
   const { id, onMiniPlayer } = currentSong;
-  // console.log(currentSong)
-  // let { id } = useParams() ;
-  // if(!id){
-  //   id= currentSong.id
-  // }
+  
   const { data, isLoading } = useGetSongsByIdQuery(id);
 
   const [progress, setProgress] = useState(0);
 
   const audioRef = useRef();
-  const navigate = useNavigate()
 
   // get songs url
   const getSongUrl = async () => {

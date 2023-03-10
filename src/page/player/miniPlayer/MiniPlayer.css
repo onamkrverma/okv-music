@@ -10,6 +10,13 @@
   padding: 0 10px;
 }
 
+.mini-player-song-info-wrapper{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 50%;
+}
+
 .mini-player-image-wrapper {
   width: 100px;
   height: 55px;
@@ -26,7 +33,7 @@
 
 .mini-player-song-title-channel-wrapper {
   flex-direction: column;
-  width: 50%;
+  width: 60%;
 }
 
 .mini-player-song-title {
