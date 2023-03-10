@@ -28,4 +28,5 @@ img.songs-image {
 .songs-title-wrapper{
   margin: 10px 0;
   padding: 0 10px;
+  width: 100%;
 }

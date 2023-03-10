@@ -1,19 +1,23 @@
 .player-page-section{
-  /* position: fixed; */
+  position: fixed;
   width: 100%;
   bottom: 0px;
   background: #04152d;
   z-index: 10;
-  height: fit-content;
+  height: 100vh;
 }
 
 .top-player-controll-wrapper {
   margin: 10px 0px 0px 10px;
+  /* position: fixed;
+  top: 0px;
+  left: 0; */
+  color:var(--primary-text-color);
 }
 .player-minimize-wrapper{
   width: 25px;
   height: 25px;
-  color: white;
+  color: var(--primary-text-color);
 }
 
 .player-section {
@@ -23,6 +27,14 @@
   flex-wrap: wrap;
   gap: 20px;
   position: relative;
+  transition: all 0.5s ease-in-out;
+}
+
+.mini-player-active{
+  transform: translateY(600px);
+  padding: 0;
+  height: 0;
+  
 }
 
 
@@ -83,12 +95,9 @@
 
 
 @media (max-width:426px) {
-  .player-section {
-    margin-top: 20px;
-  }
-
   .player-container {
     width: 90%;
+    height: 500px;
   }
 
   .player-song-image-wrapper {

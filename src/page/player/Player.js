@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { BsChevronDown } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { baseUrl } from '../../api/getAudio';
 import Header from '../../components/header/Header';
 import { useGetSongsByIdQuery } from '../../reduxtool/services/songsApi';
@@ -9,6 +9,8 @@ import { addSongId, addSongInfo } from '../../reduxtool/slice/currentSongSlice';
 import MiniPlayer from './miniPlayer/MiniPlayer';
 import './Player.css'
 import PlayerControls from './playerControls/PlayerControls';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import RelatedSongs from './relatedSongs/RelatedSongs';
 
 
@@ -20,18 +22,18 @@ const Player = ({ onHome }) => {
   const [alertMessage, setAlertMessage] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [autoPlay, setAutoPlay] = useState(true)
-  const [onMiniPlayer, setOnMiniPlayer] = useState(false);
-   
+  // const [onMiniPlayer, setOnMiniPlayer] = useState(false);
+
   // const { id } = JSON.parse(localStorage.getItem('currentSongInfo'));
-  // const dispatch = useDispatch();
-  // const currentSong = useSelector((state) => state.currentSongSlice.currentSongInfo)
-  // const { id } = currentSong;
+  const dispatch = useDispatch();
+  const currentSong = useSelector((state) => state.currentSongSlice.currentSongInfo)
+  const { id, onMiniPlayer } = currentSong;
   // console.log(currentSong)
-  let { id } = useParams() ;
+  // let { id } = useParams() ;
   // if(!id){
   //   id= currentSong.id
   // }
-  const { data } = useGetSongsByIdQuery(id);
+  const { data, isLoading } = useGetSongsByIdQuery(id);
 
   const [progress, setProgress] = useState(0);
 
@@ -72,14 +74,14 @@ const Player = ({ onHome }) => {
 
 
   useEffect(() => {
-    if(songsInfo[0]?.snippet?.liveBroadcastContent === 'live'){
+    if (songsInfo[0]?.snippet?.liveBroadcastContent === 'live') {
       setAlertMessage("can't play live stream")
       setTimeout(() => {
         setAlertMessage('')
       }, 3000)
     }
   }, [songsInfo])
-  
+
 
 
   const onPlaying = () => {
@@ -96,7 +98,7 @@ const Player = ({ onHome }) => {
     setAudioLoading(true)
   }, [id])
 
- 
+
 
 
   // console.log({ isPlaying, audioLoading })
@@ -113,9 +115,9 @@ const Player = ({ onHome }) => {
 
     if (index < mapVideoId.length - 1) {
       console.log(mapVideoId[index + 1])
-      navigate(`/play/${mapVideoId[index + 1]}`,{replace:true})
+      // navigate(`/play/${mapVideoId[index + 1]}`, { replace: true })
       // setCurrentSongInfo({ id: mapVideoId[index + 1] })
-      // dispatch(addSongInfo({ id: mapVideoId[index + 1] }))
+      dispatch(addSongInfo({ ...currentSong, id: mapVideoId[index + 1] }))
       // setIsPlaying(false)
     }
     else {
@@ -136,9 +138,9 @@ const Player = ({ onHome }) => {
 
     if (index > 0) {
       console.log(mapVideoId[index - 1])
-      navigate(`/play/${mapVideoId[index - 1]}`,{replace:true})
+      // navigate(`/play/${mapVideoId[index - 1]}`, { replace: true })
       // setCurrentSongInfo({ id: mapVideoId[index - 1] })
-      // dispatch(addSongInfo({ id: mapVideoId[index - 1] }))
+      dispatch(addSongInfo({ ...currentSong, id: mapVideoId[index - 1] }))
 
       // setIsPlaying(false)
     }
@@ -152,9 +154,9 @@ const Player = ({ onHome }) => {
 
   }
 
-  // useEffect(() => {
-  //   localStorage.setItem('currentSongInfo', JSON.stringify(currentSong))
-  // }, [currentSong])
+  useEffect(() => {
+    localStorage.setItem('currentSongInfo', JSON.stringify(currentSong))
+  }, [currentSong])
 
 
 
@@ -176,22 +178,44 @@ const Player = ({ onHome }) => {
   }
 
 
+  // on back button press mini play true
+  // const playerRef = useRef()
+
+  // window.onclick = (e) => {
+  //   if (e.target !== playerRef.current) {
+  //     if (!onMiniPlayer) {
+  //       dispatch(addSongInfo({ ...currentSong, onMiniPlayer: true }))
+  //       console.log('back pressed')
+  //     }
+  //   }
+  // }
+
+  useEffect(() => {
+    if (!onMiniPlayer) {
+      document.body.style.overflowY = 'hidden'
+    }else{
+      document.body.style.overflowY = 'auto'
+    }
+  }, [onMiniPlayer])
+  
+
 
 
 
 
   return (
-    <div className="player-page-section">
+    <div className="player-page-section" style={{ height: onMiniPlayer && '70px' }}>
       {/* <Header /> */}
-     {/* {!onMiniPlayer && <div className="top-player-controll-wrapper">
-        <div className="player-minimize-wrapper cur-pointer" onClick={() => setOnMiniPlayer(!onMiniPlayer)}>
+      {!onMiniPlayer && <div className="top-player-controll-wrapper">
+        <div className="player-minimize-wrapper cur-pointer" onClick={() => dispatch(addSongInfo({ ...currentSong, onMiniPlayer: true }))}>
           <BsChevronDown style={{ width: '100%', height: '100%' }} />
         </div>
-      </div>} */}
+      </div>}
 
+      <div className={`player-section ${onMiniPlayer && 'mini-player-active '} `} >
 
-      <div className='player-section ' >
         <div className="player-container">
+
           <div className="player-song-image-wrapper">
             <img
               src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
@@ -199,19 +223,28 @@ const Player = ({ onHome }) => {
               className='player-song-image'
             />
           </div>
-          <div className="player-song-title-channel-wrapper absolute-center">
-            <div className="player-song-title">
-              {songsInfo[0]?.snippet?.title.slice(0, 70) + '...'}
+
+          {isLoading ? 
+           <div className="player-song-title-channel-wrapper absolute-center">
+            <Skeleton width={'200px'}/>
             </div>
-            <div className="player-song-channel">
-              • {songsInfo[0]?.snippet?.channelTitle}
+            :
+            <div className="player-song-title-channel-wrapper absolute-center">
+              <div className="player-song-title">
+                {songsInfo[0]?.snippet?.title.slice(0, 70) + '...'}
+              </div>
+              <div className="player-song-channel">
+                • {songsInfo[0]?.snippet?.channelTitle}
+              </div>
             </div>
-          </div>
+          }
+
+
 
           <audio src={songUrl} ref={audioRef} onTimeUpdate={onPlaying}
-            onCanPlay={()=>setAudioLoading(false)}
-            onEnded={()=> autoPlay && handleNext()} 
-            autoPlay={autoPlay}  />
+            onCanPlay={() => setAudioLoading(false)}
+            onEnded={() => autoPlay && handleNext()}
+            autoPlay={autoPlay} />
 
 
           <PlayerControls audioRef={audioRef}
@@ -226,6 +259,8 @@ const Player = ({ onHome }) => {
             handlePrev={handlePrev}
             autoPlay={autoPlay}
             setAutoPlay={setAutoPlay}
+            currentIndex={index}
+            mapVideoId={mapVideoId}
           />
 
           {alertMessage && <div className="alert-message-wrapper">
@@ -241,8 +276,8 @@ const Player = ({ onHome }) => {
 
 
       </div>
-      
-     { onMiniPlayer && <MiniPlayer
+
+      {onMiniPlayer && <MiniPlayer
         songsInfo={songsInfo}
         videoId={id}
         isPlaying={isPlaying}
@@ -252,11 +287,11 @@ const Player = ({ onHome }) => {
         audioLoading={audioLoading}
         audioRef={audioRef}
         songsList={songsList}
-        onMiniPlayer={onMiniPlayer}
-        setOnMiniplayer={setOnMiniPlayer}
+        mapVideoId={mapVideoId}
+        currentIndex={index}
       />}
-      
-    
+
+
 
 
     </div>

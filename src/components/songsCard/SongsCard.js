@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
-import { addSongId, addSongInfo } from '../../reduxtool/slice/currentSongSlice';
+import { addSongInfo } from '../../reduxtool/slice/currentSongSlice';
 import './SongsCard.css'
 
 
@@ -10,10 +10,14 @@ const SongsCard = ({ songs }) => {
  const dispatch =  useDispatch()
 
   const handleRedirect = (videoId) => {
-    navigate(`/play/${videoId}`)
+    // navigate(`/play/${videoId}`)
     // setCurrentSongInfo({id:videoId})
     // console.log('clicked')
-    // dispatch(addSongInfo({id:videoId}))
+    dispatch(addSongInfo(
+      {id:videoId,
+      onMiniPlayer: false
+      }
+      ))
   }
 
 

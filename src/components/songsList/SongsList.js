@@ -1,8 +1,9 @@
 import React from 'react'
 import SongsCard from '../songsCard/SongsCard'
+import SongsCardSkeleton from '../songsCard/SongsCardSkeleton'
 import './SongsList.css'
 
-const SongsList = ({songsData,title,searchResult}) => {
+const SongsList = ({songsData,title,searchResult,isLoading}) => {
 
   
 
@@ -14,7 +15,9 @@ const SongsList = ({songsData,title,searchResult}) => {
 
       <div className="songs-list-wrapper"
        style={{flexWrap:searchResult && "wrap",justifyContent:searchResult && 'center'}}>
-      {songsData && songsData.map((songs)=>
+      {isLoading ? <SongsCardSkeleton amount={6}/>
+      :
+      songsData && songsData.map((songs)=>
         <SongsCard songs={songs} key={songs.etag} />
       )}
       </div>

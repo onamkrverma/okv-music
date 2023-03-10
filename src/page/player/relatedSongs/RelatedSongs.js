@@ -1,15 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { BsPlayCircleFill } from 'react-icons/bs';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetSearchRelatedItemsQuery } from '../../../reduxtool/services/songsApi'
+import { addSongInfo } from '../../../reduxtool/slice/currentSongSlice';
 import './RelatedSongs.css'
+import RelatedSongsSkeleton from './RelatedSongsSkeleton';
 
 const RelatedSongs = ({ videoId, songsList, setSongsList,setIsPlaying }) => {
-  const { id } = useParams()
+  // const { id } = useParams()
   // const getRealated = JSON.parse(localStorage.getItem('related'));
-  // const currentSong = useSelector((state)=>state.currentSongSlice.currentSongInfo)
-  // const {id} = currentSong;
+  const dispatch = useDispatch();
+  const currentSong = useSelector((state)=>state.currentSongSlice.currentSongInfo)
+  const {id} = currentSong;
   const [relatedSongs, setRelatedSongs] = useState([])
   const [isUpClick, setIsUpClick] = useState(false)
   const { data, isLoading, isError } = useGetSearchRelatedItemsQuery(videoId, { skip: songsList.length > 11 })
@@ -35,9 +38,9 @@ const RelatedSongs = ({ videoId, songsList, setSongsList,setIsPlaying }) => {
   const navigate = useNavigate();
 
   const handleRedirect = (videoId) => {
-    navigate(`/play/${videoId}`,{replace:true})
-    localStorage.setItem('currentSong',JSON.stringify({id:videoId}))
+    // navigate(`/play/${videoId}`,{replace:true})
     // setIsPlaying(false)
+    dispatch(addSongInfo({...currentSong, id:videoId }))
 
   }
 
@@ -58,7 +61,8 @@ const RelatedSongs = ({ videoId, songsList, setSongsList,setIsPlaying }) => {
       </div>
       <div className={`related-songs-container ${isUpClick ? 'related-songs-mobile' : ''}`}>
 
-        {songsList?.map((songs, index) =>
+        {isLoading ? <RelatedSongsSkeleton amount={6}/>
+        : songsList?.map((songs) =>
           <div className="related-songs-info-wrapper cur-pointer" key={songs.etag} onClick={() => handleRedirect(songs.id.videoId)}>
             <div className="related-songs-image-wrapper">
               <img

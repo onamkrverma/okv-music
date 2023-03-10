@@ -32,8 +32,8 @@ const SearchResult = () => {
   return (
     <div className='search-result-container '>
       <Header />
-      <SongsList title={'Search result'} songsData={searchResult?.items} searchResult={'searchResult'} />
-      {/* {id && <Player />} */}
+      <SongsList title={'Search result'} songsData={searchResult?.items} searchResult={'searchResult'} isLoading={isLoading} />
+      {id && <Player />}
     </div>
   )
 }

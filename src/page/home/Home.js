@@ -49,12 +49,12 @@ const {id} = currentSong;
   return (
     <div className='home-section'>
       <Header />
-      <HeroBanner trendingSongs={songsData.trendingSongs?.items} />
-      <SongsList title={'Trending Songs'} songsData={songsData.trendingSongs?.items} />
-      <SongsList title={'New Released Songs'} songsData={songsData.newSongs?.items} />
-      <SongsList title={'Bollywood HitsList'} songsData={songsData.bollywoodHitsSongs?.items} />
+      <HeroBanner trendingSongs={songsData.trendingSongs?.items} isLoading={trendingSongs.isLoading} />
+      <SongsList title={'Trending Songs'} songsData={songsData.trendingSongs?.items} isLoading={trendingSongs.isLoading}/>
+      <SongsList title={'New Released Songs'} songsData={songsData.newSongs?.items} isLoading={newSongs.isLoading} />
+      <SongsList title={'Bollywood HitsList'} songsData={songsData.bollywoodHitsSongs?.items} isLoading={bollywoodHitsSongs.isLoading}/>
 
-    {/* {id && <Player/>} */}
+    {id && <Player/>}
     </div>
   )
 }

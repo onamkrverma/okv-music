@@ -1,47 +1,52 @@
 import React, { useState } from 'react';
 import { BsChevronUp, BsFillSkipEndFill, BsFillSkipStartFill, BsPauseCircleFill, BsPlayCircleFill } from 'react-icons/bs';
 import { RxCross2 } from 'react-icons/rx';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addSongInfo } from '../../../reduxtool/slice/currentSongSlice';
 import './MiniPlayer.css';
 
-const MiniPlayer = ({ songsInfo, videoId, isPlaying, setIsPlaying, handleNext, handlePrev, audioLoading,audioRef,songsList, OnPlayer,onMiniPlayer,setOnMiniplayer }) => {
+const MiniPlayer = ({ songsInfo, videoId, isPlaying, setIsPlaying, handleNext, handlePrev, audioLoading, audioRef, mapVideoId, currentIndex }) => {
   // const { id } = JSON.parse(localStorage.getItem('currentSongInfo'));
-  // const currentSong = useSelector((state)=>state.currentSongSlice.currentSongInfo)
-  // const {id} = currentSong;
-  const id = videoId;
-  const mapVideoId = songsList.map((songs) => songs.id.videoId)
-  const index = mapVideoId.findIndex((x) => x === id)
+  const currentSong = useSelector((state) => state.currentSongSlice.currentSongInfo)
+  const { id } = currentSong;
+  const dispatch = useDispatch()
+  // const id = videoId;
+  // const mapVideoId = songsList.map((songs) => songs.id.videoId)
+  // const index = mapVideoId.findIndex((x) => x === id)
 
   const [playerClose, setPlayerClose] = useState(false)
 
-  const handleClosePlayer = ()=>{
+  const handleClosePlayer = () => {
     setPlayerClose(true)
-    // setOnMiniplayer(false)
+    dispatch(addSongInfo({ onMiniPlayer: false }))
     localStorage.removeItem('currentSongInfo')
+
   }
 
 
-
   return (
-    <div className='mini-player-section' style={{display:(playerClose || !id)  && 'none'}}>
+    <div className='mini-player-section' style={{ display: (playerClose || !id) && 'none' }} >
       <div className="mini-player-container" >
-        <div className="mini-player-image-wrapper">
-          <img
-            src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
-            className='mini-player-image '
-            alt="mini-player-poster" />
-        </div>
-        <div className="mini-player-song-title-channel-wrapper absolute-center">
-          <div className="mini-player-song-title">
-            {songsInfo[0]?.snippet?.title}
+        <div className="mini-player-song-info-wrapper cur-pointer" onClick={() => dispatch(addSongInfo({ ...currentSong, onMiniPlayer: false }))}>
+          <div className="mini-player-image-wrapper">
+            <img
+              src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
+              className='mini-player-image '
+              alt="mini-player-poster" />
           </div>
-          <div className="mini-player-song-channel">
-            • {songsInfo[0]?.snippet?.channelTitle}
+          <div className="mini-player-song-title-channel-wrapper absolute-center " >
+            <div className="mini-player-song-title">
+              {songsInfo[0]?.snippet?.title}
+            </div>
+            <div className="mini-player-song-channel">
+              • {songsInfo[0]?.snippet?.channelTitle}
+            </div>
           </div>
         </div>
+
         <div className="audio-controls-wrapper absolute-center">
 
-          <div className="audio-prev-wrapper next-prev-icons" style={{ opacity: index <= 0 && '0.5' }} onClick={handlePrev}>
+          <div className="audio-prev-wrapper next-prev-icons cur-pointer" style={{ opacity: currentIndex <= 0 && '0.5' }} onClick={handlePrev}>
             <BsFillSkipStartFill style={{ width: '100%', height: '100%' }} />
           </div>
 
@@ -63,16 +68,16 @@ const MiniPlayer = ({ songsInfo, videoId, isPlaying, setIsPlaying, handleNext, h
 
           </div>
 
-          <div className="audio-next-wrapper next-prev-icons " style={{ opacity: index >= (mapVideoId.length - 1) && '0.5' }} onClick={handleNext}>
+          <div className="audio-next-wrapper next-prev-icons " style={{ opacity: currentIndex >= (mapVideoId.length - 1) && '0.5' }} onClick={handleNext}>
             <BsFillSkipEndFill style={{ width: '100%', height: '100%' }} />
           </div>
         </div>
 
-        <div className="player-maximize-wrapper" onClick={()=>setOnMiniplayer(false)}>
-        <BsChevronUp style={{ width: '100%', height: '100%' }} />
-        </div>
-        <div className="player-close-wrapper player-maximize-wrapper" onClick={handleClosePlayer}>
-        <RxCross2 style={{ width: '100%', height: '100%' }} />
+        {/* <div className="player-maximize-wrapper" onClick={() => dispatch(addSongInfo({ ...currentSong, onMiniPlayer: false }))}>
+          <BsChevronUp style={{ width: '100%', height: '100%' }} />
+        </div> */}
+        <div className="player-close-wrapper  cur-pointer" onClick={handleClosePlayer}>
+          <RxCross2 style={{ width: '100%', height: '100%' }} />
         </div>
 
       </div>

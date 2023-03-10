@@ -4,6 +4,10 @@
   align-items: center;
   background: #071120;
   color: white;
+  /* position: absolute;
+  bottom: -1px;
+  width: 100%; */
+  padding: 0 10px;
 }
 
 .mini-player-image-wrapper {
@@ -20,14 +24,14 @@
 
 }
 
-.mini-player-song-title-channel-wrapper.absolute-center {
+.mini-player-song-title-channel-wrapper {
   flex-direction: column;
   width: 50%;
 }
 
 .mini-player-song-title {
   text-overflow: ellipsis;
-  width: 75%;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   margin-bottom: 5px;
@@ -37,9 +41,18 @@
 .mini-player-song-channel {
   opacity: 0.7;
   font-size: 14px;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.player-maximize-wrapper {
+.player-close-wrapper {
   width: 25px;
   height: 25px;
+}
+
+
+@media (max-width:426px){
+  
 }

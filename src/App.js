@@ -12,7 +12,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/search/:q" element={<SearchResult/>}/>
-      <Route path="/play/:id" element={<Player/>}/>
+      {/* <Route path="/play/:id" element={<Player/>}/> */}
     </Routes>
     
     </BrowserRouter>

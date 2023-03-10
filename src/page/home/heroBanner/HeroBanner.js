@@ -4,8 +4,9 @@ import Slider from 'react-slick';
 import NextArrow from './NextArrow';
 import PrevArrow from './PrevArrow';
 import { useNavigate } from 'react-router-dom';
+import HeroBannerSkeleton from './HeroBannerSkeleton';
 
-const HeroBanner = ({ trendingSongs }) => {
+const HeroBanner = ({ trendingSongs,isLoading }) => {
   const navigate = useNavigate()
 
   const settings = {
@@ -31,6 +32,8 @@ const HeroBanner = ({ trendingSongs }) => {
 
   return (
     <div className='heroBanner-section container'>
+      {isLoading ? <HeroBannerSkeleton/>
+      :
       <Slider {...settings}>
         {trendingSongs?.slice(0,5).map((songs) =>
           <div className="heroBanner-wrapper " key={songs.etag} onClick={()=>handleRedirect(songs.snippet.resourceId.videoId)}>
@@ -46,6 +49,7 @@ const HeroBanner = ({ trendingSongs }) => {
           </div>
         )}
       </Slider>
+}
     </div>
   )
 }
