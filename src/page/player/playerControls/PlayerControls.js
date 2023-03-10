@@ -23,6 +23,7 @@ const PlayerControls = ({ audioRef, progress, audioLoading, setAlertMessage, han
       setAlertMessage(error.message)
     }
 
+    // eslint-disable-next-line
   }, [isPlaying])
 
 

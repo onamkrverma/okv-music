@@ -1,20 +1,21 @@
-.player-page-section{
+.player-page-section {
   position: fixed;
   width: 100%;
   bottom: 0px;
   background: #04152d;
   z-index: 10;
-  height: 100vh;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .top-player-controll-wrapper {
-  margin: 10px 0px 0px 10px;
-  /* position: fixed;
-  top: 0px;
-  left: 0; */
-  color:var(--primary-text-color);
+  display: flex;
+  padding: 20px 20px 0;
+  justify-content: space-between;
+  align-items: center;
 }
-.player-minimize-wrapper{
+
+.player-minimize-wrapper {
   width: 25px;
   height: 25px;
   color: var(--primary-text-color);
@@ -30,11 +31,11 @@
   transition: all 0.5s ease-in-out;
 }
 
-.mini-player-active{
+.mini-player-active {
   transform: translateY(600px);
   padding: 0;
   height: 0;
-  
+
 }
 
 
@@ -104,6 +105,7 @@
     width: 90%;
     height: 170px;
   }
+
   .alert-message-wrapper {
     bottom: -40px;
   }

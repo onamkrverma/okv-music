@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { BsChevronDown } from 'react-icons/bs';
+import { BsChevronDown, BsThreeDotsVertical } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { baseUrl } from '../../api/getAudio';
 import { useGetSongsByIdQuery } from '../../reduxtool/services/songsApi';
@@ -10,7 +10,6 @@ import PlayerControls from './playerControls/PlayerControls';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import RelatedSongs from './relatedSongs/RelatedSongs';
-
 
 const Player = () => {
   const [songUrl, setSongUrl] = useState('');
@@ -202,6 +201,9 @@ const Player = () => {
       {!onMiniPlayer && <div className="top-player-controll-wrapper">
         <div className="player-minimize-wrapper cur-pointer" onClick={() => dispatch(addSongInfo({ ...currentSong, onMiniPlayer: true }))}>
           <BsChevronDown style={{ width: '100%', height: '100%' }} />
+        </div>
+        <div className="player-info-wrapper player-minimize-wrapper  cur-pointer" >
+          <BsThreeDotsVertical style={{ width: '100%', height: '100%' }} />
         </div>
       </div>}
 
