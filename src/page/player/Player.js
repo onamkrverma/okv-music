@@ -196,7 +196,7 @@ const Player = () => {
 
 
   return (
-    <div className="player-page-section" style={{ height: onMiniPlayer && '70px' }}>
+    <div className={`player-page-section ${onMiniPlayer ? 'miniplayer-active':''}`}>
       {/* <Header /> */}
       {!onMiniPlayer && <div className="top-player-controll-wrapper">
         <div className="player-minimize-wrapper cur-pointer" onClick={() => dispatch(addSongInfo({ ...currentSong, onMiniPlayer: true }))}>
@@ -204,6 +204,10 @@ const Player = () => {
         </div>
         <div className="player-info-wrapper player-minimize-wrapper  cur-pointer" >
           <BsThreeDotsVertical style={{ width: '100%', height: '100%' }} />
+          {/* <div className="player-more-info">
+            <div className="watch-video-wrapper">Watch Video</div>
+            <div className="song-details">Song details</div>
+          </div> */}
         </div>
       </div>}
 
