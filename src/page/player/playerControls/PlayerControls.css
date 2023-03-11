@@ -94,7 +94,7 @@
 }
 
 .volume-input {
-  accent-color: white;
+  accent-color: var(--primary-text-color);
   height: 5px;
   outline: none;
   width: 80%;
@@ -105,6 +105,11 @@
   bottom: 10px;
   right: 20px;
 
+}
+.audio-autoplay-title{
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: var(--primary-text-color);
 }
 
 .audio-autoplay {
@@ -131,20 +136,9 @@
   -webkit-transition: .4s;
   transition: .4s ease-in-out;
   border-radius: 20px;
-  ;
+  
 }
 
-/* .autoplay-slider:before {
-  position: absolute;
-  content: "";
-  height: 20px;
-  width: 20px;
-  left: 0px;
-  bottom: -5px;
-  background: var(--primary-text-color);
-  transition: 0.4s ease-in-out;
-  border-radius: 50%;
-} */
 
 .autoplay-icons {
   width: 20px;

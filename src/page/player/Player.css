@@ -98,7 +98,7 @@
 @media (max-width:426px) {
   .player-container {
     width: 90%;
-    height: 500px;
+    padding-bottom: 35px;
   }
 
   .player-song-image-wrapper {

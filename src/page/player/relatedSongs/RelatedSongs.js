@@ -27,6 +27,7 @@ const RelatedSongs = ({ videoId, songsList, setSongsList }) => {
       setSongsList([...relatedSongs, ...uniqueEtag])
 
     }
+   // eslint-disable-next-line 
   }, [data])
 
 
@@ -54,7 +55,7 @@ const RelatedSongs = ({ videoId, songsList, setSongsList }) => {
   return (
     <div className='related-songs-section' >
       <div className="relate-songs-heading">Related Songs</div>
-      <div className="relate-songs-heading mobile-next" ref={upNextRef} onClick={() => setIsUpClick(!isUpClick)}>
+      <div className="relate-songs-heading mobile-next cur-pointer" ref={upNextRef} onClick={() => setIsUpClick(!isUpClick)}>
         Up Next Songs
       </div>
       <div className={`related-songs-container ${isUpClick ? 'related-songs-mobile' : ''}`}>

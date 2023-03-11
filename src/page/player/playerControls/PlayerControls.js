@@ -135,6 +135,7 @@ const PlayerControls = ({ audioRef, progress, audioLoading, setAlertMessage, han
       </div>
 
       <div className="audio-autoplay-wrapper">
+        <div className='audio-autoplay-title' >AutoPlay</div>
         <label className="audio-autoplay">
           <input type="checkbox" title='autoplay'  aria-label='autoplay' placeholder='autoplay' checked={autoPlay} onChange={()=>setAutoPlay(!autoPlay)}/>
           <span className='autoplay-slider' title='autoplay'>

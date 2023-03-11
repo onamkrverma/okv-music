@@ -5,7 +5,7 @@
 
 .relate-songs-heading {
   color: white;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
   margin-top: 10px;
 }
@@ -92,7 +92,7 @@
     display: block;
     text-align: center;
     border-top: 5px solid var(--primary-text-color);
-    padding-top: 5px;
+    padding: 5px 10px 5px;
     border-radius: 5px;
     background: rgb(0 0 0 / 80%);
     backdrop-filter: blur(6px);
