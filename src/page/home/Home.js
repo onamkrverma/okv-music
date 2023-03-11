@@ -39,11 +39,10 @@ const {id} = currentSong;
 
   useEffect(()=>{
     if(songsData.trendingSongs || songsData.newSongs || songsData.bollywoodHitsId){
-      localStorage.setItem('homepageData',JSON.stringify(songsData))
+      // localStorage.setItem('homepageData',JSON.stringify(songsData))
     }
   },[songsData.trendingSongs, songsData.newSongs , songsData.bollywoodHitsId])
   
-
 
 
   return (

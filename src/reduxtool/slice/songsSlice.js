@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
- const getLocalData = JSON.parse(localStorage.getItem('homepageData'));
+//  const getLocalData = JSON.parse(localStorage.getItem('homepageData'));
 
 const initialState = {
-  songsData: getLocalData || {},
+  songsData:  {},
 
 }
 

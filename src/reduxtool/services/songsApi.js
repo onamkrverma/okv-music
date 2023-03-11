@@ -1,7 +1,15 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 
-const apiKey = process.env.REACT_APP_YT_API;
+
+const selectRandomKey = () => {
+  const apiKeys = process.env.REACT_APP_YT_API.split(","); //we are splitting the api keys to make an array
+  const random = Math.floor(Math.random() * apiKeys.length); //this will get a random number
+  return apiKeys[random];
+};
+
+
+
 const baseUrl = 'https://www.googleapis.com/youtube/v3';
 
 export const songsApi = createApi({
@@ -15,7 +23,7 @@ export const songsApi = createApi({
         params: {
           part: ['snippet','contentDetails'],
           id: songId,
-          key: apiKey,
+          key: selectRandomKey(),
         },
         method: 'GET'
       })
@@ -29,7 +37,7 @@ export const songsApi = createApi({
           part: 'snippet',
           playlistId: playlistId,
           maxResults: '10',
-          key: apiKey,
+          key: selectRandomKey(),
         },
         method: 'GET'
       })
@@ -43,7 +51,7 @@ export const songsApi = createApi({
           q:searchQuery,
           type: 'video',
           maxResults: '50',
-          key: apiKey,
+          key: selectRandomKey(),
         },
         method: 'GET'
       })
@@ -57,7 +65,7 @@ export const songsApi = createApi({
           type: 'video',
           videoCategoryId: '10',
           maxResults: '10',
-          key: apiKey,
+          key: selectRandomKey(),
         },
         method: 'GET'
       })

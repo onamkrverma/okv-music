@@ -93,7 +93,7 @@
     text-align: center;
     border-top: 5px solid var(--primary-text-color);
     padding: 5px 10px 5px;
-    border-radius: 5px;
+    border-radius: 10px 10px 0 0;
     background: rgb(0 0 0 / 80%);
     backdrop-filter: blur(6px);
 
