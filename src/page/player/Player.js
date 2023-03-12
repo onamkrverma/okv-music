@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { BsChevronDown, BsThreeDotsVertical } from 'react-icons/bs';
+import { BsChevronDown, BsThreeDotsVertical, BsYoutube } from 'react-icons/bs';
+import { AiFillInfoCircle, AiFillSetting } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { baseUrl } from '../../api/getAudio';
 import { useGetSongsByIdQuery } from '../../reduxtool/services/songsApi';
@@ -10,6 +11,7 @@ import PlayerControls from './playerControls/PlayerControls';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import RelatedSongs from './relatedSongs/RelatedSongs';
+import { RxCross2 } from 'react-icons/rx';
 
 const Player = () => {
   const [songUrl, setSongUrl] = useState('');
@@ -18,14 +20,16 @@ const Player = () => {
   const [songsList, setSongsList] = useState([]);
   const [alertMessage, setAlertMessage] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
-  const [autoPlay, setAutoPlay] = useState(true)
-  // const [onMiniPlayer, setOnMiniPlayer] = useState(false);
+  const [autoPlay, setAutoPlay] = useState(true);
+  const [playerInfo, setPlayerInfo] = useState({ isMoreInfoClick: false, 
+    isAudioQualityClick: false,isSongDetailsClick:false });
+  const [audioFormat, setAudioFormat] = useState('low');
 
   // const { id } = JSON.parse(localStorage.getItem('currentSongInfo'));
   const dispatch = useDispatch();
   const currentSong = useSelector((state) => state.currentSongSlice.currentSongInfo)
   const { id, onMiniPlayer } = currentSong;
-  
+
   const { data, isLoading } = useGetSongsByIdQuery(id);
 
   const [progress, setProgress] = useState(0);
@@ -40,9 +44,18 @@ const Player = () => {
       })
       const data = await response.json()
       // console.log(data)
-      setSongUrl(data)
-      setAudioLoading(false)
-      setIsPlaying(false)
+      if (audioFormat === 'high') {
+        setSongUrl(data.audioFormatHigh)
+        setAudioLoading(false)
+        setIsPlaying(false)
+      }
+      else {
+        setSongUrl(data.audioFormatLow)
+        setAudioLoading(false)
+        setIsPlaying(false)
+      }
+
+
 
     } catch (error) {
       console.log(error)
@@ -56,7 +69,7 @@ const Player = () => {
   useEffect(() => {
     getSongUrl();
     // eslint-disable-next-line
-  }, [id])
+  }, [id, audioFormat])
 
   useEffect(() => {
     if (data) {
@@ -70,7 +83,13 @@ const Player = () => {
       setAlertMessage("can't play live stream")
       setTimeout(() => {
         setAlertMessage('')
-      }, 3000)
+      }, 5000)
+    }
+    if (songsInfo[0]?.snippet?.channelTitle.includes('Topic')) {
+      setAlertMessage("can't play this")
+      setTimeout(() => {
+        setAlertMessage('')
+      }, 5000)
     }
   }, [songsInfo])
 
@@ -185,31 +204,91 @@ const Player = () => {
   useEffect(() => {
     if (!onMiniPlayer) {
       document.body.style.overflowY = 'hidden'
-    }else{
+    } else {
       document.body.style.overflowY = 'auto'
     }
   }, [onMiniPlayer])
+
+
+
   
 
 
 
-
-
   return (
-    <div className={`player-page-section ${onMiniPlayer ? 'miniplayer-active':''}`}>
+    <div className={`player-page-section ${onMiniPlayer ? 'miniplayer-active' : ''}`}>
       {/* <Header /> */}
       {!onMiniPlayer && <div className="top-player-controll-wrapper">
         <div className="player-minimize-wrapper cur-pointer" onClick={() => dispatch(addSongInfo({ ...currentSong, onMiniPlayer: true }))}>
           <BsChevronDown style={{ width: '100%', height: '100%' }} />
         </div>
-        <div className="player-info-wrapper player-minimize-wrapper  cur-pointer" >
+        <div className="player-info-wrapper player-minimize-wrapper  cur-pointer" onClick={() => setPlayerInfo({ isMoreInfoClick: !playerInfo.isMoreInfoClick })}>
           <BsThreeDotsVertical style={{ width: '100%', height: '100%' }} />
-          {/* <div className="player-more-info">
-            <div className="watch-video-wrapper">Watch Video</div>
-            <div className="song-details">Song details</div>
-          </div> */}
         </div>
+        <div className="player-more-info" style={{ top: (playerInfo.isMoreInfoClick) && '25px' }}>
+          <div className="audio-quality-wrapper  " >
+            <div className='audio-quality absolute-center cur-pointer' onClick={() => setPlayerInfo({ ...playerInfo, isAudioQualityClick: !playerInfo.isAudioQualityClick })}>
+              <div className="player-more-info-icons">
+                <AiFillSetting style={{ width: '100%', height: '100%' }} />
+              </div>
+              <span>Audio Quality</span>
+            </div>
+            <div className="audio-selection-wrapper cur-pointer" style={{ display: !playerInfo.isAudioQualityClick && 'none' }}>
+              <label htmlFor="audio-quality">Select Quality</label>
+              <select className='cur-pointer' onChange={(e) => setAudioFormat(e.target.value)}
+                value={audioFormat}>
+                <option value="low" >Low</option>
+                <option value="high" >High</option>
+              </select>
+            </div>
+          </div>
+          <div className="watch-video-wrapper  ">
+            <a className='absolute-center cur-pointer' href={`https://youtube.com/watch?v=${id}`} target="_blank" rel="noopener noreferrer"> <div className="player-more-info-icons">
+              <BsYoutube style={{ width: '100%', height: '100%' }} />
+            </div>
+              Watch Video
+            </a>
+          </div>
+          <div className="song-details-wrapper absolute-center cur-pointer"
+           onClick={()=>setPlayerInfo({...playerInfo, isSongDetailsClick: true})}>
+            <div className="player-more-info-icons">
+              <AiFillInfoCircle style={{ width: '100%', height: '100%' }} />
+            </div>
+            Song details
+          </div>
+        </div>
+
+
       </div>}
+
+      <div className="song-details-model-wrapper absolute-center" style={{display: playerInfo.isSongDetailsClick ? 'flex' : 'none'}}>
+        <div className="song-details-model">
+          <div className="song-details-model-close cur-pointer" onClick={()=>setPlayerInfo({...playerInfo, isSongDetailsClick: false})}>
+            <RxCross2 style={{ width: '100%', height: '100%' }} />
+          </div>
+          <p className='song-details'>
+            Id: {songsInfo[0]?.id}
+          </p>
+          <p className='song-details'>
+            Channel: {songsInfo[0]?.snippet?.channelTitle}
+          </p>
+          <p className='song-details'>
+            PublishedAt: {songsInfo[0]?.snippet?.publishedAt}
+          </p>
+          <p className='song-details'>
+            Duration: {songsInfo[0]?.contentDetails?.duration}
+          </p>
+          <p className='song-details'>
+            Title: {songsInfo[0]?.snippet?.title}
+          </p>
+          <p className='song-details'>
+            Image: {`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
+          </p>
+          <p className='song-details'>
+            songUrl: {songUrl}
+          </p>
+        </div>
+      </div>
 
       <div className={`player-section ${onMiniPlayer && 'mini-player-active '} `} >
 
@@ -223,9 +302,9 @@ const Player = () => {
             />
           </div>
 
-          {isLoading ? 
-           <div className="player-song-title-channel-wrapper absolute-center">
-            <Skeleton width={'200px'}/>
+          {isLoading ?
+            <div className="player-song-title-channel-wrapper absolute-center">
+              <Skeleton width={'200px'} />
             </div>
             :
             <div className="player-song-title-channel-wrapper absolute-center">
@@ -243,7 +322,7 @@ const Player = () => {
           <audio src={songUrl} ref={audioRef} onTimeUpdate={onPlaying}
             onCanPlay={() => setAudioLoading(false)}
             onEnded={() => autoPlay && handleNext()}
-            autoPlay={autoPlay} />
+            autoPlay={autoPlay}  />
 
 
           <PlayerControls audioRef={audioRef}
