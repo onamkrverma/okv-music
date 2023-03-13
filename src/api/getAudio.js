@@ -1,1 +1,1 @@
-export const baseUrl = 'https://okv-music-api.onrender.com';
+export const baseUrl = 'https://okv-music-backend.vercel.app';

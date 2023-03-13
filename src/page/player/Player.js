@@ -85,12 +85,6 @@ const Player = () => {
         setAlertMessage('')
       }, 5000)
     }
-    if (songsInfo[0]?.snippet?.channelTitle.includes('Topic')) {
-      setAlertMessage("can't play this")
-      setTimeout(() => {
-        setAlertMessage('')
-      }, 5000)
-    }
   }, [songsInfo])
 
 
@@ -189,17 +183,7 @@ const Player = () => {
   }
 
 
-  // on back button press mini play true
-  // const playerRef = useRef()
-
-  // window.onclick = (e) => {
-  //   if (e.target !== playerRef.current) {
-  //     if (!onMiniPlayer) {
-  //       dispatch(addSongInfo({ ...currentSong, onMiniPlayer: true }))
-  //       console.log('back pressed')
-  //     }
-  //   }
-  // }
+  
 
   useEffect(() => {
     if (!onMiniPlayer) {
