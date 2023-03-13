@@ -21,8 +21,10 @@ const Player = () => {
   const [alertMessage, setAlertMessage] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [autoPlay, setAutoPlay] = useState(true);
-  const [playerInfo, setPlayerInfo] = useState({ isMoreInfoClick: false, 
-    isAudioQualityClick: false,isSongDetailsClick:false });
+  const [playerInfo, setPlayerInfo] = useState({
+    isMoreInfoClick: false,
+    isAudioQualityClick: false, isSongDetailsClick: false
+  });
   const [audioFormat, setAudioFormat] = useState('low');
 
   // const { id } = JSON.parse(localStorage.getItem('currentSongInfo'));
@@ -100,6 +102,7 @@ const Player = () => {
   //  reset state on song changed
   useEffect(() => {
     setProgress(0)
+    setIsPlaying(false)
     setAudioLoading(true)
   }, [id])
 
@@ -113,17 +116,16 @@ const Player = () => {
 
   const handleNext = () => {
     // console.log(songsList)
-    console.log('current', id)
-
-    console.log(index)
-
+    // console.log('current', id)
+    // console.log(index)
+    
 
     if (index < mapVideoId.length - 1) {
       console.log(mapVideoId[index + 1])
       // navigate(`/play/${mapVideoId[index + 1]}`, { replace: true })
       // setCurrentSongInfo({ id: mapVideoId[index + 1] })
       dispatch(addSongInfo({ ...currentSong, id: mapVideoId[index + 1] }))
-      // setIsPlaying(false)
+
     }
     else {
       console.log('you reached at end')
@@ -136,10 +138,9 @@ const Player = () => {
 
 
   const handlePrev = () => {
-    console.log(songsList)
-    console.log('current', id)
-    console.log(index)
-
+    // console.log(songsList)
+    // console.log('current', id)
+    // console.log(index)
 
     if (index > 0) {
       console.log(mapVideoId[index - 1])
@@ -147,7 +148,7 @@ const Player = () => {
       // setCurrentSongInfo({ id: mapVideoId[index - 1] })
       dispatch(addSongInfo({ ...currentSong, id: mapVideoId[index - 1] }))
 
-      // setIsPlaying(false)
+
     }
     else {
       console.log('you reached at first')
@@ -183,7 +184,7 @@ const Player = () => {
   }
 
 
-  
+
 
   useEffect(() => {
     if (!onMiniPlayer) {
@@ -195,7 +196,7 @@ const Player = () => {
 
 
 
-  
+
 
 
 
@@ -234,7 +235,7 @@ const Player = () => {
             </a>
           </div>
           <div className="song-details-wrapper absolute-center cur-pointer"
-           onClick={()=>setPlayerInfo({...playerInfo, isSongDetailsClick: true})}>
+            onClick={() => setPlayerInfo({ ...playerInfo, isSongDetailsClick: true })}>
             <div className="player-more-info-icons">
               <AiFillInfoCircle style={{ width: '100%', height: '100%' }} />
             </div>
@@ -245,9 +246,9 @@ const Player = () => {
 
       </div>}
 
-      <div className="song-details-model-wrapper absolute-center" style={{display: playerInfo.isSongDetailsClick ? 'flex' : 'none'}}>
+      <div className="song-details-model-wrapper absolute-center" style={{ display: playerInfo.isSongDetailsClick ? 'flex' : 'none' }}>
         <div className="song-details-model">
-          <div className="song-details-model-close cur-pointer" onClick={()=>setPlayerInfo({...playerInfo, isSongDetailsClick: false})}>
+          <div className="song-details-model-close cur-pointer" onClick={() => setPlayerInfo({ ...playerInfo, isSongDetailsClick: false })}>
             <RxCross2 style={{ width: '100%', height: '100%' }} />
           </div>
           <p className='song-details'>
@@ -306,7 +307,7 @@ const Player = () => {
           <audio src={songUrl} ref={audioRef} onTimeUpdate={onPlaying}
             onCanPlay={() => setAudioLoading(false)}
             onEnded={() => autoPlay && handleNext()}
-            autoPlay={autoPlay}  />
+            autoPlay={autoPlay} />
 
 
           <PlayerControls audioRef={audioRef}
