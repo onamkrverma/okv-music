@@ -35,7 +35,6 @@ const HeroBanner = ({ trendingSongs, isLoading }) => {
   }
 
 
-
   return (
     <div className='heroBanner-section container'>
       {isLoading ? <HeroBannerSkeleton />
@@ -45,7 +44,8 @@ const HeroBanner = ({ trendingSongs, isLoading }) => {
             <div className="heroBanner-wrapper " key={songs.etag} onClick={() => handleRedirect(songs.snippet.resourceId.videoId)}>
               <div className="hero-image-wrapper">
                 <img
-                  src={songs.snippet.thumbnails.maxres.url}
+                  src={songs.snippet.thumbnails?.maxres ? songs.snippet?.thumbnails.maxres?.url 
+                  : songs.snippet?.thumbnails.high?.url}
                   className='hero-image'
                   alt="hero poster" />
               </div>
