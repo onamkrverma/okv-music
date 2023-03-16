@@ -1,5 +1,5 @@
 # Okv Music 
- - **A progressive music app made with Javascript using ReactJS and YouTube Api**
+ - **A progressive music app made with Javascript using React jS and YouTube Api that allows user to discover and listen to new music from around the world. The website features a clean and modern design, a user-friendly interface, and a powerful search feature of youtube. **
  
  ## Screenshots
 
@@ -16,11 +16,13 @@
  - Next/Prev song track controls
  - Auto Song Recommendations
  - No Ads
- 
+
  
  
  #### Upcoming features to be add 
- - Get song info button
+  - Controls audio quality (done ✔)
+ - Direct click to watch youtube video (done ✔)
+ - Get song info button (done ✔)
  - Add more playlists
  - many more..
  
@@ -35,9 +37,13 @@
  - React loading skeleton
  - React icons
  
+ ### Backend 
+ - Node js
+ - Express js
+ - Ytdl-core package 
+ 
 ### Deployement 
   [![Netlify Status](https://api.netlify.com/api/v1/badges/0ac304c4-a7c5-4aeb-af7e-0115f09830e1/deploy-status)](https://okv-music.netlify.app/)
-
 
 
 
@@ -54,3 +60,11 @@ Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+## Contributors
+- Onam kumar verma
+
+## Contact
+If you have any questions or suggestions, feel free to contact me at my email onamkrverma@gmail.com
+
+
