@@ -7,6 +7,7 @@
 .songs-list-wrapper {
   display: flex;
   overflow-x: auto;
+  gap: 20px;
 }
 
 .songs-list-title {
@@ -14,8 +15,8 @@
   font-weight: 600;
   margin: 10px 0;
 }
-
-@media (max-width:426px){
- 
-
+@media (max-width: 426px) {
+  .songs-list-title {
+    font-size: 20px;
+  }
 }
