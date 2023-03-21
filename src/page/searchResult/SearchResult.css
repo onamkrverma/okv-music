@@ -6,7 +6,9 @@
   .search-result-container {
     margin-top: 0;
   }
-
+  .search-result-container .songs-list-wrapper {
+    flex-direction: column;
+  }
   .search-result-container .songs-card-wrapper {
     width: 100%;
   }
