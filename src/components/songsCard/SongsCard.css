@@ -1,6 +1,5 @@
 .songs-card-container {
   display: flex;
-  margin: 10px;
   justify-content: center;
 }
 .songs-card-wrapper {
@@ -25,8 +24,17 @@ img.songs-image {
   border-top-left-radius: inherit;
 }
 
-.songs-title-wrapper{
+.songs-title-wrapper {
   margin: 10px 0;
   padding: 0 10px;
   width: 100%;
+}
+
+@media (max-width: 426px) {
+  .songs-card-wrapper {
+    width: 250px;
+  }
+  .songs-image-wrapper {
+    height: 140px;
+  }
 }
