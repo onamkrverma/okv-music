@@ -51,15 +51,6 @@ const PlayerControls = ({
     audioRef.current.volume = e.target.valueAsNumber;
   };
 
-  function updatePositionState() {
-    if ("setPositionState" in navigator.mediaSession) {
-      navigator.mediaSession.setPositionState({
-        duration: audioRef.current?.duration,
-        position: audioRef.current?.currentTime,
-      });
-    }
-  }
-
   navigator.mediaSession.setActionHandler("play", () => {
     setIsPlaying(false);
   });
@@ -88,12 +79,6 @@ const PlayerControls = ({
     // Unset the "nexttrack" action handler at the end of a playlist.
     navigator.mediaSession.setActionHandler("nexttrack", null);
   }
-
-  // When user wants to seek to a specific time, update position.
-  navigator.mediaSession.setActionHandler("seekto", () => {
-    handleJumpDuration();
-    updatePositionState();
-  });
 
   return (
     <div className="player-controls-container">
