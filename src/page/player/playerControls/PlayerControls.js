@@ -51,6 +51,26 @@ const PlayerControls = ({
     audioRef.current.volume = e.target.valueAsNumber;
   };
 
+  function updatePositionState() {
+    if ("setPositionState" in navigator.mediaSession) {
+      navigator.mediaSession.setPositionState({
+        duration: audioRef.current.duration,
+        playbackRate: audioRef.current.playbackRate,
+        position: audioRef.current.currentTime,
+      });
+    }
+  }
+
+  if ("mediaSession" in navigator) {
+    navigator.mediaSession.setPositionState({
+      duration: audioRef.current.duration,
+      playbackRate: audioRef.current.playbackRate,
+      position: audioRef.current.currentTime,
+    });
+  } else {
+    navigator.mediaSession.setPositionState(null);
+  }
+
   navigator.mediaSession.setActionHandler("play", () => {
     setIsPlaying(false);
   });
@@ -59,6 +79,7 @@ const PlayerControls = ({
   });
   navigator.mediaSession.setActionHandler("stop", () => {
     setIsPlaying(true);
+    audioRef.current.currentTime = 0;
   });
 
   if (currentIndex > 0) {
@@ -78,6 +99,12 @@ const PlayerControls = ({
     // Unset the "nexttrack" action handler at the end of a playlist.
     navigator.mediaSession.setActionHandler("nexttrack", null);
   }
+
+  // When user wants to seek to a specific time, update position.
+  navigator.mediaSession.setActionHandler("seekto", () => {
+    handleJumpDuration();
+    updatePositionState();
+  });
 
   return (
     <div className="player-controls-container">
