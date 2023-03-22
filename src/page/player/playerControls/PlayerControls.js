@@ -54,21 +54,10 @@ const PlayerControls = ({
   function updatePositionState() {
     if ("setPositionState" in navigator.mediaSession) {
       navigator.mediaSession.setPositionState({
-        duration: audioRef.current.duration,
-        playbackRate: audioRef.current.playbackRate,
-        position: audioRef.current.currentTime,
+        duration: audioRef.current?.duration,
+        position: audioRef.current?.currentTime,
       });
     }
-  }
-
-  if ("mediaSession" in navigator) {
-    navigator.mediaSession.setPositionState({
-      duration: audioRef.current.duration,
-      playbackRate: audioRef.current.playbackRate,
-      position: audioRef.current.currentTime,
-    });
-  } else {
-    navigator.mediaSession.setPositionState(null);
   }
 
   navigator.mediaSession.setActionHandler("play", () => {
