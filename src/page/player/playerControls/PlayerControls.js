@@ -57,10 +57,6 @@ const PlayerControls = ({
   navigator.mediaSession.setActionHandler("pause", () => {
     setIsPlaying(true);
   });
-  navigator.mediaSession.setActionHandler("stop", () => {
-    setIsPlaying(true);
-    audioRef.current.currentTime = 0;
-  });
 
   if (currentIndex > 0) {
     navigator.mediaSession.setActionHandler("previoustrack", () => {
