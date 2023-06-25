@@ -112,7 +112,7 @@ const Player = () => {
     // console.log(index)
 
     if (index < mapVideoId.length - 1) {
-      console.log(mapVideoId[index + 1]);
+      // console.log(mapVideoId[index + 1]);
       // navigate(`/play/${mapVideoId[index + 1]}`, { replace: true })
       // setCurrentSongInfo({ id: mapVideoId[index + 1] })
       dispatch(addSongInfo({ ...currentSong, id: mapVideoId[index + 1] }));
@@ -131,12 +131,11 @@ const Player = () => {
     // console.log(index)
 
     if (index > 0) {
-      console.log(mapVideoId[index - 1]);
+      // console.log(mapVideoId[index - 1]);
       // navigate(`/play/${mapVideoId[index - 1]}`, { replace: true })
       // setCurrentSongInfo({ id: mapVideoId[index - 1] })
       dispatch(addSongInfo({ ...currentSong, id: mapVideoId[index - 1] }));
     } else {
-      console.log("you reached at first");
       setAlertMessage("you reached at first");
       setTimeout(() => {
         setAlertMessage("");
@@ -369,11 +368,9 @@ const Player = () => {
             mapVideoId={mapVideoId}
           />
 
-          {alertMessage && (
-            <div className="alert-message-wrapper">
-              <div className="alert-message">{alertMessage}</div>
-            </div>
-          )}
+          <div className={`${alertMessage ? "alert-message-wrapper" : "hide"}`}>
+            <div className="alert-message">{alertMessage}</div>
+          </div>
         </div>
 
         <RelatedSongs

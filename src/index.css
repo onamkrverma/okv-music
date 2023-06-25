@@ -1,39 +1,43 @@
-@import './common/variable.css';
+@import "./common/variable.css";
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Inter,Avenir,Helvetica,Arial,sans-serif;
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1;
   font-weight: 500;
 }
 
-body{
+body {
   background-color: #04152d;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   display: none;
 }
 
 /* common classes */
-.absolute-center{
+.absolute-center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.align-center{
+.align-center {
   display: flex;
   align-items: center;
 }
-.cur-pointer{
+.cur-pointer {
   cursor: pointer;
 }
-.container{
+.container {
   max-width: 1200px;
   width: 100%;
   margin: 20px auto;
   padding: 0 20px;
+}
+
+.hide {
+  display: none;
 }

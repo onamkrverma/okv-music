@@ -64,28 +64,25 @@
   height: 100%;
   position: absolute;
   top: 0;
+  z-index: -5;
   animation: rotate 3s linear infinite;
-
 }
 
 .svg-circle {
   stroke-dasharray: 150;
   stroke: var(--primary-text-color);
   stroke-width: 5px;
-
-
 }
 
 @keyframes rotate {
   0% {
-    transform: rotate(0deg)
+    transform: rotate(0deg);
   }
 
   100% {
-    transform: rotate(360deg)
+    transform: rotate(360deg);
   }
 }
-
 
 .audio-volume-wrapper {
   position: absolute;
@@ -104,9 +101,8 @@
   position: absolute;
   bottom: 10px;
   right: 20px;
-
 }
-.audio-autoplay-title{
+.audio-autoplay-title {
   margin-bottom: 10px;
   font-size: 12px;
   color: var(--primary-text-color);
@@ -133,12 +129,10 @@
   right: 0;
   bottom: 0;
   background-color: #ffffff78;
-  -webkit-transition: .4s;
-  transition: .4s ease-in-out;
+  -webkit-transition: 0.4s;
+  transition: 0.4s ease-in-out;
   border-radius: 20px;
-  
 }
-
 
 .autoplay-icons {
   width: 20px;
@@ -150,14 +144,10 @@
   transition: 0.4s ease-in-out;
 }
 
-input:checked+.autoplay-slider {
-  background-color: #ffffff78
+input:checked + .autoplay-slider {
+  background-color: #ffffff78;
 }
 
-input:focus+.autoplay-slider {
-  /* box-shadow: 0 0 1px #2196F3; */
-}
-
-input:checked+.autoplay-slider .autoplay-icons {
+input:checked + .autoplay-slider .autoplay-icons {
   transform: translateX(26px);
 }

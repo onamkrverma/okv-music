@@ -52,6 +52,7 @@ const Home = () => {
         })
       );
     }
+    // eslint-disable-next-line
   }, [
     trendingSongs.data,
     newSongs.data,

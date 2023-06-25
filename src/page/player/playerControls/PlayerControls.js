@@ -94,18 +94,25 @@ const PlayerControls = ({
       </div>
       <div className="player-durations-wrapper">
         <p>
-          {parseInt((audioRef.current?.currentTime / 60) % 60) +
-            ":" +
-            parseInt(audioRef.current?.currentTime % 60)}
+          {audioRef.current?.currentTime > 3600
+            ? new Date(audioRef.current?.currentTime * 1000)
+                .toISOString()
+                .substring(11, 19)
+            : new Date(audioRef.current?.currentTime * 1000)
+                .toISOString()
+                .substring(14, 19)}
         </p>
         {!audioRef.current?.duration ? (
           "0:00"
         ) : (
           <p>
-            {/* {audioDuration?.slice(2, audioDuration.length - 1).replaceAll(/[A-Z]/ig, ':')} */}
-            {parseInt((audioRef.current?.duration / 60) % 60) +
-              ":" +
-              parseInt(audioRef.current?.duration % 60)}
+            {audioRef.current?.duration > 3600
+              ? new Date(audioRef.current?.duration * 1000)
+                  .toISOString()
+                  .substring(11, 19)
+              : new Date(audioRef.current?.duration * 1000)
+                  .toISOString()
+                  .substring(14, 19)}
           </p>
         )}
       </div>
