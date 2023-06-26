@@ -94,7 +94,9 @@ const PlayerControls = ({
       </div>
       <div className="player-durations-wrapper">
         <p>
-          {audioRef.current?.currentTime > 3600
+          {!audioRef.current?.currentTime
+            ? "0:00"
+            : audioRef?.current?.currentTime > 3600
             ? new Date(audioRef.current?.currentTime * 1000)
                 .toISOString()
                 .substring(11, 19)

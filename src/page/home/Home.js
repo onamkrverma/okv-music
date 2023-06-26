@@ -60,27 +60,11 @@ const Home = () => {
     punjabiFireSong.data,
   ]);
 
-  useEffect(() => {
-    if (
-      songsData.trendingSongs ||
-      songsData.newSongs ||
-      songsData.bollywoodHitsId ||
-      songsData.punjabiFireId
-    ) {
-      // localStorage.setItem('homepageData',JSON.stringify(songsData))
-    }
-  }, [
-    songsData.trendingSongs,
-    songsData.newSongs,
-    songsData.bollywoodHitsId,
-    songsData.punjabiFireId,
-  ]);
-
   return (
     <div className="home-section">
       <Header />
       <HeroBanner
-        trendingSongs={songsData.trendingSongs?.items}
+        songsData={songsData.trendingSongs?.items}
         isLoading={trendingSongs.isLoading}
       />
       <SongsList

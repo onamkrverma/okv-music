@@ -15,10 +15,9 @@ const SongsList = ({ songsData, title, searchResult, isLoading }) => {
           justifyContent: searchResult && "center",
         }}
       >
-        {isLoading ? (
+        {isLoading || !songsData ? (
           <SongsCardSkeleton amount={6} />
         ) : (
-          songsData &&
           songsData.map((songs) => <SongsCard songs={songs} key={songs.etag} />)
         )}
       </div>

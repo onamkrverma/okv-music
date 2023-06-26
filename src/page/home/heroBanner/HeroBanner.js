@@ -7,7 +7,7 @@ import HeroBannerSkeleton from "./HeroBannerSkeleton";
 import { useDispatch } from "react-redux";
 import { addSongInfo } from "../../../reduxtool/slice/currentSongSlice";
 
-const HeroBanner = ({ trendingSongs, isLoading }) => {
+const HeroBanner = ({ songsData, isLoading }) => {
   const dispatch = useDispatch();
 
   const settings = {
@@ -42,11 +42,11 @@ const HeroBanner = ({ trendingSongs, isLoading }) => {
 
   return (
     <div className="heroBanner-section container">
-      {isLoading ? (
+      {isLoading || !songsData ? (
         <HeroBannerSkeleton />
       ) : (
         <Slider {...settings}>
-          {trendingSongs?.slice(0, 5).map((songs) => (
+          {songsData?.slice(0, 5).map((songs) => (
             <div
               className="heroBanner-wrapper "
               key={songs.etag}
