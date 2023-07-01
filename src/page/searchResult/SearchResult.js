@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import Header from "../../components/header/Header";
 import SongsList from "../../components/songsList/SongsList";
 import { useGetSearchItemsQuery } from "../../reduxtool/services/songsApi";
-import Player from "../player/Player";
+import Player from "../../components/player/Player";
 import "./SearchResult.css";
 
 const SearchResult = () => {
