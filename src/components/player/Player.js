@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { BsChevronDown, BsThreeDotsVertical, BsYoutube } from "react-icons/bs";
-import { AiFillInfoCircle, AiFillSetting } from "react-icons/ai";
+import { BsChevronDown } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { baseUrl } from "../../api/getAudio";
 import { useGetSongsByIdQuery } from "../../reduxtool/services/songsApi";
@@ -11,7 +10,8 @@ import PlayerControls from "./playerControls/PlayerControls";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import RelatedSongs from "./relatedSongs/RelatedSongs";
-import { RxCross2 } from "react-icons/rx";
+import PlayerMoreInfo from "./playerMoreInfo/PlayerMoreInfo";
+import SongDetailsModel from "./songDetailsModel/SongDetailsModel";
 
 const Player = () => {
   const [songUrl, setSongUrl] = useState("");
@@ -107,14 +107,7 @@ const Player = () => {
   const index = mapVideoId.findIndex((x) => x === id);
 
   const handleNext = () => {
-    // console.log(songsList)
-    // console.log('current', id)
-    // console.log(index)
-
     if (index < mapVideoId.length - 1) {
-      // console.log(mapVideoId[index + 1]);
-      // navigate(`/play/${mapVideoId[index + 1]}`, { replace: true })
-      // setCurrentSongInfo({ id: mapVideoId[index + 1] })
       dispatch(addSongInfo({ ...currentSong, id: mapVideoId[index + 1] }));
     } else {
       console.log("you reached at end");
@@ -126,14 +119,7 @@ const Player = () => {
   };
 
   const handlePrev = () => {
-    // console.log(songsList)
-    // console.log('current', id)
-    // console.log(index)
-
     if (index > 0) {
-      // console.log(mapVideoId[index - 1]);
-      // navigate(`/play/${mapVideoId[index - 1]}`, { replace: true })
-      // setCurrentSongInfo({ id: mapVideoId[index - 1] })
       dispatch(addSongInfo({ ...currentSong, id: mapVideoId[index - 1] }));
     } else {
       setAlertMessage("you reached at first");
@@ -213,106 +199,23 @@ const Player = () => {
           >
             <BsChevronDown style={{ width: "100%", height: "100%" }} />
           </div>
-          <div
-            className="player-info-wrapper player-minimize-wrapper  cur-pointer"
-            onClick={() =>
-              setPlayerInfo({ isMoreInfoClick: !playerInfo.isMoreInfoClick })
-            }
-          >
-            <BsThreeDotsVertical style={{ width: "100%", height: "100%" }} />
-          </div>
-          <div
-            className="player-more-info"
-            style={{ top: playerInfo.isMoreInfoClick && "25px" }}
-          >
-            <div className="audio-quality-wrapper  ">
-              <div
-                className="audio-quality absolute-center cur-pointer"
-                onClick={() =>
-                  setPlayerInfo({
-                    ...playerInfo,
-                    isAudioQualityClick: !playerInfo.isAudioQualityClick,
-                  })
-                }
-              >
-                <div className="player-more-info-icons">
-                  <AiFillSetting style={{ width: "100%", height: "100%" }} />
-                </div>
-                <span>Audio Quality</span>
-              </div>
-              <div
-                className="audio-selection-wrapper cur-pointer"
-                style={{ display: !playerInfo.isAudioQualityClick && "none" }}
-              >
-                <label htmlFor="audio-quality">Select Quality</label>
-                <select
-                  className="cur-pointer"
-                  onChange={(e) => setAudioFormat(e.target.value)}
-                  value={audioFormat}
-                >
-                  <option value="low">Low</option>
-                  <option value="high">High</option>
-                </select>
-              </div>
-            </div>
-            <div className="watch-video-wrapper  ">
-              <a
-                className="absolute-center cur-pointer"
-                href={`https://youtube.com/watch?v=${id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div className="player-more-info-icons">
-                  <BsYoutube style={{ width: "100%", height: "100%" }} />
-                </div>
-                Watch Video
-              </a>
-            </div>
-            <div
-              className="song-details-wrapper absolute-center cur-pointer"
-              onClick={() =>
-                setPlayerInfo({ ...playerInfo, isSongDetailsClick: true })
-              }
-            >
-              <div className="player-more-info-icons">
-                <AiFillInfoCircle style={{ width: "100%", height: "100%" }} />
-              </div>
-              Song details
-            </div>
-          </div>
+          <PlayerMoreInfo
+            id={id}
+            playerInfo={playerInfo}
+            setPlayerInfo={setPlayerInfo}
+            audioFormat={audioFormat}
+            setAudioFormat={setAudioFormat}
+          />
         </div>
       )}
 
-      <div
-        className="song-details-model-wrapper absolute-center"
-        style={{ display: playerInfo.isSongDetailsClick ? "flex" : "none" }}
-      >
-        <div className="song-details-model">
-          <div
-            className="song-details-model-close cur-pointer"
-            onClick={() =>
-              setPlayerInfo({ ...playerInfo, isSongDetailsClick: false })
-            }
-          >
-            <RxCross2 style={{ width: "100%", height: "100%" }} />
-          </div>
-          <p className="song-details">Id: {songsInfo[0]?.id}</p>
-          <p className="song-details">
-            Channel: {songsInfo[0]?.snippet?.channelTitle}
-          </p>
-          <p className="song-details">
-            PublishedAt: {songsInfo[0]?.snippet?.publishedAt}
-          </p>
-          <p className="song-details">
-            Duration: {songsInfo[0]?.contentDetails?.duration}
-          </p>
-          <p className="song-details">Title: {songsInfo[0]?.snippet?.title}</p>
-          <p className="song-details">
-            Image: {`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
-          </p>
-          <p className="song-details">songUrl: {songUrl}</p>
-        </div>
-      </div>
+      <SongDetailsModel
+        id={id}
+        playerInfo={playerInfo}
+        setPlayerInfo={setPlayerInfo}
+        songUrl={songUrl}
+        songsInfo={songsInfo}
+      />
 
       <div
         className={`player-section ${onMiniPlayer && "mini-player-active "} `}
