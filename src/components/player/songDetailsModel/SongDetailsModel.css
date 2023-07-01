@@ -1,0 +1,39 @@
+.song-details-model-wrapper {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+  backdrop-filter: blur(1px);
+}
+.song-details-model {
+  color: var(--primary-text-color);
+  width: 50%;
+  background: black;
+  padding: 30px;
+  position: relative;
+  height: 70%;
+  border-radius: 10px;
+  overflow-y: scroll;
+}
+.song-details {
+  word-wrap: break-word;
+  margin-bottom: 10px;
+}
+
+.song-details-model-close {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 5px;
+  background: var(--gradient);
+  border-radius: inherit;
+}
+
+@media (max-width: 426px) {
+  .song-details-model {
+    width: 80%;
+  }
+}

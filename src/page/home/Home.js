@@ -6,7 +6,7 @@ import SongsList from "../../components/songsList/SongsList";
 import { useDispatch, useSelector } from "react-redux";
 import { addSongs } from "../../reduxtool/slice/songsSlice";
 import HeroBanner from "./heroBanner/HeroBanner";
-import Player from "../player/Player";
+import Player from "../../components/player/Player";
 
 const Home = () => {
   const playlistId = {

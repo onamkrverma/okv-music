@@ -7,11 +7,10 @@
   height: 100%;
   overflow-y: scroll;
 }
-.miniplayer-active{
+.miniplayer-active {
   height: 70px;
   overflow: hidden;
 }
-
 
 .top-player-controll-wrapper {
   display: flex;
@@ -25,31 +24,6 @@
   width: 25px;
   height: 25px;
   color: var(--primary-text-color);
-  
-}
-
-
-.player-more-info {
-  background: black;
-  color: var(--primary-text-color);
-  position: absolute;
-  top: -145px;
-  right: 50px;
-  width: 165px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 15px;
-  z-index: 5;
-  padding: 15px;
-  border-radius: 15px;
-  transition: top 0.5s ease-in-out;
-}
-.player-more-info-icons{
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
 }
 
 .player-section {
@@ -62,66 +36,11 @@
   transition: all 0.5s ease-in-out;
 }
 
-.audio-quality-wrapper{
-position: relative;
-}
-.audio-selection-wrapper {
-  position: absolute;
-  left: 0px;
-  top: 35px;
-  background: var(--primary-bg);
-  padding: 10px;
-}
-.watch-video-wrapper a{
-  color: var(--primary-text-color);
-  text-decoration: none;
-}
-
-.song-details-model-wrapper {
-  position: absolute;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: 15;
-  backdrop-filter: blur(1px);
-}
-.song-details-model {
-  color: var(--primary-text-color);
-  width: 50%;
-  background: black;
-  padding: 30px;
-  position: relative;
-  height: 70%;
-  border-radius: 10px;
-  overflow-y: scroll;
-}
-.song-details{
-  word-wrap: break-word;
-  margin-bottom: 10px;
-}
-
-.song-details-model-close {
-  width: 35px;
-  height: 35px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 5px;
-  background: var(--gradient);
-  border-radius: inherit;
-}
-
-
-
-
 .mini-player-active {
   transform: translateY(600px);
   padding: 0;
   height: 0;
-
 }
-
-
 
 .player-container {
   display: flex;
@@ -166,7 +85,6 @@ position: relative;
   margin: 5px;
 }
 
-
 .alert-message-wrapper {
   position: absolute;
   bottom: 15px;
@@ -177,8 +95,7 @@ position: relative;
   text-transform: capitalize;
 }
 
-
-@media (max-width:426px) {
+@media (max-width: 426px) {
   .player-container {
     width: 90%;
     padding-bottom: 35px;
@@ -191,8 +108,5 @@ position: relative;
 
   .alert-message-wrapper {
     bottom: -40px;
-  }
-  .song-details-model{
-    width: 80%;
   }
 }

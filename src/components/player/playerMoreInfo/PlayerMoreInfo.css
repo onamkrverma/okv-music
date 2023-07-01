@@ -1,0 +1,38 @@
+.player-more-info {
+  position: absolute;
+  right: 50px;
+  top: -150px;
+  z-index: 5;
+  width: 165px;
+  border: none;
+  border-radius: 15px;
+  background: black;
+  color: var(--primary-text-color);
+  transition: top 0.5s ease-in-out;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 15px;
+}
+.player-more-info-icons {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.audio-quality-wrapper {
+  position: relative;
+}
+.audio-selection-wrapper {
+  position: absolute;
+  left: 0px;
+  top: 35px;
+  background: var(--primary-bg);
+  padding: 10px;
+}
+.watch-video-wrapper a {
+  color: var(--primary-text-color);
+  text-decoration: none;
+}
