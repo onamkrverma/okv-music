@@ -15,6 +15,12 @@ const SongDetailsModel = ({
         display: playerInfo.isSongDetailsClick ? "flex" : "none",
       }}
     >
+      <div
+        className="model-overlayer"
+        onClick={() =>
+          setPlayerInfo({ ...playerInfo, isSongDetailsClick: false })
+        }
+      ></div>
       <div className="song-details-model">
         <span
           className="song-details-model-close cur-pointer"
