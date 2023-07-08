@@ -41,12 +41,8 @@
  - Node js
  - Express js
  - Ytdl-core package 
+
  
-### Deployement 
-  [![Netlify Status](https://api.netlify.com/api/v1/badges/0ac304c4-a7c5-4aeb-af7e-0115f09830e1/deploy-status)](https://okv-music.netlify.app/)
-
-
-
 ## Getting Started with Create React App
  - This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
  - clone down this repositery. You will need to `node.js` and `git` installed globally on your machine.
@@ -61,8 +57,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-## Contributors
-- Onam kumar verma
 
 ## Contact
 If you have any questions or suggestions, feel free to contact me at my email onamkrverma@gmail.com
