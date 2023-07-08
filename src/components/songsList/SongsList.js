@@ -22,7 +22,11 @@ const SongsList = ({
     <div className="songs-list-container container">
       <div className="songs-list-top-wrapper">
         <p className="songs-list-title">{title}</p>
-        <button className="view-all cur-pointer" onClick={handleRedirect}>
+        <button
+          type="button"
+          className="view-all cur-pointer"
+          onClick={handleRedirect}
+        >
           view all
         </button>
       </div>

@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addSongs } from "../../reduxtool/slice/songsSlice";
 import HeroBanner from "./heroBanner/HeroBanner";
 import Player from "../../components/player/Player";
+import { AiOutlinePlus, AiOutlinePlusCircle } from "react-icons/ai";
+import AddPlaylist from "../../components/addPlaylist/AddPlaylist";
 
 const Home = () => {
   const playlistId = {
@@ -15,6 +17,11 @@ const Home = () => {
     bollywoodHitsId: "RDCLAK5uy_n9Fbdw7e6ap-98_A-8JYBmPv64v-Uaq1g",
     punjabiFireId: "RDCLAK5uy_kuo_NioExeUmw07dFf8BzQ64DFFTlgE7Q",
   };
+  // local playlist id
+  const myLocalPlaylist = localStorage.getItem("myPlaylist");
+
+  console.log(myLocalPlaylist);
+
   const dispatch = useDispatch();
   const songsData = useSelector((state) => state.songsSlice.songsData);
   const currentSong = useSelector(
@@ -91,6 +98,15 @@ const Home = () => {
         isLoading={punjabiFireSong.isLoading}
         playlistId={playlistId.punjabiFireId}
       />
+      {/* my playlist */}
+      {/* <SongsList
+        title={"Punjabi Fire"}
+        songsData={songsData.punjabiFireSong?.items}
+        isLoading={punjabiFireSong.isLoading}
+        playlistId={playlistId.punjabiFireId}
+      /> */}
+      {/* add playlist button */}
+      <AddPlaylist />
 
       {id && <Player />}
     </div>
