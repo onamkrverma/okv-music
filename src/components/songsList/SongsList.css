@@ -8,8 +8,18 @@
   display: flex;
   overflow-x: auto;
   gap: 20px;
+  scrollbar-width: none; /* Firefox */
 }
-
+.songs-list-top-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.view-all {
+  background: none;
+  border: none;
+  color: var(--primary-text-color);
+}
 .songs-list-title {
   font-size: 25px;
   font-weight: 600;

@@ -71,21 +71,25 @@ const Home = () => {
         title={"Trending Songs"}
         songsData={songsData.trendingSongs?.items}
         isLoading={trendingSongs.isLoading}
+        playlistId={playlistId.trendingSongsId}
       />
       <SongsList
-        title={"New Released Songs"}
+        title={"New Released"}
         songsData={songsData.newSongs?.items}
         isLoading={newSongs.isLoading}
+        playlistId={playlistId.newRelesedId}
       />
       <SongsList
         title={"Bollywood HitsList"}
         songsData={songsData.bollywoodHitsSongs?.items}
         isLoading={bollywoodHitsSongs.isLoading}
+        playlistId={playlistId.bollywoodHitsId}
       />
       <SongsList
         title={"Punjabi Fire"}
         songsData={songsData.punjabiFireSong?.items}
         isLoading={punjabiFireSong.isLoading}
+        playlistId={playlistId.punjabiFireId}
       />
 
       {id && <Player />}

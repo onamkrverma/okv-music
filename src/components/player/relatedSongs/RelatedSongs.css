@@ -1,6 +1,7 @@
 .related-songs-container {
   height: 500px;
   overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
 }
 
 .relate-songs-heading {
@@ -13,6 +14,10 @@
 .related-songs-info-wrapper {
   display: flex;
   margin: 10px;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 5px;
 }
 
 .related-songs-image-wrapper {
@@ -37,37 +42,32 @@
   z-index: 5;
   color: white;
   width: 25px;
-  height: 25px; 
+  height: 25px;
   animation: rotate 2s linear infinite;
 }
 
-.line2{ 
+.line2 {
   background: var(--gradient);
   height: 15px;
-   
 }
 
 @keyframes rotate {
   0% {
-    transform: rotate(0deg)
+    transform: rotate(0deg);
   }
 
   100% {
-    transform: rotate(360deg)
+    transform: rotate(360deg);
   }
 }
 
-
-
-
 .related-songs-title-channel-wrapper {
-  margin-left: 10px;
   color: var(--primary-text-color);
 }
 
 .related-songs-channel-wrapper {
   opacity: 0.7;
-  font-size: 14px;
+  font-size: 12px;
   margin: 5px;
 }
 
@@ -75,7 +75,7 @@
   display: none;
 }
 
-@media (max-width:769px) {
+@media (max-width: 769px) {
   .related-songs-section {
     position: fixed;
     bottom: 5px;
@@ -96,7 +96,6 @@
     border-radius: 10px 10px 0 0;
     background: rgb(0 0 0 / 80%);
     backdrop-filter: blur(6px);
-
   }
 
   .related-songs-container {
@@ -111,9 +110,5 @@
     background: rgb(0 0 0 / 70%);
     backdrop-filter: blur(6px);
     border-radius: 10px;
-    
   }
-
-
-
 }

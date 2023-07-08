@@ -12,6 +12,11 @@
 
 body {
   background-color: #04152d;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+  scroll-snap-stop: always;
+  scroll-behavior: smooth;
+  scroll-snap-type: mandatory;
 }
 
 ::-webkit-scrollbar {

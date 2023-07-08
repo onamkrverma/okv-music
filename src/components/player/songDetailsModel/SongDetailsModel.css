@@ -22,6 +22,7 @@
   height: 70%;
   border-radius: 10px;
   overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
 }
 .song-details {
   word-wrap: break-word;

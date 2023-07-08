@@ -1,6 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
-
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const selectRandomKey = () => {
   const apiKeys = process.env.REACT_APP_YT_API.split(","); //we are splitting the api keys to make an array
@@ -8,71 +6,84 @@ const selectRandomKey = () => {
   return apiKeys[random];
 };
 
-
-
-const baseUrl = 'https://www.googleapis.com/youtube/v3';
+const baseUrl = "https://www.googleapis.com/youtube/v3";
 
 export const songsApi = createApi({
-  reducerPath: 'songsApi',
+  reducerPath: "songsApi",
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
 
   endpoints: (builder) => ({
     getSongsById: builder.query({
       query: (songId) => ({
-        url:'videos',
+        url: "videos",
         params: {
-          part: ['snippet','contentDetails'],
+          part: ["snippet", "contentDetails"],
           id: songId,
           key: selectRandomKey(),
         },
-        method: 'GET'
-      })
+        method: "GET",
+      }),
     }),
-  
-  
+
     getPlaylistItems: builder.query({
       query: (playlistId) => ({
-        url:'playlistItems' ,
+        url: "playlistItems",
         params: {
-          part: 'snippet',
+          part: "snippet",
           playlistId: playlistId,
-          maxResults: '10',
+          maxResults: "10",
           key: selectRandomKey(),
         },
-        method: 'GET'
-      })
+        method: "GET",
+      }),
+    }),
+    getAllPlaylistItems: builder.query({
+      query: (playlistId) => ({
+        url: "playlistItems",
+        params: {
+          part: "snippet",
+          playlistId: playlistId,
+          maxResults: "50",
+          key: selectRandomKey(),
+        },
+        method: "GET",
+      }),
     }),
 
     getSearchItems: builder.query({
       query: (searchQuery) => ({
-        url:'search' ,
+        url: "search",
         params: {
-          part: 'snippet',
-          q:searchQuery,
-          type: 'video',
-          maxResults: '50',
+          part: "snippet",
+          q: searchQuery,
+          type: "video",
+          maxResults: "50",
           key: selectRandomKey(),
         },
-        method: 'GET'
-      })
+        method: "GET",
+      }),
     }),
     getSearchRelatedItems: builder.query({
       query: (videoId) => ({
-        url:'search' ,
+        url: "search",
         params: {
-          part: 'snippet',
-          relatedToVideoId : videoId,
-          type: 'video',
-          videoCategoryId: '10',
-          maxResults: '10',
+          part: "snippet",
+          relatedToVideoId: videoId,
+          type: "video",
+          videoCategoryId: "10",
+          maxResults: "10",
           key: selectRandomKey(),
         },
-        method: 'GET'
-      })
-    })
-
+        method: "GET",
+      }),
+    }),
   }),
+});
 
-}) 
-
-export const {useGetPlaylistItemsQuery,useGetSongsByIdQuery,useGetSearchItemsQuery,useGetSearchRelatedItemsQuery} = songsApi
+export const {
+  useGetPlaylistItemsQuery,
+  useGetSongsByIdQuery,
+  useGetSearchItemsQuery,
+  useGetSearchRelatedItemsQuery,
+  useGetAllPlaylistItemsQuery,
+} = songsApi;
