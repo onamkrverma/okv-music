@@ -1,6 +1,9 @@
 .search-result-container {
   margin-top: 65px;
 }
+.search-result-container .view-all {
+  display: none;
+}
 
 @media (max-width: 426px) {
   .search-result-container {
