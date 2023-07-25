@@ -35,7 +35,7 @@ const SearchResult = () => {
         searchResult={"searchResult"}
         isLoading={isLoading}
       />
-      {id && <Player />}
+      {id ? <Player /> : null}
     </div>
   );
 };

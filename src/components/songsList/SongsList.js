@@ -11,13 +11,14 @@ const SongsList = ({
   isLoading,
   playlistId,
 }) => {
-  const urlTitle = title.replaceAll(" ", "-").toLowerCase();
+  const urlTitle = title?.replaceAll(" ", "-").toLowerCase();
   const navigate = useNavigate();
   const handleRedirect = () => {
     navigate(`/playlistsongs/${urlTitle}`, {
       state: { playlistId },
     });
   };
+
   return (
     <div className="songs-list-container container">
       <div className="songs-list-top-wrapper">
