@@ -1,5 +1,6 @@
 .playlist-songs-container {
   color: var(--primary-text-color);
+  padding-bottom: 60px;
 }
 .playlist-songs-header {
   display: flex;
@@ -39,6 +40,9 @@
   justify-content: space-between;
   border-bottom: 1px solid var(--border-color);
   padding: 10px 0;
+}
+.playlist-songs-info-wrapper:last-child {
+  border-bottom: none;
 }
 .playlist-songs-info {
   display: flex;

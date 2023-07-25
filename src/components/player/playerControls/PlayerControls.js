@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./PlayerControls.css";
 import {
   BsFillSkipEndFill,
@@ -22,6 +22,16 @@ const PlayerControls = ({
   mapVideoId,
   currentIndex,
 }) => {
+  const localVolume = localStorage.getItem("localVolume");
+  const [volumeLevel, setVolumeLevel] = useState(localVolume ?? 1.0);
+
+  useEffect(() => {
+    audioRef.current.volume = volumeLevel;
+    // eslint-disable-next-line
+  }, [volumeLevel]);
+
+  localStorage.setItem("localVolume", volumeLevel);
+
   useEffect(() => {
     try {
       if (isPlaying) {
@@ -45,10 +55,6 @@ const PlayerControls = ({
     const divProgress = Math.floor((offsetX / totalWidth) * 100);
     audioRef.current.currentTime =
       (divProgress / 100) * audioRef.current.duration;
-  };
-
-  const handleVolume = (e) => {
-    audioRef.current.volume = e.target.valueAsNumber;
   };
 
   navigator.mediaSession.setActionHandler("play", () => {
@@ -183,7 +189,8 @@ const PlayerControls = ({
             min={0.0}
             max={1.0}
             step={0.01}
-            onChange={handleVolume}
+            value={volumeLevel}
+            onChange={(e) => setVolumeLevel(e.target.valueAsNumber)}
           />
         </div>
       </div>
