@@ -1,9 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const selectRandomKey = () => {
-  const apiKeys = process.env.REACT_APP_YT_API.split(","); //we are splitting the api keys to make an array
-  const random = Math.floor(Math.random() * apiKeys.length); //this will get a random number
-  return apiKeys[random];
+  if (process.env.REACT_APP_YT_API.search(",") !== -1) {
+    const apiKeys = process.env.REACT_APP_YT_API.split(","); //we are splitting the api keys to make an array
+    const random = Math.floor(Math.random() * apiKeys.length); //this will get a random number
+    return apiKeys[random];
+  } else {
+    return process.env.REACT_APP_YT_API;
+  }
 };
 
 const baseUrl = "https://www.googleapis.com/youtube/v3";

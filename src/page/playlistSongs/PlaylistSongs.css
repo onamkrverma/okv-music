@@ -82,7 +82,8 @@
 .playlist-songs-title-wrapper {
   white-space: nowrap;
   text-overflow: ellipsis;
-  overflow-x: hidden;
+  overflow: hidden;
+  padding-top: 5px;
 }
 .playlist-songs-channel-wrapper {
   opacity: 0.7;

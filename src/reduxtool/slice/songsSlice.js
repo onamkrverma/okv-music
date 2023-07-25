@@ -1,23 +1,54 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
-//  const getLocalData = JSON.parse(localStorage.getItem('homepageData'));
+// local playlist id
+const myLocalPlaylist = JSON.parse(localStorage.getItem("myPlaylist"));
 
 const initialState = {
-  songsData:  {},
-
-}
+  songsData: [],
+  myPlaylistSongs: [],
+  myPlaylistData: myLocalPlaylist || [],
+};
 
 export const songsSlice = createSlice({
-  name: 'songs',
+  name: "songs",
   initialState,
   reducers: {
-    addSongs: (state,action)=>{
-      state.songsData = action.payload
-    }
-  }
-})
+    addSongs: (state, action) => {
+      state.songsData = action.payload;
+    },
+
+    addPlaylist: (state, action) => {
+      state.myPlaylistData = action.payload;
+    },
+    addMyPlaylistSongs: (state, action) => {
+      state.myPlaylistSongs = action.payload;
+    },
+    removePlaylistSongs: (state, action) => {
+      state.myPlaylistSongs.splice(
+        state.myPlaylistSongs.findIndex(
+          (item) => item.metaData?.playlistId === action.payload
+        ),
+        1
+      );
+    },
+    removePlaylist: (state, action) => {
+      state.myPlaylistData.splice(
+        state.myPlaylistData.findIndex(
+          (item) => item.playlistId === action.payload
+        ),
+        1
+      );
+    },
+  },
+});
 
 // Action creators are generated for each case reducer function
-export const { addSongs } = songsSlice.actions
+export const {
+  addSongs,
+  addPlaylist,
+  addMyPlaylistSongs,
+  removePlaylistSongs,
+  removePlaylist,
+} = songsSlice.actions;
 
-export default songsSlice.reducer
+export default songsSlice.reducer;

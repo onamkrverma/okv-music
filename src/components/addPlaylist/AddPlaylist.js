@@ -1,14 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./AddPlaylist.css";
-import { AiOutlinePlusCircle } from "react-icons/ai";
+import { BsYoutube } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
+import { useDispatch, useSelector } from "react-redux";
+import { addPlaylist } from "../../reduxtool/slice/songsSlice";
 
 const AddPlaylist = () => {
-  const [isAddPlaylist, setisAddPlaylist] = useState(false);
+  const [isAddPlaylist, setIsAddPlaylist] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const formRef = useRef(null);
-  // local playlist id
-  const myLocalPlaylist = JSON.parse(localStorage.getItem("myPlaylist"));
-  const [myPlaylist, setMyPlaylist] = useState(myLocalPlaylist || []);
+  const dispatch = useDispatch();
+  // local playlist
+  const myLocalPlaylist = useSelector(
+    (state) => state.songsSlice.myPlaylistData
+  );
 
   useEffect(() => {
     document.body.style.overflow = isAddPlaylist ? "hidden" : "auto";
@@ -16,29 +21,43 @@ const AddPlaylist = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formRef.current) {
-      const formData = new FormData(formRef.current);
-      const title = formData.get("title");
-      const playlistId = formData.get("playlistId");
-      setMyPlaylist([...myPlaylist, { title, playlistId }]);
+    if (errorMessage) {
+      setErrorMessage("");
     }
-    e.target.reset();
-    window.location.reload();
+    try {
+      if (formRef.current) {
+        const formData = new FormData(formRef.current);
+        const title = formData.get("title");
+        const playlistLink = formData.get("playlistLink");
+        const url = new URL(playlistLink);
+        const playlistId = url.searchParams.get("list");
+        if (!playlistId) return setErrorMessage("Playlist id Not Found");
+        dispatch(addPlaylist([...myLocalPlaylist, { title, playlistId }]));
+      }
+      e.target.reset();
+      setIsAddPlaylist(false);
+    } catch (error) {
+      console.log(error);
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      }
+    }
   };
-  localStorage.setItem("myPlaylist", JSON.stringify(myPlaylist));
-
+  localStorage.setItem("myPlaylist", JSON.stringify(myLocalPlaylist));
   return (
-    <div className="add-your-playlist-container container ">
+    <div
+      className={`add-your-playlist-container container ${
+        myLocalPlaylist.length >= 2 ? "hide" : ""
+      } `}
+    >
       <button
         type="button"
         title="add-palylist"
         className="add-your-playlist-btn cur-pointer"
-        onClick={() => setisAddPlaylist(true)}
+        onClick={() => setIsAddPlaylist(true)}
       >
-        <AiOutlinePlusCircle
-          style={{ width: "30%", height: "30%", color: "#04152d" }}
-        />
-        <span>Add Your Playlist</span>
+        <BsYoutube style={{ width: "30%", height: "30%", color: "#04152d" }} />
+        <span>Import Youtube Playlist</span>
       </button>
 
       {/* add playlist model */}
@@ -50,12 +69,12 @@ const AddPlaylist = () => {
       >
         <div
           className="model-overlayer"
-          onClick={() => setisAddPlaylist(false)}
+          onClick={() => setIsAddPlaylist(false)}
         ></div>
         <div className="add-playlist-model">
           <span
             className="add-playlist-model-close cur-pointer"
-            onClick={() => setisAddPlaylist(false)}
+            onClick={() => setIsAddPlaylist(false)}
           >
             <RxCross2 style={{ width: "100%", height: "100%" }} />
           </span>
@@ -79,18 +98,19 @@ const AddPlaylist = () => {
               />
             </div>
             <div className="title-input-wrapper">
-              <p>Playlist Id</p>
+              <p>Playlist Link</p>
               <input
                 type="text"
-                name="playlistId"
-                placeholder="Enter youtube playlist id"
-                minLength={3}
+                name="playlistLink"
+                placeholder="Enter Youtube playlist link"
+                minLength={10}
                 required
               />
             </div>
             <button type="submit" className="form-submit-btn cur-pointer">
               Submit
             </button>
+            <p>{errorMessage}</p>
           </form>
         </div>
       </div>

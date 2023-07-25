@@ -2,7 +2,7 @@ import React from "react";
 import SongsCard from "../songsCard/SongsCard";
 import SongsCardSkeleton from "../songsCard/SongsCardSkeleton";
 import "./SongsList.css";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SongsList = ({
   songsData,
@@ -11,13 +11,14 @@ const SongsList = ({
   isLoading,
   playlistId,
 }) => {
-  const urlTitle = title.replaceAll(" ", "-").toLowerCase();
+  const urlTitle = title?.replaceAll(" ", "-").toLowerCase();
   const navigate = useNavigate();
   const handleRedirect = () => {
     navigate(`/playlistsongs/${urlTitle}`, {
       state: { playlistId },
     });
   };
+
   return (
     <div className="songs-list-container container">
       <div className="songs-list-top-wrapper">

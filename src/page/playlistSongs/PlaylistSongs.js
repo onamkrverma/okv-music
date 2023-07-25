@@ -4,7 +4,7 @@ import { useGetAllPlaylistItemsQuery } from "../../reduxtool/services/songsApi";
 import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/header/Header";
-import { BsPlayCircleFill, BsThreeDotsVertical } from "react-icons/bs";
+import { BsPlayCircleFill } from "react-icons/bs";
 import { addSongInfo } from "../../reduxtool/slice/currentSongSlice";
 import Player from "../../components/player/Player";
 import PlaylistSongsSkeleton from "./PlaylistSongsSkeleton";
@@ -101,14 +101,11 @@ const PlaylistSongs = () => {
                   </p>
                 </div>
               </div>
-              {/* <div className="absolute-center cur-pointer">
-                <BsThreeDotsVertical />
-              </div> */}
             </div>
           ))}
         </div>
       )}
-      {id && <Player />}
+      {id ? <Player /> : null}
     </div>
   );
 };

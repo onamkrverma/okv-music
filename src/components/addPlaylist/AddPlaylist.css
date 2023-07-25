@@ -14,6 +14,7 @@
 .add-playlist-model-wrapper {
   position: fixed;
   top: 0px;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 15;
@@ -46,6 +47,7 @@
 .add-playlist-form-title {
   font-size: large;
   font-weight: 600;
+  line-height: 1.3;
 }
 .title-input-wrapper {
   display: flex;
@@ -66,4 +68,13 @@
   color: var(--primary-text-color);
   background: var(--gradient);
   font-weight: bold;
+}
+
+@media (max-width: 426px) {
+  .add-your-playlist-btn {
+    width: 250px;
+  }
+  .add-playlist-model {
+    width: 90%;
+  }
 }
