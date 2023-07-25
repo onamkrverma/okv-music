@@ -23,7 +23,7 @@
   - Controls audio quality (done ✔)
  - Direct click to watch youtube video (done ✔)
  - Get song info button (done ✔)
- - Add more playlists
+ - Import Youtube playlists (done ✔)
  - many more..
  
  ### Don't forget to :star: the repo
