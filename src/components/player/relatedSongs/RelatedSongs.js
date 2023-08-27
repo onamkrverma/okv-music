@@ -15,7 +15,7 @@ const RelatedSongs = ({ videoId, songsList, setSongsList }) => {
   const { id } = currentSong;
   const [relatedSongs, setRelatedSongs] = useState([]);
   const [isUpClick, setIsUpClick] = useState(false);
-  const { data, isLoading } = useGetSearchRelatedItemsQuery(videoId, {
+  const { data, isLoading, isError } = useGetSearchRelatedItemsQuery(videoId, {
     skip: songsList.length > 11,
   });
 
@@ -62,36 +62,45 @@ const RelatedSongs = ({ videoId, songsList, setSongsList }) => {
         {isLoading ? (
           <RelatedSongsSkeleton amount={6} />
         ) : (
-          songsList?.map((songs) => (
-            <div
-              className="related-songs-info-wrapper cur-pointer"
-              key={songs.etag}
-              onClick={() => handleRedirect(songs.id.videoId)}
-            >
-              <div className="related-songs-image-wrapper">
-                <img
-                  src={songs.snippet.thumbnails.default.url}
-                  className="related-songs-image"
-                  alt="related-song"
-                />
-                {id === songs.id.videoId && (
-                  <div className="playing-status-wrapper">
-                    <BsPlayCircleFill
-                      style={{ width: "100%", height: "100%" }}
+          <>
+            {!isError ? (
+              songsList?.map((songs) => (
+                <div
+                  className="related-songs-info-wrapper cur-pointer"
+                  key={songs.etag}
+                  onClick={() => handleRedirect(songs.id.videoId)}
+                >
+                  <div className="related-songs-image-wrapper">
+                    <img
+                      src={songs.snippet.thumbnails.default.url}
+                      className="related-songs-image"
+                      alt="related-song"
                     />
+                    {id === songs.id.videoId && (
+                      <div className="playing-status-wrapper">
+                        <BsPlayCircleFill
+                          style={{ width: "100%", height: "100%" }}
+                        />
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              <div className="related-songs-title-channel-wrapper">
-                <div className="related-songs-title-wrapper">
-                  {songs.snippet?.title.slice(0, 50) + "..."}
+                  <div className="related-songs-title-channel-wrapper">
+                    <div className="related-songs-title-wrapper">
+                      {songs.snippet?.title.slice(0, 50) + "..."}
+                    </div>
+                    <div className="related-songs-channel-wrapper">
+                      • {songs.snippet?.channelTitle}
+                    </div>
+                  </div>
                 </div>
-                <div className="related-songs-channel-wrapper">
-                  • {songs.snippet?.channelTitle}
-                </div>
+              ))
+            ) : (
+              <div className="related-songs-error-wrapper">
+                <p className="sorry-emoji">😢</p>
+                <p>Sorry! Not able to fetch related songs</p>
               </div>
-            </div>
-          ))
+            )}
+          </>
         )}
       </div>
     </div>
