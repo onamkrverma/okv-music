@@ -10,6 +10,7 @@ const PlayerMoreInfo = ({
   audioFormat,
   setAudioFormat,
 }) => {
+  localStorage.setItem("audioQuality", audioFormat);
   return (
     <div>
       <div

@@ -26,7 +26,8 @@ const Player = () => {
     isAudioQualityClick: false,
     isSongDetailsClick: false,
   });
-  const [audioFormat, setAudioFormat] = useState("low");
+  const localAudioFormat = localStorage.getItem("audioQuality");
+  const [audioFormat, setAudioFormat] = useState(localAudioFormat ?? "high");
 
   // const { id } = JSON.parse(localStorage.getItem('currentSongInfo'));
   const dispatch = useDispatch();
