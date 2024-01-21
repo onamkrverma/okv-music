@@ -1,36 +1,41 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BsPlayCircleFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetSearchRelatedItemsQuery } from "../../../reduxtool/services/songsApi";
 import { addSongInfo } from "../../../reduxtool/slice/currentSongSlice";
 import "./RelatedSongs.css";
 import RelatedSongsSkeleton from "./RelatedSongsSkeleton";
+import { getRelatedSongs } from "../../../api/getRelatedSongs";
 
 const RelatedSongs = ({ videoId, songsList, setSongsList }) => {
-  // const getRealated = JSON.parse(localStorage.getItem('related'));
   const dispatch = useDispatch();
   const currentSong = useSelector(
     (state) => state.currentSongSlice.currentSongInfo
   );
   const { id } = currentSong;
-  const [relatedSongs, setRelatedSongs] = useState([]);
   const [isUpClick, setIsUpClick] = useState(false);
-  const { data, isLoading, isError } = useGetSearchRelatedItemsQuery(videoId, {
-    skip: songsList.length > 11,
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const getRelated = async () => {
+    try {
+      setErrorMessage(null);
+      const response = await getRelatedSongs({ id });
+      const data = await response.json();
+      setSongsList(data.result);
+    } catch (error) {
+      console.log(error);
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (data) {
-      setRelatedSongs(data.items);
-      const relatedEtag = relatedSongs.map((song) => song.etag);
-      const uniqueEtag = data.items.filter(
-        (val) => relatedEtag.indexOf(val.etag) < 0
-      );
-      // console.log(uniqueEtag)
-      setSongsList([...relatedSongs, ...uniqueEtag]);
-    }
+    getRelated();
     // eslint-disable-next-line
-  }, [data]);
+  }, []);
 
   const handleRedirect = (videoId) => {
     dispatch(addSongInfo({ ...currentSong, id: videoId }));
@@ -46,7 +51,7 @@ const RelatedSongs = ({ videoId, songsList, setSongsList }) => {
 
   return (
     <div className="related-songs-section">
-      <div className="relate-songs-heading">Related Songs</div>
+      <h3 className="relate-songs-heading">Related Songs</h3>
       <div
         className="relate-songs-heading mobile-next cur-pointer"
         ref={upNextRef}
@@ -63,20 +68,20 @@ const RelatedSongs = ({ videoId, songsList, setSongsList }) => {
           <RelatedSongsSkeleton amount={6} />
         ) : (
           <>
-            {!isError ? (
-              songsList?.map((songs) => (
+            {songsList?.length ? (
+              songsList?.map((song) => (
                 <div
                   className="related-songs-info-wrapper cur-pointer"
-                  key={songs.etag}
-                  onClick={() => handleRedirect(songs.id.videoId)}
+                  key={song?.index}
+                  onClick={() => handleRedirect(song?.videoId)}
                 >
                   <div className="related-songs-image-wrapper">
                     <img
-                      src={songs.snippet.thumbnails.default.url}
+                      src={song?.thumbnails}
                       className="related-songs-image"
-                      alt="related-song"
+                      alt={song?.title}
                     />
-                    {id === songs.id.videoId && (
+                    {id === song?.videoId && (
                       <div className="playing-status-wrapper">
                         <BsPlayCircleFill
                           style={{ width: "100%", height: "100%" }}
@@ -85,12 +90,10 @@ const RelatedSongs = ({ videoId, songsList, setSongsList }) => {
                     )}
                   </div>
                   <div className="related-songs-title-channel-wrapper">
-                    <div className="related-songs-title-wrapper">
-                      {songs.snippet?.title.slice(0, 50) + "..."}
-                    </div>
-                    <div className="related-songs-channel-wrapper">
-                      • {songs.snippet?.channelTitle}
-                    </div>
+                    <p className="related-songs-title-wrapper">{song?.title}</p>
+                    <p className="related-songs-channel-wrapper">
+                      • {song?.artistInfo.artist[0]?.text}
+                    </p>
                   </div>
                 </div>
               ))
@@ -98,6 +101,9 @@ const RelatedSongs = ({ videoId, songsList, setSongsList }) => {
               <div className="related-songs-error-wrapper">
                 <p className="sorry-emoji">😢</p>
                 <p>Sorry! Not able to fetch related songs</p>
+                {errorMessage ? (
+                  <p className="error-message">Error: {errorMessage}</p>
+                ) : null}
               </div>
             )}
           </>

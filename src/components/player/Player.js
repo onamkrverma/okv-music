@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { baseUrl } from "../../api/getAudio";
+import { getAudioUrls } from "../../api/getAudio";
 import { useGetSongsByIdQuery } from "../../reduxtool/services/songsApi";
 import { addSongInfo } from "../../reduxtool/slice/currentSongSlice";
 import MiniPlayer from "./miniPlayer/MiniPlayer";
@@ -45,9 +45,7 @@ const Player = () => {
   // get songs url
   const getSongUrl = async () => {
     try {
-      const response = await fetch(`${baseUrl}/song/${id}`, {
-        method: "GET",
-      });
+      const response = await getAudioUrls({ id });
       const data = await response.json();
       // console.log(data)
       if (audioFormat === "high") {
@@ -104,9 +102,8 @@ const Player = () => {
 
   // console.log({ isPlaying, audioLoading })
 
-  const mapVideoId = songsList.map((songs) => songs.id.videoId);
+  const mapVideoId = songsList?.map((song) => song.videoId);
   const index = mapVideoId.findIndex((x) => x === id);
-
   const handleNext = () => {
     if (index < mapVideoId.length - 1) {
       dispatch(addSongInfo({ ...currentSong, id: mapVideoId[index + 1] }));
