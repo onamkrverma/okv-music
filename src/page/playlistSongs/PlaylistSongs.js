@@ -48,6 +48,17 @@ const PlaylistSongs = () => {
       ) : (
         <div className="container">
           <div className="playlist-songs-header">
+            <div className="bg-poster-wrapper">
+              <img
+                className="bg-poster-image"
+                src={
+                  playlistInfo[0]?.snippet.thumbnails?.maxres
+                    ? playlistInfo[0]?.snippet.thumbnails?.maxres?.url
+                    : playlistInfo[0]?.snippet.thumbnails?.high?.url
+                }
+                alt="song poster"
+              />
+            </div>
             <div className="playlist-songs-header-image-wrapper">
               <img
                 className="playlist-songs-header-image"
@@ -62,7 +73,7 @@ const PlaylistSongs = () => {
             <div className="playlist-title-wrapper">
               <h1 className="playlist-title">{playlistTitle}</h1>
               <p className="playlist-title-subtext">
-                Top {playlistTitle}, refreshed daily
+                Top {playlistTitle}, Refreshed daily
               </p>
             </div>
           </div>

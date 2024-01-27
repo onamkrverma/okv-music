@@ -51,7 +51,7 @@ const RelatedSongs = ({ videoId, songsList, setSongsList }) => {
 
   return (
     <div className="related-songs-section">
-      <h3 className="relate-songs-heading">Related Songs</h3>
+      <h3 className="relate-songs-heading">Up Next Songs</h3>
       <div
         className="relate-songs-heading mobile-next cur-pointer"
         ref={upNextRef}

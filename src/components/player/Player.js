@@ -42,8 +42,8 @@ const Player = () => {
 
   const audioRef = useRef();
 
-  // get songs url
-  const getSongUrl = async () => {
+  // get songs audio url
+  const getSongAudioUrls = async () => {
     try {
       const response = await getAudioUrls({ id });
       const data = await response.json();
@@ -67,7 +67,7 @@ const Player = () => {
     }
   };
   useEffect(() => {
-    getSongUrl();
+    getSongAudioUrls();
     // eslint-disable-next-line
   }, [id, audioFormat]);
 
@@ -186,6 +186,13 @@ const Player = () => {
         onMiniPlayer ? "miniplayer-active" : ""
       }`}
     >
+      <div className="bg-poster-wrapper">
+        <img
+          className="bg-poster-image"
+          src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
+          alt="song poster"
+        />
+      </div>
       {/* <Header /> */}
       {!onMiniPlayer && (
         <div className="top-player-controll-wrapper">

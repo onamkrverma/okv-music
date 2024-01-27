@@ -20,14 +20,8 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 2px;
-  background: black;
-  height: 0px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #b5b5b5;
-  border-radius: 1px;
+  width: 0;
+  height: 0;
 }
 
 /* common classes */
@@ -59,4 +53,21 @@ body {
   left: 0px;
   width: 100%;
   height: 100%;
+}
+
+/* bg poster of song */
+.bg-poster-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  color: transparent;
+  filter: blur(20px);
+  z-index: -5;
+}
+.bg-poster-wrapper .bg-poster-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

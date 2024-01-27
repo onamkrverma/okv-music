@@ -2,7 +2,7 @@ import React from "react";
 import SongsCard from "../songsCard/SongsCard";
 import SongsCardSkeleton from "../songsCard/SongsCardSkeleton";
 import "./SongsList.css";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const SongsList = ({
   songsData,
@@ -12,24 +12,20 @@ const SongsList = ({
   playlistId,
 }) => {
   const urlTitle = title?.replaceAll(" ", "-").toLowerCase();
-  const navigate = useNavigate();
-  const handleRedirect = () => {
-    navigate(`/playlistsongs/${urlTitle}`, {
-      state: { playlistId },
-    });
-  };
 
   return (
     <div className="songs-list-container container">
       <div className="songs-list-top-wrapper">
         <p className="songs-list-title">{title}</p>
-        <button
-          type="button"
+        <Link
+          to={{
+            pathname: `/playlistsongs/${urlTitle}`,
+          }}
+          state={{ playlistId }}
           className="view-all cur-pointer"
-          onClick={handleRedirect}
         >
           view all
-        </button>
+        </Link>
       </div>
       <div
         className="songs-list-wrapper"
