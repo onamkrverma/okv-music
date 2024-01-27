@@ -7,7 +7,7 @@ import { addSongInfo } from "../../reduxtool/slice/currentSongSlice";
 import MiniPlayer from "./miniPlayer/MiniPlayer";
 import "./Player.css";
 import PlayerControls from "./playerControls/PlayerControls";
-import Skeleton from "react-loading-skeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import RelatedSongs from "./relatedSongs/RelatedSongs";
 import PlayerMoreInfo from "./playerMoreInfo/PlayerMoreInfo";
@@ -227,11 +227,25 @@ const Player = () => {
       >
         <div className="player-container">
           <div className="player-song-image-wrapper">
-            <img
-              src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
-              alt="song-poster"
-              className="player-song-image"
-            />
+            {!isLoading && songsInfo.length ? (
+              <img
+                src={
+                  songsInfo[0]?.snippet.thumbnails?.maxres
+                    ? `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`
+                    : `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
+                }
+                alt="song-poster"
+                className="player-song-image"
+              />
+            ) : (
+              <SkeletonTheme
+                baseColor="#747070"
+                highlightColor="#615e5e"
+                duration="2s"
+              >
+                <Skeleton height={"170px"} />
+              </SkeletonTheme>
+            )}
           </div>
 
           {isLoading ? (

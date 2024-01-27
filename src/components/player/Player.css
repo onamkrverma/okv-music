@@ -106,7 +106,7 @@
 
   .player-song-image-wrapper {
     width: 90%;
-    height: 170px;
+    height: auto;
   }
 
   .alert-message-wrapper {
