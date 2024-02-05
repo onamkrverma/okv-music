@@ -6,7 +6,7 @@ import "./RelatedSongs.css";
 import RelatedSongsSkeleton from "./RelatedSongsSkeleton";
 import { getRelatedSongs } from "../../../api/getRelatedSongs";
 
-const RelatedSongs = ({ videoId, songsList, setSongsList }) => {
+const RelatedSongs = ({ songsList, setSongsList }) => {
   const dispatch = useDispatch();
   const currentSong = useSelector(
     (state) => state.currentSongSlice.currentSongInfo

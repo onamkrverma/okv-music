@@ -34,7 +34,7 @@ const PlayerControls = ({
 
   useEffect(() => {
     try {
-      if (isPlaying) {
+      if (!isPlaying) {
         audioRef.current.pause();
       } else {
         audioRef.current.play();
@@ -47,6 +47,16 @@ const PlayerControls = ({
     // eslint-disable-next-line
   }, [isPlaying]);
 
+  //set auto play property
+  useEffect(() => {
+    if (autoPlay) {
+      audioRef.current.autoplay = true;
+    } else {
+      audioRef.current.autoplay = false;
+    }
+    // eslint-disable-next-line
+  }, [autoPlay]);
+
   const progressRef = useRef();
 
   const handleJumpDuration = (e) => {
@@ -56,31 +66,6 @@ const PlayerControls = ({
     audioRef.current.currentTime =
       (divProgress / 100) * audioRef.current.duration;
   };
-
-  navigator.mediaSession.setActionHandler("play", () => {
-    setIsPlaying(false);
-  });
-  navigator.mediaSession.setActionHandler("pause", () => {
-    setIsPlaying(true);
-  });
-
-  if (currentIndex > 0) {
-    navigator.mediaSession.setActionHandler("previoustrack", () => {
-      handlePrev();
-    });
-  } else {
-    // Unset the "previoustrack" action handler at the end of a list.
-    navigator.mediaSession.setActionHandler("previoustrack", null);
-  }
-
-  if (currentIndex < mapVideoId.length - 1) {
-    navigator.mediaSession.setActionHandler("nexttrack", () => {
-      handleNext();
-    });
-  } else {
-    // Unset the "nexttrack" action handler at the end of a playlist.
-    navigator.mediaSession.setActionHandler("nexttrack", null);
-  }
 
   return (
     <div className="player-controls-container">
@@ -139,12 +124,12 @@ const PlayerControls = ({
             className="audio-play-pause  cur-pointer"
             onClick={() => setIsPlaying(!isPlaying)}
           >
-            {isPlaying || progress === 100 ? (
+            {(!isPlaying || progress === 100) && audioRef.current?.paused ? (
               <BsPlayCircleFill
                 style={{
                   width: "100%",
                   height: "100%",
-                  opacity: audioLoading && "0.9",
+                  opacity: audioLoading && "0.8",
                 }}
               />
             ) : (

@@ -16,11 +16,11 @@ import SongDetailsModel from "./songDetailsModel/SongDetailsModel";
 const Player = () => {
   const [songUrl, setSongUrl] = useState("");
   const [songsInfo, setSongsInfo] = useState([]);
-  const [audioLoading, setAudioLoading] = useState(true);
+  const [audioLoading, setAudioLoading] = useState(false);
   const [songsList, setSongsList] = useState([]);
   const [alertMessage, setAlertMessage] = useState("");
   const [isPlaying, setIsPlaying] = useState(false);
-  const [autoPlay, setAutoPlay] = useState(true);
+  const [autoPlay, setAutoPlay] = useState(false);
   const [playerInfo, setPlayerInfo] = useState({
     isMoreInfoClick: false,
     isAudioQualityClick: false,
@@ -44,18 +44,17 @@ const Player = () => {
 
   // get songs audio url
   const getSongAudioUrls = async () => {
+    setAudioLoading(true);
     try {
       const response = await getAudioUrls({ id });
       const data = await response.json();
       // console.log(data)
       if (audioFormat === "high") {
         setSongUrl(data.audioFormatHigh);
-        setAudioLoading(false);
-        setIsPlaying(false);
+        // setAudioLoading(false);
+        // setIsPlaying(false);
       } else {
         setSongUrl(data.audioFormatLow);
-        setAudioLoading(false);
-        setIsPlaying(false);
       }
     } catch (error) {
       console.log(error);
@@ -64,6 +63,9 @@ const Player = () => {
       setTimeout(() => {
         setAlertMessage("");
       }, 3000);
+    } finally {
+      setAudioLoading(false);
+      setIsPlaying(false);
     }
   };
   useEffect(() => {
@@ -97,16 +99,17 @@ const Player = () => {
   useEffect(() => {
     setProgress(0);
     setIsPlaying(false);
-    setAudioLoading(true);
+    setAudioLoading(false);
   }, [id]);
 
-  // console.log({ isPlaying, audioLoading })
-
   const mapVideoId = songsList?.map((song) => song.videoId);
-  const index = mapVideoId.findIndex((x) => x === id);
+  const currentIndex = mapVideoId.findIndex((x) => x === id);
   const handleNext = () => {
-    if (index < mapVideoId.length - 1) {
-      dispatch(addSongInfo({ ...currentSong, id: mapVideoId[index + 1] }));
+    if (currentIndex < mapVideoId.length - 1) {
+      dispatch(
+        addSongInfo({ ...currentSong, id: mapVideoId[currentIndex + 1] })
+      );
+      setAutoPlay(true);
     } else {
       console.log("you reached at end");
       setAlertMessage("you reached at end");
@@ -117,8 +120,10 @@ const Player = () => {
   };
 
   const handlePrev = () => {
-    if (index > 0) {
-      dispatch(addSongInfo({ ...currentSong, id: mapVideoId[index - 1] }));
+    if (currentIndex > 0) {
+      dispatch(
+        addSongInfo({ ...currentSong, id: mapVideoId[currentIndex - 1] })
+      );
     } else {
       setAlertMessage("you reached at first");
       setTimeout(() => {
@@ -170,6 +175,31 @@ const Player = () => {
         },
       ],
     });
+
+    navigator.mediaSession.setActionHandler("play", () => {
+      setIsPlaying(false);
+    });
+    navigator.mediaSession.setActionHandler("pause", () => {
+      setIsPlaying(true);
+    });
+
+    if (currentIndex > 0) {
+      navigator.mediaSession.setActionHandler("previoustrack", () => {
+        handlePrev();
+      });
+    } else {
+      // Unset the "previoustrack" action handler at the end of a list.
+      navigator.mediaSession.setActionHandler("previoustrack", null);
+    }
+
+    if (currentIndex < mapVideoId.length - 1) {
+      navigator.mediaSession.setActionHandler("nexttrack", () => {
+        handleNext();
+      });
+    } else {
+      // Unset the "nexttrack" action handler at the end of a playlist.
+      navigator.mediaSession.setActionHandler("nexttrack", null);
+    }
   }
 
   useEffect(() => {
@@ -226,7 +256,11 @@ const Player = () => {
         className={`player-section ${onMiniPlayer && "mini-player-active "} `}
       >
         <div className="player-container">
-          <div className="player-song-image-wrapper">
+          <div
+            className={`player-song-image-wrapper ${
+              !songsInfo[0]?.snippet.thumbnails?.maxres ? "small-hq-image" : ""
+            }`}
+          >
             {!isLoading && songsInfo.length ? (
               <img
                 src={
@@ -269,7 +303,15 @@ const Player = () => {
             onTimeUpdate={onPlaying}
             onCanPlay={() => setAudioLoading(false)}
             onEnded={() => autoPlay && handleNext()}
-            autoPlay={autoPlay}
+            onError={(e) => {
+              console.log(e.target.error);
+              // Check the error code
+              if (e.target.error.code === 4 && !e.target.error.message.length) {
+                // Handle the 403 error
+                console.log("The request was forbidden");
+                getSongAudioUrls();
+              }
+            }}
           />
 
           <PlayerControls
@@ -286,7 +328,7 @@ const Player = () => {
             handlePrev={handlePrev}
             autoPlay={autoPlay}
             setAutoPlay={setAutoPlay}
-            currentIndex={index}
+            currentIndex={currentIndex}
             mapVideoId={mapVideoId}
           />
 
@@ -295,12 +337,7 @@ const Player = () => {
           </div>
         </div>
 
-        <RelatedSongs
-          videoId={id}
-          songsList={songsList}
-          setSongsList={setSongsList}
-          setIsPlaying={setIsPlaying}
-        />
+        <RelatedSongs songsList={songsList} setSongsList={setSongsList} />
       </div>
 
       {onMiniPlayer && (
@@ -315,7 +352,8 @@ const Player = () => {
           audioRef={audioRef}
           songsList={songsList}
           mapVideoId={mapVideoId}
-          currentIndex={index}
+          currentIndex={currentIndex}
+          progress={progress}
         />
       )}
     </div>
