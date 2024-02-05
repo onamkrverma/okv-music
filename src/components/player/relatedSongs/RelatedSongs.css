@@ -1,7 +1,7 @@
 .related-songs-container {
   height: 500px;
   overflow-y: scroll;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: thin; /* Firefox */
   background: rgb(0 0 0 / 70%);
   backdrop-filter: blur(15px);
   border-radius: 10px;
@@ -100,7 +100,7 @@
 .related-songs-title-wrapper {
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
+  overflow-x: clip;
 }
 
 .related-songs-channel-wrapper {

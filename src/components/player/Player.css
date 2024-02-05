@@ -108,7 +108,9 @@
     width: 90%;
     height: auto;
   }
-
+  .player-song-image-wrapper.small-hq-image {
+    height: 170px;
+  }
   .alert-message-wrapper {
     bottom: -40px;
   }

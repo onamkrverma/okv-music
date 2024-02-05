@@ -10,7 +10,7 @@
   padding: 0 10px;
 }
 
-.mini-player-song-info-wrapper{
+.mini-player-song-info-wrapper {
   display: flex;
   align-items: center;
   gap: 20px;
@@ -28,7 +28,6 @@
   height: 100%;
   object-fit: cover;
   border-radius: inherit;
-
 }
 
 .mini-player-song-title-channel-wrapper {
@@ -40,7 +39,7 @@
   text-overflow: ellipsis;
   width: 100%;
   white-space: nowrap;
-  overflow: hidden;
+  overflow-x: clip;
   margin-bottom: 5px;
   font-weight: 600;
 }
@@ -51,15 +50,10 @@
   width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
+  overflow-x: clip;
 }
 
 .player-close-wrapper {
   width: 25px;
   height: 25px;
-}
-
-
-@media (max-width:426px){
-  
 }
