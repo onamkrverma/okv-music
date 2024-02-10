@@ -1,14 +1,13 @@
 .related-songs-container {
   height: 500px;
   overflow-y: scroll;
-  scrollbar-width: thin; /* Firefox */
   background: rgb(0 0 0 / 70%);
   backdrop-filter: blur(15px);
   border-radius: 10px;
 }
 .related-songs-container::-webkit-scrollbar {
   width: 2px;
-  background: black;
+  background: transparent;
   height: 0px;
 }
 
@@ -147,8 +146,6 @@
     display: flex;
     height: 250px;
     flex-direction: column;
-    background: rgb(0 0 0 / 70%);
     backdrop-filter: blur(6px);
-    border-radius: 10px;
   }
 }

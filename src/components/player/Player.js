@@ -177,10 +177,12 @@ const Player = () => {
     });
 
     navigator.mediaSession.setActionHandler("play", () => {
-      setIsPlaying(false);
+      audioRef.current.play();
+      setIsPlaying(true);
     });
     navigator.mediaSession.setActionHandler("pause", () => {
-      setIsPlaying(true);
+      audioRef.current.pause();
+      setIsPlaying(false);
     });
 
     if (currentIndex > 0) {
@@ -304,7 +306,6 @@ const Player = () => {
             onCanPlay={() => setAudioLoading(false)}
             onEnded={() => autoPlay && handleNext()}
             onError={(e) => {
-              console.log(e.target.error);
               // Check the error code
               if (e.target.error.code === 4 && !e.target.error.message.length) {
                 // Handle the 403 error
