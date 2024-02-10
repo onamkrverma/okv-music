@@ -37,7 +37,6 @@ const AddPlaylist = () => {
       e.target.reset();
       setIsAddPlaylist(false);
     } catch (error) {
-      console.log(error);
       if (error instanceof Error) {
         setErrorMessage(error.message);
       }

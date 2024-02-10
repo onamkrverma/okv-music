@@ -17,9 +17,6 @@ const SearchResult = () => {
 
   const [searchResult, setSearchResult] = useState({});
 
-  // console.log(q)
-  // console.log(searchResult)
-
   useEffect(() => {
     if (data) {
       setSearchResult(data);

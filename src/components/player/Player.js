@@ -48,7 +48,6 @@ const Player = () => {
     try {
       const response = await getAudioUrls({ id });
       const data = await response.json();
-      // console.log(data)
       if (audioFormat === "high") {
         setSongUrl(data.audioFormatHigh);
         // setAudioLoading(false);
@@ -57,8 +56,6 @@ const Player = () => {
         setSongUrl(data.audioFormatLow);
       }
     } catch (error) {
-      console.log(error);
-      console.log(error.message);
       setAlertMessage(error.message);
       setTimeout(() => {
         setAlertMessage("");
@@ -91,7 +88,6 @@ const Player = () => {
   const onPlaying = () => {
     const duration = audioRef.current.duration;
     const currTime = audioRef.current.currentTime;
-    // console.log(duration,currTime)
     setProgress((currTime / duration) * 100);
   };
 
@@ -111,7 +107,6 @@ const Player = () => {
       );
       setAutoPlay(true);
     } else {
-      console.log("you reached at end");
       setAlertMessage("you reached at end");
       setTimeout(() => {
         setAlertMessage("");
@@ -309,7 +304,6 @@ const Player = () => {
               // Check the error code
               if (e.target.error.code === 4 && !e.target.error.message.length) {
                 // Handle the 403 error
-                console.log("The request was forbidden");
                 getSongAudioUrls();
               }
             }}

@@ -40,7 +40,6 @@ const PlayerControls = ({
         audioRef.current.play();
       }
     } catch (error) {
-      console.log(error);
       setAlertMessage(error.message);
     }
 

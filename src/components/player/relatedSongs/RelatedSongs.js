@@ -23,7 +23,6 @@ const RelatedSongs = ({ songsList, setSongsList }) => {
       const data = await response.json();
       setSongsList(data.result);
     } catch (error) {
-      console.log(error);
       if (error instanceof Error) {
         setErrorMessage(error.message);
       }
