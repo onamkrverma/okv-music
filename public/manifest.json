@@ -2,7 +2,6 @@
   "short_name": "OKV Music",
   "name": "OKV Music",
   "icons": [
-   
     {
       "src": "logo144.png",
       "type": "image/png",
@@ -28,6 +27,7 @@
     }
   ],
   "start_url": "/",
+  "description": "Okv Music is a PWA that lets you explore and listen to new music and songs online. it offers a smooth and responsive web experience with a robust YouTube search functionality.",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
