@@ -9,7 +9,6 @@
   width: 200px;
   background: black;
   border-radius: 10px;
-  border: 1.5px solid var(--border-color);
 }
 .songs-image-wrapper {
   width: 100%;
