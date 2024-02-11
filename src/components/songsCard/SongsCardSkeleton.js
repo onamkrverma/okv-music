@@ -14,7 +14,7 @@ const SongsCardSkeleton = ({ amount }) => {
           </div>
           <div className="songs-title-wrapper">
             <p className="songs-title">
-              <Skeleton height={"8px"} count={2} />
+              <Skeleton height={"8px"} count={1} />
             </p>
           </div>
         </SkeletonTheme>

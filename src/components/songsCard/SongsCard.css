@@ -6,13 +6,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 300px;
+  width: 200px;
   background: black;
   border-radius: 10px;
+  border: 1.5px solid var(--border-color);
 }
 .songs-image-wrapper {
   width: 100%;
-  height: 170px;
+  height: 112.5px;
   border-radius: inherit;
 }
 
@@ -29,12 +30,11 @@ img.songs-image {
   padding: 0 10px;
   width: 100%;
 }
+.songs-title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
 
 @media (max-width: 426px) {
-  .songs-card-wrapper {
-    width: 250px;
-  }
-  .songs-image-wrapper {
-    height: 140px;
-  }
 }
