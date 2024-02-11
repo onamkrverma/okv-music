@@ -91,7 +91,7 @@ const PlaylistSongs = () => {
               >
                 <div className="playlist-songs-image-wrapper">
                   <img
-                    src={songs.snippet.thumbnails.default.url}
+                    src={songs.snippet.thumbnails?.default?.url}
                     className="playlist-songs-image"
                     alt="playlist-song"
                   />

@@ -4,6 +4,13 @@
 .search-result-container .view-all {
   display: none;
 }
+.search-result-container .songs-channel {
+  display: block;
+  text-align: center;
+  opacity: 0.7;
+  font-size: 12px;
+  margin-top: 5px;
+}
 
 @media (max-width: 426px) {
   .search-result-container {

@@ -24,16 +24,18 @@ img.songs-image {
   border-top-left-radius: inherit;
 }
 
-.songs-title-wrapper {
+.songs-title-channel-wrapper {
   margin: 10px 0;
   padding: 0 10px;
   width: 100%;
 }
+.songs-channel,
 .songs-title {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
-@media (max-width: 426px) {
+.songs-channel {
+  display: none;
 }

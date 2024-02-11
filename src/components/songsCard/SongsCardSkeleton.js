@@ -12,9 +12,12 @@ const SongsCardSkeleton = ({ amount }) => {
           <div className="songs-image-wrapper">
             <Skeleton height={"100%"} />
           </div>
-          <div className="songs-title-wrapper">
+          <div className="songs-title-channel-wrapper">
             <p className="songs-title">
               <Skeleton height={"8px"} count={1} />
+            </p>
+            <p className="songs-channel">
+              <Skeleton height={"8px"} width={"80px"} count={1} />
             </p>
           </div>
         </SkeletonTheme>
