@@ -38,7 +38,7 @@ const Home = () => {
   );
   const { id } = currentSong;
 
-  const newSongs = useGetPlaylistItemsQuery(playlistId.newRelesedId, {});
+  const newSongs = useGetPlaylistItemsQuery(playlistId.newRelesedId);
   const trendingSongs = useGetPlaylistItemsQuery(playlistId.trendingSongsId);
   const bollywoodHitsSongs = useGetPlaylistItemsQuery(
     playlistId.bollywoodHitsId

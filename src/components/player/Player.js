@@ -249,9 +249,7 @@ const Player = () => {
         songsInfo={songsInfo}
       />
 
-      <div
-        className={`player-section ${onMiniPlayer && "mini-player-active "} `}
-      >
+      <div className={`player-section ${onMiniPlayer && "hide-main-player"} `}>
         <div className="player-container">
           <div
             className={`player-song-image-wrapper ${

@@ -11,6 +11,7 @@
 .miniplayer-active {
   height: 70px;
   overflow: hidden;
+  bottom: 65px;
 }
 
 .top-player-controll-wrapper {
@@ -37,7 +38,7 @@
   transition: all 0.5s ease-in-out;
 }
 
-.mini-player-active {
+.hide-main-player {
   transform: translateY(600px);
   padding: 0;
   height: 0;

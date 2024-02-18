@@ -32,7 +32,7 @@ img.songs-image {
 .songs-channel,
 .songs-title {
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow-x: clip;
   white-space: nowrap;
 }
 

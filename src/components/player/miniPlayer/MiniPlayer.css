@@ -1,6 +1,6 @@
 .mini-player-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
   background: #071120;
   color: white;
@@ -14,13 +14,14 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  width: 50%;
+  width: 65%;
 }
 
 .mini-player-image-wrapper {
   width: 100px;
   height: 55px;
   border-radius: 8px;
+  box-shadow: 0 0 10px 2px var(--border-color);
 }
 
 .mini-player-image {
@@ -32,7 +33,7 @@
 
 .mini-player-song-title-channel-wrapper {
   flex-direction: column;
-  width: 60%;
+  width: 75%;
 }
 
 .mini-player-song-title {
@@ -56,4 +57,13 @@
 .player-close-wrapper {
   width: 25px;
   height: 25px;
+}
+
+@media (max-width: 426px) {
+  .mini-player-song-info-wrapper {
+    gap: 10px;
+  }
+  .mini-player-container .next-prev-icons {
+    display: none;
+  }
 }

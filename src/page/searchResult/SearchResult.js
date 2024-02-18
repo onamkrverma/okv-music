@@ -6,10 +6,14 @@ import SongsList from "../../components/songsList/SongsList";
 import { useGetSearchItemsQuery } from "../../reduxtool/services/songsApi";
 import Player from "../../components/player/Player";
 import "./SearchResult.css";
+import "../../components/header/Header.css";
+import { BsSearch } from "react-icons/bs";
 
 const SearchResult = () => {
   const { q } = useParams();
-  const { data, isLoading } = useGetSearchItemsQuery(q);
+  const { data, isLoading } = useGetSearchItemsQuery(q, {
+    skip: q === undefined,
+  });
   const currentSong = useSelector(
     (state) => state.currentSongSlice.currentSongInfo
   );
@@ -26,12 +30,38 @@ const SearchResult = () => {
   return (
     <div className="search-result-container ">
       <Header />
-      <SongsList
-        title={"Search results"}
-        songsData={searchResult?.items}
-        searchResult={"searchResult"}
-        isLoading={isLoading}
-      />
+
+      <div>
+        <form
+          className="header-search-wrapper"
+          // onSubmit={handleSearch}
+        >
+          <div className="search-icon-wrapper absolute-center">
+            <BsSearch
+              style={{ width: "100%", height: "100%", color: "black" }}
+            />
+          </div>
+
+          <input
+            type="text"
+            name="search"
+            className="search-input"
+            placeholder="Search songs"
+          />
+          <button type="submit" className="search-btn cur-pointer">
+            Search
+          </button>
+        </form>
+      </div>
+
+      {q ? (
+        <SongsList
+          title={"Search results"}
+          songsData={searchResult?.items}
+          searchResult={"searchResult"}
+          isLoading={isLoading}
+        />
+      ) : null}
       {id ? <Player /> : null}
     </div>
   );

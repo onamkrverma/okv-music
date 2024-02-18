@@ -47,6 +47,7 @@
   border-radius: 50%;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 
 .audio-play-pause {
