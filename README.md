@@ -65,6 +65,6 @@ You may also see any lint errors in the console.
 
 
 ## Contact
-If you have any questions or suggestions, feel free to contact me at my email onamkrverma@gmail.com
+If you have any questions or suggestions, feel free to [create an issue](https://github.com/onamkrverma/okv-music/issues) or [contact me](https://onam.vercel.app/contact)
 
 
