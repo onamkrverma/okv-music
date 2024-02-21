@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: #071120;
+  background: var(--secondary-bg);
   color: white;
   /* position: absolute;
   bottom: -1px;

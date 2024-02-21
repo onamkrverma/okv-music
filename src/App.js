@@ -5,6 +5,7 @@ import SearchResult from "./page/searchResult/SearchResult";
 import PlaylistSongs from "./page/playlistSongs/PlaylistSongs";
 import ScrollToTop from "./utils/ScrollToUp";
 import PageNotFound from "./page/pageNotFound/PageNotFound";
+import Trending from "./page/trending/Trending";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="playlistsongs/:urlTitle" element={<PlaylistSongs />} />
         <Route path="/search/:q" element={<SearchResult />} />
+        <Route path="/trending" element={<Trending />} />
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>

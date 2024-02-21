@@ -37,8 +37,6 @@ const MiniPlayer = ({
     localStorage.removeItem("currentSongInfo");
   };
 
-  console.log(currentSong);
-
   return (
     <div
       className="mini-player-section"

@@ -5,7 +5,8 @@ import { RxCross2 } from "react-icons/rx";
 import { BsSearch } from "react-icons/bs";
 import logo from "./logo.png";
 import { Link } from "react-router-dom";
-import { HiHome, HiMagnifyingGlass, HiBars3BottomRight } from "react-icons/hi2";
+import { HiHome, HiBars3BottomRight } from "react-icons/hi2";
+import { IoCompass, IoTrendingUp } from "react-icons/io5";
 
 const Header = () => {
   const [isSearchClick, setIsSearchClick] = useState(false);
@@ -26,9 +27,14 @@ const Header = () => {
   const navLinks = [
     { title: "Home", link: "/", icon: <HiHome size="100%" /> },
     {
-      title: "Search",
-      link: "/search",
-      icon: <HiMagnifyingGlass size="100%" />,
+      title: "Trending",
+      link: "/trending",
+      icon: <IoTrendingUp size="100%" />,
+    },
+    {
+      title: "Explore",
+      link: "/explore",
+      icon: <IoCompass size="100%" />,
     },
     { title: "More", link: "/more", icon: <HiBars3BottomRight size="100%" /> },
   ];
