@@ -95,13 +95,13 @@ const Trending = () => {
                     className="playlist-songs-image"
                     alt="playlist-song"
                   />
-                  {id === songs.id && (
+                  {id === songs.snippet.resourceId.videoId ? (
                     <div className="playing-status-wrapper">
                       <BsPlayCircleFill
                         style={{ width: "100%", height: "100%" }}
                       />
                     </div>
-                  )}
+                  ) : null}
                 </div>
                 <div className="playlist-songs-title-channel-wrapper">
                   <p className="playlist-songs-title-wrapper">
