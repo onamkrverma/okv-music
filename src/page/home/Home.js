@@ -11,7 +11,6 @@ import {
   removePlaylistSongs,
 } from "../../reduxtool/slice/songsSlice";
 import HeroBanner from "./heroBanner/HeroBanner";
-import Player from "../../components/player/Player";
 import AddPlaylist from "../../components/addPlaylist/AddPlaylist";
 import { MdDeleteForever } from "react-icons/md";
 
@@ -32,11 +31,6 @@ const Home = () => {
   const myPlaylistSongs = useSelector(
     (state) => state.songsSlice.myPlaylistSongs
   );
-
-  const currentSong = useSelector(
-    (state) => state.currentSongSlice.currentSongInfo
-  );
-  const { id } = currentSong;
 
   const newSongs = useGetPlaylistItemsQuery(playlistId.newRelesedId, {});
   const trendingSongs = useGetPlaylistItemsQuery(playlistId.trendingSongsId);
@@ -187,8 +181,6 @@ const Home = () => {
       ))}
       {/* add playlist button */}
       <AddPlaylist />
-
-      {id ? <Player /> : null}
     </div>
   );
 };
