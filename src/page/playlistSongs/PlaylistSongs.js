@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/header/Header";
 import { BsPlayCircleFill } from "react-icons/bs";
 import { addSongInfo } from "../../reduxtool/slice/currentSongSlice";
-import Player from "../../components/player/Player";
 import PlaylistSongsSkeleton from "./PlaylistSongsSkeleton";
 
 const PlaylistSongs = () => {
@@ -116,7 +115,6 @@ const PlaylistSongs = () => {
           ))}
         </div>
       )}
-      {id ? <Player /> : null}
     </div>
   );
 };
