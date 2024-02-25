@@ -6,8 +6,15 @@ import PlaylistSongs from "./page/playlistSongs/PlaylistSongs";
 import ScrollToTop from "./utils/ScrollToUp";
 import PageNotFound from "./page/pageNotFound/PageNotFound";
 import Trending from "./page/trending/Trending";
+import Player from "./components/player/Player";
+import { useSelector } from "react-redux";
 
 function App() {
+  const currentSong = useSelector(
+    (state) => state.currentSongSlice.currentSongInfo
+  );
+  const { id } = currentSong;
+
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -19,6 +26,7 @@ function App() {
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      {id ? <Player /> : null}
     </BrowserRouter>
   );
 }

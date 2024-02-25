@@ -2,12 +2,10 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: var(--secondary-bg);
+  background: transparent;
   color: white;
-  /* position: absolute;
-  bottom: -1px;
-  width: 100%; */
   padding: 0 10px;
+  margin: 0 auto;
 }
 
 .mini-player-song-info-wrapper {

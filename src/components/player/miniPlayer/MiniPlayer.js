@@ -42,7 +42,7 @@ const MiniPlayer = ({
       className="mini-player-section"
       style={{ display: (playerClose || !id) && "none" }}
     >
-      <div className="mini-player-container">
+      <div className="mini-player-container container">
         <div
           className="mini-player-song-info-wrapper cur-pointer"
           onClick={() =>
