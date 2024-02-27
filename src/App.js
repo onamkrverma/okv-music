@@ -8,6 +8,7 @@ import PageNotFound from "./page/pageNotFound/PageNotFound";
 import Trending from "./page/trending/Trending";
 import Player from "./components/player/Player";
 import { useSelector } from "react-redux";
+import Explore from "./page/explore/Explore";
 
 function App() {
   const currentSong = useSelector(
@@ -23,6 +24,7 @@ function App() {
         <Route path="playlistsongs/:urlTitle" element={<PlaylistSongs />} />
         <Route path="/search/:q" element={<SearchResult />} />
         <Route path="/trending" element={<Trending />} />
+        <Route path="/explore" element={<Explore />} />
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>

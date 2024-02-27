@@ -29,6 +29,18 @@ export const songsApi = createApi({
       }),
     }),
 
+    getPlaylist: builder.query({
+      query: (playlistId) => ({
+        url: "playlists",
+        params: {
+          part: "snippet",
+          id: playlistId,
+          maxResults: "1",
+          key: selectRandomKey(),
+        },
+        method: "GET",
+      }),
+    }),
     getPlaylistItems: builder.query({
       query: (playlistId) => ({
         url: "playlistItems",
@@ -90,4 +102,5 @@ export const {
   useGetSearchItemsQuery,
   useGetSearchRelatedItemsQuery,
   useGetAllPlaylistItemsQuery,
+  useGetPlaylistQuery,
 } = songsApi;

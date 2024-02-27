@@ -1,15 +1,23 @@
 .songs-card-container {
   display: flex;
   justify-content: center;
+  padding: 5px 0;
 }
 .songs-card-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 200px;
-  background: black;
+  background: var(--secondary-bg);
   border-radius: 10px;
+  transition: box-shadow 0.15s ease-in-out;
+  border: 1px solid var(--border-color);
 }
+.songs-card-wrapper:hover,
+.songs-card-wrapper:focus-within {
+  box-shadow: 0 0 5px 5px var(--border-color);
+}
+
 .songs-image-wrapper {
   width: 100%;
   height: 112.5px;

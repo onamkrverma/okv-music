@@ -14,13 +14,13 @@ const PlaylistSongsSkeleton = ({ amount, variant }) => {
         >
           {variant !== "trending" ? (
             <div className="playlist-songs-header-image-wrapper">
-              <Skeleton width={"300px"} height={"200px"} />
+              <Skeleton width={"300px"} height={"150px"} />
             </div>
           ) : null}
 
           <div className="playlist-title-wrapper">
             <h1 className="playlist-title">
-              <Skeleton width={"100px"} />
+              <Skeleton width={"150px"} />
             </h1>
             <p className="playlist-title-subtext">
               <Skeleton width={"50px"} />

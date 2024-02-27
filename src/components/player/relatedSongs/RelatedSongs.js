@@ -13,12 +13,13 @@ const RelatedSongs = ({ songsList, setSongsList }) => {
   );
   const { id } = currentSong;
   const [isUpClick, setIsUpClick] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const getRelated = async () => {
+    setIsLoading(true);
+    setErrorMessage(null);
     try {
-      setErrorMessage(null);
       const response = await getRelatedSongs({ id });
       const data = await response.json();
       setSongsList(data.result);
