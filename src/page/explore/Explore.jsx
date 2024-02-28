@@ -103,12 +103,6 @@ const Explore = () => {
     <section className="explore-section">
       <Header />
       <div className="explore-container container">
-        <ExploreList
-          title={"Discover New Music"}
-          exploreData={discoverNewMusic}
-          isLoading={newIndianPop.isLoading}
-          dataType="youtubeFetch"
-        />
         {localPlaylists?.map((localPlaylist, index) => (
           <ExploreList
             key={index}
@@ -118,6 +112,13 @@ const Explore = () => {
             dataType="localFetch"
           />
         ))}
+
+        <ExploreList
+          title={"Discover New Music"}
+          exploreData={discoverNewMusic}
+          isLoading={newIndianPop.isLoading}
+          dataType="youtubeFetch"
+        />
       </div>
     </section>
   );

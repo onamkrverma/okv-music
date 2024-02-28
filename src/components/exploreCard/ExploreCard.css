@@ -14,8 +14,8 @@
   box-shadow: 0 0 5px 5px var(--border-color);
 }
 .explore-card-image {
-  padding: 5px;
-  width: 100%;
+  padding: 2px;
+  width: inherit;
   border-radius: inherit;
 }
 .explore-card-image img {
@@ -43,6 +43,9 @@
 @media (max-width: 426px) {
   .explore-card {
     width: 150px;
+  }
+  .explore-card-image {
+    height: 150px;
   }
   .explore-card-title {
     font-size: 16px;

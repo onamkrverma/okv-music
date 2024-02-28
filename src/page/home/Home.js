@@ -17,9 +17,8 @@ import { MdDeleteForever } from "react-icons/md";
 const Home = () => {
   const playlistId = {
     newRelesedId: "RDCLAK5uy_nNhhgRET3NcJ4SJBvqhAIJ6t7vjsQYowc",
-    trendingSongsId: "PL_yIBWagYVjwYmv3PlwYk0b4vmaaHX6aL",
+    trendingSongsId: "OLAK5uy_lSTp1DIuzZBUyee3kDsXwPgP25WdfwB40",
     bollywoodHitsId: "RDCLAK5uy_n9Fbdw7e6ap-98_A-8JYBmPv64v-Uaq1g",
-    punjabiFireId: "RDCLAK5uy_kuo_NioExeUmw07dFf8BzQ64DFFTlgE7Q",
   };
   // local playlist
   const myLocalPlaylist = useSelector(

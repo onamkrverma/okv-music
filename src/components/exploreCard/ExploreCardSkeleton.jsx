@@ -9,7 +9,7 @@ const ExploreCardSkeleton = ({ amount }) => {
     <SkeletonTheme baseColor="#202020" highlightColor="#292828" key={index}>
       <div className="explore-card">
         <div className="explore-card-image">
-          <Skeleton height={"140px"} width={"140px"} />
+          <Skeleton height={"150px"} />
           <div className="explore-card-metadata-wrapper">
             <h6 className="explore-card-title">
               <Skeleton height={"8px"} count={1} />

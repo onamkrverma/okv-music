@@ -18,7 +18,7 @@ const ExploreCard = ({ item, dataType }) => {
   const title = dataType === "localFetch" ? item.title : item.snippet.title;
   const description =
     dataType === "localFetch"
-      ? `${shuffledWord} to brand ${title.toLowerCase()} of the moment`
+      ? `${shuffledWord} ${title.toLowerCase()} of the moment`
       : item.snippet.description;
 
   return (
