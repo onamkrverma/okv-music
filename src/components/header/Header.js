@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import { RxCross2 } from "react-icons/rx";
@@ -12,6 +12,7 @@ const Header = () => {
   const [isSearchClick, setIsSearchClick] = useState(false);
   const [isRotate, setIsRotate] = useState(false);
   const navigate = useNavigate();
+  const inputRef = useRef(null);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -40,6 +41,12 @@ const Header = () => {
   ];
 
   const currentPath = window.location.pathname;
+
+  useEffect(() => {
+    if (isSearchClick) {
+      inputRef.current?.focus();
+    }
+  }, [isSearchClick]);
 
   return (
     <div className="header-nav-container">
@@ -85,6 +92,7 @@ const Header = () => {
               name="search"
               className="search-input"
               placeholder="Search songs"
+              ref={inputRef}
             />
             <button type="submit" className="search-btn cur-pointer">
               Search
