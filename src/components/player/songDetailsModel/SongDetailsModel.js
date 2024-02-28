@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
+import { HiOutlineClipboardDocumentCheck } from "react-icons/hi2";
 import "./SongDetailsModel.css";
 const SongDetailsModel = ({
   id,
@@ -8,6 +9,17 @@ const SongDetailsModel = ({
   setPlayerInfo,
   songUrl,
 }) => {
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleCopy = () => {
+    if (!songUrl) return;
+    navigator.clipboard.writeText(songUrl);
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 3000);
+  };
+
   return (
     <div
       className="song-details-model-wrapper absolute-center"
@@ -44,7 +56,23 @@ const SongDetailsModel = ({
         <p className="song-details">
           Image: {`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
         </p>
-        <p className="song-details">songUrl: {songUrl}</p>
+        <div className="song-details ">
+          <div className="song-url-wrapper">
+            <p>SongUrl:</p>
+            <button
+              type="button"
+              className="copy-btn"
+              title="Copy Url"
+              onClick={handleCopy}
+            >
+              {isCopied ? (
+                <span className="tooltiptext">Copied to clipboard</span>
+              ) : null}
+              <HiOutlineClipboardDocumentCheck size={20} color="white" />
+            </button>
+          </div>
+          <p>{songUrl}</p>
+        </div>
       </div>
     </div>
   );
