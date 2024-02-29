@@ -50,8 +50,6 @@ const Player = () => {
       const data = await response.json();
       if (audioFormat === "high") {
         setSongUrl(data.audioFormatHigh);
-        // setAudioLoading(false);
-        // setIsPlaying(false);
       } else {
         setSongUrl(data.audioFormatLow);
       }

@@ -3,32 +3,11 @@ import Header from "../../components/header/Header";
 import { useGetPlaylistQuery } from "../../reduxtool/services/songsApi";
 import "./Explore.css";
 import ExploreList from "../../components/exploreList/ExploreList";
-import { getLocalPlaylistinfo } from "../../api/getLocalPlaylistinfo";
+import { useGetMyplaylistInfoQuery } from "../../reduxtool/services/myApi";
 
 const Explore = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [localPlaylists, setLocalPlaylists] = useState([]);
-
-  const getLocalPlaylists = async () => {
-    setIsLoading(true);
-    try {
-      const response = await getLocalPlaylistinfo();
-      const data = await response.json();
-      console.log(data);
-      setLocalPlaylists(data.localPlaylistsInfo);
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getLocalPlaylists();
-    // eslint-disable-next-line
-  }, []);
+  const [discoverNewMusic, setDiscoverNewMusic] = useState([]);
 
   const playlists = [
     { title: "Released", id: "RDCLAK5uy_ksEjgm3H_7zOJ_RHzRjN1wY-_FFcs7aAU" },
@@ -57,8 +36,6 @@ const Explore = () => {
       id: "RDCLAK5uy_nVQAtE2KBWk-ROQIc5o39Oup3hOLnYV0g",
     },
   ];
-
-  const [discoverNewMusic, setDiscoverNewMusic] = useState([]);
 
   const newReleased = useGetPlaylistQuery(playlists[0].id);
   const newMusicHindi = useGetPlaylistQuery(playlists[1].id);
@@ -98,6 +75,18 @@ const Explore = () => {
     newMusicTamil.data,
     newMusicTelgu.data,
   ]);
+
+  // get my local playlist info
+
+  const { data, isLoading } = useGetMyplaylistInfoQuery();
+  console.log(data);
+
+  useEffect(() => {
+    if (data) {
+      setLocalPlaylists(data.localPlaylistsInfo);
+    }
+    // eslint-disable-next-line
+  }, [data]);
 
   return (
     <section className="explore-section">
