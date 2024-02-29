@@ -73,6 +73,7 @@ export const songsApi = createApi({
           part: "snippet",
           q: searchQuery,
           type: "video",
+          eventType: "completed",
           maxResults: "50",
           key: selectRandomKey(),
         },
