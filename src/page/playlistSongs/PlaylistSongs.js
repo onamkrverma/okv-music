@@ -3,7 +3,6 @@ import "./PlaylistSongs.css";
 import { useGetAllPlaylistItemsQuery } from "../../reduxtool/services/songsApi";
 import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Header from "../../components/header/Header";
 import { BsPlayCircleFill } from "react-icons/bs";
 import { addSongInfo } from "../../reduxtool/slice/currentSongSlice";
 import PlaylistSongsSkeleton from "./PlaylistSongsSkeleton";
@@ -41,7 +40,6 @@ const PlaylistSongs = () => {
 
   return (
     <div className="playlist-songs-container">
-      <Header />
       {isLoading || !playlistInfo.length ? (
         <PlaylistSongsSkeleton amount={10} variant="playlist" />
       ) : (

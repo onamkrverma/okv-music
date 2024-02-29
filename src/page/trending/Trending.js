@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./Trending.css";
-import Header from "../../components/header/Header";
 import "../playlistSongs/PlaylistSongs.css";
 import { useGetAllPlaylistItemsQuery } from "../../reduxtool/services/songsApi";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,7 +52,6 @@ const Trending = () => {
 
   return (
     <div className="playlist-songs-container trending-songs-container">
-      <Header />
       {isLoading || !playlistInfo.length ? (
         <PlaylistSongsSkeleton amount={10} variant="trending" />
       ) : (

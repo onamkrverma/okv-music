@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../../components/header/Header";
 import SongsList from "../../components/songsList/SongsList";
 import { useGetSearchItemsQuery } from "../../reduxtool/services/songsApi";
 import "./SearchResult.css";
@@ -18,7 +17,6 @@ const SearchResult = () => {
 
   return (
     <div className="search-result-container ">
-      <Header />
       <SongsList
         title={"Search results"}
         songsData={searchResult}

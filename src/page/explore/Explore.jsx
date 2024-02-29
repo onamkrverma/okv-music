@@ -90,7 +90,6 @@ const Explore = () => {
 
   return (
     <section className="explore-section">
-      <Header />
       <div className="explore-container container">
         {localPlaylists?.map((localPlaylist, index) => (
           <ExploreList

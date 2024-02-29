@@ -44,8 +44,9 @@ const PlayerMoreInfo = ({
             className="audio-selection-wrapper cur-pointer"
             style={{ display: !playerInfo.isAudioQualityClick && "none" }}
           >
-            <label htmlFor="audio-quality">Select Quality</label>
+            <label htmlFor="select-audio-quality">Select Quality</label>
             <select
+              id="select-audio-quality"
               className="cur-pointer"
               onChange={(e) => setAudioFormat(e.target.value)}
               value={audioFormat}

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "./Home.css";
 import { useGetPlaylistItemsQuery } from "../../reduxtool/services/songsApi";
-import Header from "../../components/header/Header";
 import SongsList from "../../components/songsList/SongsList";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -128,7 +127,6 @@ const Home = () => {
 
   return (
     <div className="home-section">
-      <Header />
       <HeroBanner
         songsData={songsData[0]?.data?.items}
         isLoading={songsData[0]?.metaData?.isLoading}

@@ -9,6 +9,7 @@ import Trending from "./page/trending/Trending";
 import Player from "./components/player/Player";
 import { useSelector } from "react-redux";
 import Explore from "./page/explore/Explore";
+import Header from "./components/header/Header";
 
 function App() {
   const currentSong = useSelector(
@@ -19,6 +20,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="playlistsongs/:urlTitle" element={<PlaylistSongs />} />

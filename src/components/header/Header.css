@@ -62,26 +62,6 @@
   display: none;
 }
 
-.refress-data-wrapper {
-  position: absolute;
-  width: 42px;
-  height: 100%;
-  overflow: hidden;
-}
-.refress-data-wrapper .header-logo {
-  width: auto;
-}
-
-.rotate-logo {
-  transition: rotate 3s ease-in-out;
-  animation: rotate 5s;
-}
-@keyframes rotate {
-  50% {
-    transform: rotate(360deg);
-  }
-}
-
 /* bottom navigation */
 
 .bottom-nav-container {
@@ -100,6 +80,7 @@
   gap: 5px;
   height: 65px;
   padding: 0 10px;
+  margin: 0 auto;
 }
 .bottom-nav-link {
   text-decoration: none;
@@ -117,6 +98,73 @@
   display: block;
   font-weight: bold;
   font-size: small;
+}
+.more-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* more options */
+
+.more-options-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  background-color: rgb(0 0 0 / 50%);
+  backdrop-filter: blur(1px);
+  transition: all 0.3s ease-in-out;
+}
+.more-options-container-visible {
+  z-index: 15;
+  pointer-events: all;
+}
+.more-options-container-hide {
+  z-index: -15;
+  pointer-events: none;
+}
+
+.more-options-model {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 400px;
+  border: 1px solid var(--border-color);
+  height: 100%;
+  background: var(--secondary-bg);
+  padding: 15px;
+  overflow-y: auto;
+  color: var(--primary-text-color);
+  transform: translateX(0);
+  transition: transform 0.3s ease-in-out;
+}
+.more-options-model-inActive {
+  transform: translateX(100%);
+}
+.more-options-logo-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  align-items: center;
+}
+.more-options-logo-wrapper img {
+  width: 150px;
+}
+.close-btn {
+  border: none;
+  color: var(--primary-text-color);
+  border-radius: 5px;
+  cursor: pointer;
+  background: none;
+  padding: 2px;
+  transition: all 0.2s ease-in-out;
+}
+.close-btn:hover {
+  background: var(--gradient);
 }
 
 /* responsive css */
@@ -143,5 +191,9 @@
 
   .bottom-nav-text {
     display: none;
+  }
+
+  .more-options-model {
+    width: 80%;
   }
 }
