@@ -12,6 +12,16 @@
   font-size: 12px;
   margin-top: 5px;
 }
+.search-result-container .live-content {
+  display: block;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: rgb(255, 0, 0);
+  font-size: 12px;
+  padding: 2px;
+  border-radius: 3px;
+}
 
 @media (max-width: 426px) {
   .search-result-container {
