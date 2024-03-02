@@ -205,6 +205,19 @@ const Player = () => {
     }
   }, [onMiniPlayer]);
 
+  // scrolling song title
+  const titleContainerRef = useRef(null);
+  const titleRef = useRef(null);
+  const [isScrollTitle, setIsScrollTitle] = useState(false);
+  useEffect(() => {
+    if (
+      titleRef.current?.clientWidth > titleContainerRef.current?.clientWidth
+    ) {
+      setIsScrollTitle(true);
+    }
+    // eslint-disable-next-line
+  }, [titleRef.current]);
+
   return (
     <div
       className={`player-page-section ${
@@ -221,14 +234,16 @@ const Player = () => {
       {/* <Header /> */}
       {!onMiniPlayer && (
         <div className="top-player-controll-wrapper">
-          <div
+          <button
+            type="button"
+            title="minimize"
             className="player-minimize-wrapper cur-pointer"
             onClick={() =>
               dispatch(addSongInfo({ ...currentSong, onMiniPlayer: true }))
             }
           >
             <BsChevronDown style={{ width: "100%", height: "100%" }} />
-          </div>
+          </button>
           <PlayerMoreInfo
             id={id}
             playerInfo={playerInfo}
@@ -279,18 +294,26 @@ const Player = () => {
             )}
           </div>
 
-          {isLoading ? (
+          {isLoading && !songsInfo.length ? (
             <div className="player-song-title-channel-wrapper absolute-center">
               <Skeleton width={"200px"} />
             </div>
           ) : (
-            <div className="player-song-title-channel-wrapper absolute-center">
-              <div className="player-song-title">
-                {songsInfo[0]?.snippet?.title.slice(0, 70) + "..."}
-              </div>
-              <div className="player-song-channel">
+            <div
+              className="player-song-title-channel-wrapper absolute-center"
+              ref={titleContainerRef}
+            >
+              <p
+                className={`player-song-title ${
+                  isScrollTitle ? "player-song-title-scrolling" : ""
+                }`}
+                ref={titleRef}
+              >
+                {songsInfo[0]?.snippet?.title}
+              </p>
+              <p className="player-song-channel">
                 • {songsInfo[0]?.snippet?.channelTitle}
-              </div>
+              </p>
             </div>
           )}
 

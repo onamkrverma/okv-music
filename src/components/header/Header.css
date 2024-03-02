@@ -48,6 +48,7 @@
   border-radius: 15px 0 0 15px;
   border: none;
   outline: none;
+  color: var(--primary-bg);
 }
 .search-btn {
   border: none;

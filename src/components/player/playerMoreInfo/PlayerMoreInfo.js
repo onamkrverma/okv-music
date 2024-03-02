@@ -13,14 +13,16 @@ const PlayerMoreInfo = ({
   localStorage.setItem("audioQuality", audioFormat);
   return (
     <div>
-      <div
+      <button
+        type="button"
+        title="more-info"
         className="player-info-wrapper player-minimize-wrapper  cur-pointer"
         onClick={() =>
           setPlayerInfo({ isMoreInfoClick: !playerInfo.isMoreInfoClick })
         }
       >
         <BsThreeDotsVertical style={{ width: "100%", height: "100%" }} />
-      </div>
+      </button>
       <div
         className="player-more-info"
         style={{ top: playerInfo.isMoreInfoClick ? "50px" : "" }}

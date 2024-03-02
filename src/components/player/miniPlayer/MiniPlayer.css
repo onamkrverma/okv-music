@@ -56,9 +56,14 @@
   overflow-x: clip;
 }
 
+.audio-controls-wrapper {
+  filter: drop-shadow(2px 4px 6px var(--border-color));
+}
+
 .player-close-wrapper {
   width: 25px;
   height: 25px;
+  filter: drop-shadow(2px 4px 6px var(--border-color));
 }
 
 @media (max-width: 426px) {
