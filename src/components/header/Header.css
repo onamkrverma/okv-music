@@ -136,7 +136,7 @@
   width: 400px;
   border: 1px solid var(--border-color);
   height: 100%;
-  background: var(--secondary-bg);
+  background: var(--primary-bg);
   padding: 15px;
   overflow-y: auto;
   color: var(--primary-text-color);
@@ -166,6 +166,27 @@
 }
 .close-btn:hover {
   background: var(--gradient);
+}
+
+.more-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 10px 0;
+}
+.more-option {
+  color: white;
+  gap: 10px;
+  font-size: 18px;
+  padding: 10px;
+  justify-content: start;
+  width: 100%;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.more-option:hover {
+  background: var(--secondary-bg);
 }
 
 /* responsive css */

@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { HiHome, HiBars3BottomRight } from "react-icons/hi2";
 import { IoCompass, IoTrendingUp } from "react-icons/io5";
 import { AiFillInfoCircle } from "react-icons/ai";
+import { MdFeedback } from "react-icons/md";
 
 const Header = () => {
   const [isSearchClick, setIsSearchClick] = useState(false);
@@ -34,6 +35,10 @@ const Header = () => {
       icon: <IoCompass size="100%" />,
     },
     { title: "More", icon: <HiBars3BottomRight size="100%" /> },
+  ];
+  const moreOptions = [
+    { title: "Feedback", link: "/feedback", icon: <MdFeedback size={25} /> },
+    { title: "About", link: "/about", icon: <AiFillInfoCircle size={25} /> },
   ];
 
   const currentPath = window.location.pathname;
@@ -166,10 +171,16 @@ const Header = () => {
             </button>
           </div>
           <div className="more-options-list">
-            <div className="absolute-center">
-              <AiFillInfoCircle size={20} />
-              About us
-            </div>
+            {moreOptions.map((item, index) => (
+              <Link
+                key={index}
+                to={item.link}
+                onClick={() => setIsMoreOptions(false)}
+                className="more-option  absolute-center"
+              >
+                {item.icon} {item.title}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
