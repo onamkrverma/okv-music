@@ -304,6 +304,7 @@ const Player = () => {
               // Check the error code
               if (e.target.error.code === 4 && !e.target.error.message.length) {
                 // Handle the 403 error
+                setSongUrl("");
                 getSongAudioUrls();
               }
             }}
