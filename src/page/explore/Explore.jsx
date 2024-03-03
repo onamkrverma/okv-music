@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Header from "../../components/header/Header";
 import { useGetPlaylistQuery } from "../../reduxtool/services/songsApi";
 import "./Explore.css";
 import ExploreList from "../../components/exploreList/ExploreList";

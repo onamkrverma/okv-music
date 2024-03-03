@@ -66,12 +66,15 @@
   border: none;
   background: #e70505;
   color: var(--primary-text-color);
-  padding: 10px 15px;
-  border-radius: 5px;
+  padding: 15px 20px;
+  border-radius: 10px;
   cursor: pointer;
 }
 .form-btn.submit-btn {
   background: var(--gradient);
+}
+.form-btn.submit-btn:disabled {
+  background: var(--border-color);
 }
 
 .status-message {

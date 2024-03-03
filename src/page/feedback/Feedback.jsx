@@ -1,22 +1,32 @@
 import React, { useRef, useState } from "react";
 import "./Feedback.css";
+import { postFeedback } from "../../api/postFeedback";
 
 const Feedback = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState(null);
   const formRef = useRef(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setStatusMessage(null);
     try {
       if (!formRef.current) return;
       const formData = new FormData(formRef.current);
       const formDataObj = Object.fromEntries(formData.entries());
       const { name, email, subject, message } = formDataObj;
+      const response = await postFeedback({ name, email, subject, message });
 
-      console.log(formDataObj);
+      if (response.status !== 200) {
+        throw new Error("Failed to send feedback ❌");
+      }
+      setStatusMessage("Feedback send successfully ✅");
+      e.target?.reset();
     } catch (error) {
+      if (error instanceof Error) {
+        setStatusMessage(error.message);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -58,7 +68,7 @@ const Feedback = () => {
           <label htmlFor="subject">Subject</label>
           <input
             id="subject"
-            name="Subject"
+            name="subject"
             type="text"
             placeholder="Subject"
             className="feedback-form-input"
@@ -82,8 +92,13 @@ const Feedback = () => {
           <button type="reset" title="Reset" className="form-btn">
             Reset
           </button>
-          <button type="submit" title="Submit" className="form-btn submit-btn">
-            Submit
+          <button
+            type="submit"
+            title="Submit"
+            className="form-btn submit-btn"
+            disabled={isLoading}
+          >
+            {isLoading ? "Submiting..." : "Submit"}
           </button>
         </div>
         {statusMessage ? (
