@@ -19,6 +19,17 @@ const Header = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     const searchQuery = e.target[0].value;
+    const isYoutubeSharedLink = searchQuery.indexOf("https://youtu.be");
+    const isYoutubeURLLink = searchQuery.indexOf("https://www.youtube.com");
+    if (isYoutubeSharedLink !== -1) {
+      const parts = searchQuery.split(".be/");
+      const videoId = parts[1].split("?")[0];
+      return navigate(`/search/${videoId}`);
+    } else if (isYoutubeURLLink !== -1) {
+      const url = new URL(searchQuery);
+      const videoId = url.searchParams.get("v");
+      return navigate(`/search/${videoId}`);
+    }
     navigate(`/search/${searchQuery}`);
   };
 
