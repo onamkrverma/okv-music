@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import Explore from "./page/explore/Explore";
 import Header from "./components/header/Header";
 import Feedback from "./page/feedback/Feedback";
+import About from "./page/about/About";
 
 function App() {
   const currentSong = useSelector(
@@ -29,6 +30,7 @@ function App() {
         <Route path="/trending" element={<Trending />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/feedback" element={<Feedback />} />
+        <Route path="/about" element={<About />} />
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>
