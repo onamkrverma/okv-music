@@ -1,25 +1,37 @@
 import React from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
-const PlaylistSongsSkeleton = ({ amount }) => {
+const PlaylistSongsSkeleton = ({ amount, variant }) => {
   const arrayCount = Array(amount).fill(1);
 
   return (
     <div className="container">
       <SkeletonTheme baseColor="#202020" highlightColor="#292828">
-        <div className="playlist-songs-header">
-          <div className="playlist-songs-header-image-wrapper">
-            <Skeleton width={"300px"} height={"200px"} />
-          </div>
+        <div
+          className={`playlist-songs-header ${
+            variant === "trending" ? "trending-header" : ""
+          } `}
+        >
+          {variant !== "trending" ? (
+            <div className="playlist-songs-header-image-wrapper">
+              <Skeleton width={"300px"} height={"150px"} />
+            </div>
+          ) : null}
 
           <div className="playlist-title-wrapper">
             <h1 className="playlist-title">
-              <Skeleton width={"100px"} />
+              <Skeleton width={"150px"} />
             </h1>
             <p className="playlist-title-subtext">
               <Skeleton width={"50px"} />
             </p>
           </div>
+          {variant === "trending" ? (
+            <div className="toggle-box">
+              <Skeleton width={"50px"} />
+              <Skeleton width={"50px"} />
+            </div>
+          ) : null}
         </div>
 
         {arrayCount.fill(amount).map((val, index) => (

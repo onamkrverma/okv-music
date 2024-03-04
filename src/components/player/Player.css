@@ -11,6 +11,7 @@
 .miniplayer-active {
   height: 70px;
   overflow: hidden;
+  bottom: 65px;
 }
 
 .top-player-controll-wrapper {
@@ -22,9 +23,12 @@
 }
 
 .player-minimize-wrapper {
+  border: none;
+  background: none;
   width: 25px;
   height: 25px;
   color: var(--primary-text-color);
+  filter: drop-shadow(2px 4px 6px var(--border-color));
 }
 
 .player-section {
@@ -35,9 +39,10 @@
   gap: 20px;
   position: relative;
   transition: all 0.5s ease-in-out;
+  margin: 0 auto;
 }
 
-.mini-player-active {
+.hide-main-player {
   transform: translateY(600px);
   padding: 0;
   height: 0;
@@ -71,15 +76,32 @@
 }
 
 .player-song-title-channel-wrapper {
-  margin: 20px 0;
+  margin: 10px 0;
   flex-direction: column;
-  width: 90%;
+  width: 80%;
+  overflow-x: hidden;
 }
 
 .player-song-title {
-  text-align: center;
   font-weight: 600;
   line-height: 25px;
+  text-align: center;
+  white-space: nowrap;
+}
+.player-song-title-scrolling {
+  animation: scrollingTitle 15s linear infinite;
+}
+
+@keyframes scrollingTitle {
+  0% {
+    transform: translateX(50%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .player-song-channel {
@@ -111,6 +133,10 @@
   .player-song-image-wrapper.small-hq-image {
     height: 170px;
   }
+  .player-song-title-channel-wrapper {
+    width: 90%;
+  }
+
   .alert-message-wrapper {
     bottom: -40px;
   }

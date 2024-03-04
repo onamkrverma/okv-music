@@ -12,6 +12,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import RelatedSongs from "./relatedSongs/RelatedSongs";
 import PlayerMoreInfo from "./playerMoreInfo/PlayerMoreInfo";
 import SongDetailsModel from "./songDetailsModel/SongDetailsModel";
+import { useLocation } from "react-router-dom";
 
 const Player = () => {
   const [songUrl, setSongUrl] = useState("");
@@ -50,8 +51,6 @@ const Player = () => {
       const data = await response.json();
       if (audioFormat === "high") {
         setSongUrl(data.audioFormatHigh);
-        // setAudioLoading(false);
-        // setIsPlaying(false);
       } else {
         setSongUrl(data.audioFormatLow);
       }
@@ -207,6 +206,32 @@ const Player = () => {
     }
   }, [onMiniPlayer]);
 
+  // scrolling song title
+  const titleContainerRef = useRef(null);
+  const titleRef = useRef(null);
+  const [isScrollTitle, setIsScrollTitle] = useState(false);
+  useEffect(() => {
+    if (
+      titleRef.current?.clientWidth > titleContainerRef.current?.clientWidth
+    ) {
+      setIsScrollTitle(true);
+    }
+    // eslint-disable-next-line
+  }, [titleRef.current]);
+
+  // minimize player if back button press
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.addEventListener("popstate", () => {
+      if (!onMiniPlayer) {
+        dispatch(addSongInfo({ ...currentSong, onMiniPlayer: true }));
+      }
+    });
+
+    // eslint-disable-next-line
+  }, [pathname]);
+
   return (
     <div
       className={`player-page-section ${
@@ -223,14 +248,16 @@ const Player = () => {
       {/* <Header /> */}
       {!onMiniPlayer && (
         <div className="top-player-controll-wrapper">
-          <div
+          <button
+            type="button"
+            title="minimize"
             className="player-minimize-wrapper cur-pointer"
             onClick={() =>
               dispatch(addSongInfo({ ...currentSong, onMiniPlayer: true }))
             }
           >
             <BsChevronDown style={{ width: "100%", height: "100%" }} />
-          </div>
+          </button>
           <PlayerMoreInfo
             id={id}
             playerInfo={playerInfo}
@@ -250,7 +277,9 @@ const Player = () => {
       />
 
       <div
-        className={`player-section ${onMiniPlayer && "mini-player-active "} `}
+        className={`player-section container ${
+          onMiniPlayer ? "hide-main-player" : ""
+        } `}
       >
         <div className="player-container">
           <div
@@ -272,25 +301,39 @@ const Player = () => {
               <SkeletonTheme
                 baseColor="#747070"
                 highlightColor="#615e5e"
-                duration="2s"
+                duration={2}
               >
                 <Skeleton height={"170px"} />
               </SkeletonTheme>
             )}
           </div>
 
-          {isLoading ? (
+          {isLoading && !songsInfo.length ? (
             <div className="player-song-title-channel-wrapper absolute-center">
-              <Skeleton width={"200px"} />
+              <SkeletonTheme
+                baseColor="#747070"
+                highlightColor="#615e5e"
+                duration={2}
+              >
+                <Skeleton width={"250px"} />
+              </SkeletonTheme>
             </div>
           ) : (
-            <div className="player-song-title-channel-wrapper absolute-center">
-              <div className="player-song-title">
-                {songsInfo[0]?.snippet?.title.slice(0, 70) + "..."}
-              </div>
-              <div className="player-song-channel">
+            <div
+              className="player-song-title-channel-wrapper absolute-center"
+              ref={titleContainerRef}
+            >
+              <p
+                className={`player-song-title ${
+                  isScrollTitle ? "player-song-title-scrolling" : ""
+                }`}
+                ref={titleRef}
+              >
+                {songsInfo[0]?.snippet?.title}
+              </p>
+              <p className="player-song-channel">
                 • {songsInfo[0]?.snippet?.channelTitle}
-              </div>
+              </p>
             </div>
           )}
 

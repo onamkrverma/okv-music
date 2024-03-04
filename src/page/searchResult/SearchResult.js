@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../../components/header/Header";
 import SongsList from "../../components/songsList/SongsList";
 import { useGetSearchItemsQuery } from "../../reduxtool/services/songsApi";
 import "./SearchResult.css";
@@ -18,13 +17,20 @@ const SearchResult = () => {
 
   return (
     <div className="search-result-container ">
-      <Header />
       <SongsList
         title={"Search results"}
         songsData={searchResult}
         searchResult={"searchResult"}
         isLoading={isLoading}
       />
+
+      {!isLoading && !searchResult.length ? (
+        <div className="search-not-found-wrapper container">
+          <h1>404</h1>
+          <p className="search-query-text">Search Query: {q}</p>
+          <p>Opps... This search query could not be found!</p>
+        </div>
+      ) : null}
     </div>
   );
 };

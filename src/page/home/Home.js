@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "./Home.css";
 import { useGetPlaylistItemsQuery } from "../../reduxtool/services/songsApi";
-import Header from "../../components/header/Header";
 import SongsList from "../../components/songsList/SongsList";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,10 +15,9 @@ import { MdDeleteForever } from "react-icons/md";
 
 const Home = () => {
   const playlistId = {
-    newRelesedId: "RDCLAK5uy_ksEjgm3H_7zOJ_RHzRjN1wY-_FFcs7aAU",
-    trendingSongsId: "PL_yIBWagYVjwYmv3PlwYk0b4vmaaHX6aL",
+    newRelesedId: "RDCLAK5uy_nNhhgRET3NcJ4SJBvqhAIJ6t7vjsQYowc",
+    trendingSongsId: "OLAK5uy_lSTp1DIuzZBUyee3kDsXwPgP25WdfwB40",
     bollywoodHitsId: "RDCLAK5uy_n9Fbdw7e6ap-98_A-8JYBmPv64v-Uaq1g",
-    punjabiFireId: "RDCLAK5uy_kuo_NioExeUmw07dFf8BzQ64DFFTlgE7Q",
   };
   // local playlist
   const myLocalPlaylist = useSelector(
@@ -32,7 +30,7 @@ const Home = () => {
     (state) => state.songsSlice.myPlaylistSongs
   );
 
-  const newSongs = useGetPlaylistItemsQuery(playlistId.newRelesedId, {});
+  const newSongs = useGetPlaylistItemsQuery(playlistId.newRelesedId);
   const trendingSongs = useGetPlaylistItemsQuery(playlistId.trendingSongsId);
   const bollywoodHitsSongs = useGetPlaylistItemsQuery(
     playlistId.bollywoodHitsId
@@ -129,7 +127,6 @@ const Home = () => {
 
   return (
     <div className="home-section">
-      <Header />
       <HeroBanner
         songsData={songsData[0]?.data?.items}
         isLoading={songsData[0]?.metaData?.isLoading}

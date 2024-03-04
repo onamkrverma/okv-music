@@ -8,6 +8,7 @@
   display: flex;
   overflow-x: auto;
   gap: 20px;
+  padding: 0 5px;
   scrollbar-width: none; /* Firefox */
 }
 .songs-list-top-wrapper {

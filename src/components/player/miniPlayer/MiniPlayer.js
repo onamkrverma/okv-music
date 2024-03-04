@@ -9,6 +9,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { addSongInfo } from "../../../reduxtool/slice/currentSongSlice";
 import "./MiniPlayer.css";
+import "../playerControls/PlayerControls.css";
 
 const MiniPlayer = ({
   songsInfo,
@@ -41,7 +42,7 @@ const MiniPlayer = ({
       className="mini-player-section"
       style={{ display: (playerClose || !id) && "none" }}
     >
-      <div className="mini-player-container">
+      <div className="mini-player-container container">
         <div
           className="mini-player-song-info-wrapper cur-pointer"
           onClick={() =>
@@ -92,7 +93,7 @@ const MiniPlayer = ({
               )}
             </div>
 
-            {(audioLoading || !audioRef.current?.duration) && (
+            {audioLoading || !audioRef.current?.duration ? (
               <div className="loading-spin">
                 <svg style={{ width: "100%", height: "100%" }}>
                   <circle
@@ -104,7 +105,7 @@ const MiniPlayer = ({
                   ></circle>
                 </svg>
               </div>
-            )}
+            ) : null}
           </div>
 
           <div

@@ -1,0 +1,36 @@
+.trending-header {
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.toggle-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: var(--secondary-bg);
+  padding: 7px 0px;
+  border-radius: 20px;
+  width: 170px;
+  border: 1px solid var(--border-color);
+}
+
+.toggle-button {
+  border: none;
+  padding: 10px 15px;
+  border-radius: inherit;
+  background: none;
+  color: var(--primary-text-color);
+  font-weight: bold;
+}
+.toggle-button.active-toggle {
+  background: var(--gradient);
+}

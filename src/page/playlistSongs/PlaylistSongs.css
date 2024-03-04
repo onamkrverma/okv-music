@@ -1,6 +1,6 @@
 .playlist-songs-container {
   color: var(--primary-text-color);
-  padding-bottom: 60px;
+  padding-bottom: 150px;
 }
 .playlist-songs-header {
   display: flex;
@@ -23,6 +23,14 @@
   border-radius: inherit;
   object-fit: cover;
 }
+
+.playlist-title-wrapper {
+  background: rgb(0 0 0 / 30%);
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 2px var(--border-color);
+}
+
 .playlist-title {
   color: var(--primary-text-color);
   text-transform: capitalize;
@@ -53,7 +61,7 @@
   width: 90%;
 }
 .playlist-songs-info-wrapper:hover {
-  background-color: #020e1e;
+  background-color: var(--secondary-bg);
 }
 .playlist-songs-image-wrapper {
   width: 100px;
@@ -88,7 +96,7 @@
 .playlist-songs-title-wrapper {
   white-space: nowrap;
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow-x: clip;
   padding-top: 5px;
 }
 .playlist-songs-channel-wrapper {

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addSongInfo } from "../../../reduxtool/slice/currentSongSlice";
 import "./RelatedSongs.css";
 import RelatedSongsSkeleton from "./RelatedSongsSkeleton";
-import { getRelatedSongs } from "../../../api/getRelatedSongs";
+import { useGetRelatedSongsQuery } from "../../../reduxtool/services/myApi";
 
 const RelatedSongs = ({ songsList, setSongsList }) => {
   const dispatch = useDispatch();
@@ -13,28 +13,15 @@ const RelatedSongs = ({ songsList, setSongsList }) => {
   );
   const { id } = currentSong;
   const [isUpClick, setIsUpClick] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState(null);
 
-  const getRelated = async () => {
-    try {
-      setErrorMessage(null);
-      const response = await getRelatedSongs({ id });
-      const data = await response.json();
-      setSongsList(data.result);
-    } catch (error) {
-      if (error instanceof Error) {
-        setErrorMessage(error.message);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { data, isLoading, isError, error } = useGetRelatedSongsQuery(id);
 
   useEffect(() => {
-    getRelated();
+    if (data) {
+      setSongsList(data.result);
+    }
     // eslint-disable-next-line
-  }, []);
+  }, [data]);
 
   const handleRedirect = (videoId) => {
     dispatch(addSongInfo({ ...currentSong, id: videoId }));
@@ -87,6 +74,7 @@ const RelatedSongs = ({ songsList, setSongsList }) => {
                         />
                       </div>
                     )}
+                    <small className="song-time-length">{song.length}</small>
                   </div>
                   <div className="related-songs-title-channel-wrapper">
                     <p className="related-songs-title-wrapper">{song?.title}</p>
@@ -100,8 +88,8 @@ const RelatedSongs = ({ songsList, setSongsList }) => {
               <div className="related-songs-error-wrapper">
                 <p className="sorry-emoji">😢</p>
                 <p>Sorry! Not able to fetch related songs</p>
-                {errorMessage ? (
-                  <p className="error-message">Error: {errorMessage}</p>
+                {isError ? (
+                  <p className="error-message">Error: {error?.data?.error}</p>
                 ) : null}
               </div>
             )}

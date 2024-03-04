@@ -1,0 +1,14 @@
+.explore-section {
+  margin-top: 70px;
+}
+
+.explore-container {
+  color: var(--primary-text-color);
+  padding-bottom: 150px;
+}
+
+@media (max-width: 426px) {
+  .explore-section {
+    margin-top: 0;
+  }
+}

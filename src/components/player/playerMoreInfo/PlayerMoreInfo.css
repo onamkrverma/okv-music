@@ -6,7 +6,7 @@
   width: 165px;
   border: none;
   border-radius: 15px;
-  background: black;
+  background: var(--primary-bg);
   color: var(--primary-text-color);
   transition: top 0.5s ease-in-out;
   display: flex;
@@ -29,8 +29,9 @@
   position: absolute;
   left: 0px;
   top: 35px;
-  background: var(--primary-bg);
+  background: var(--secondary-bg);
   padding: 10px;
+  border: 1px solid var(--border-color);
 }
 .watch-video-wrapper a {
   color: var(--primary-text-color);

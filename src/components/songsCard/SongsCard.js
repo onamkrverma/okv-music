@@ -32,6 +32,10 @@ const SongsCard = ({ songs }) => {
             className="songs-image"
             alt="song-poster"
           />
+          {/* visible only in search page */}
+          {songs.snippet?.liveBroadcastContent === "live" ? (
+            <small className="live-content">Live</small>
+          ) : null}
         </div>
         <div className="songs-title-channel-wrapper">
           <p className="songs-title">

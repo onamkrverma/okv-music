@@ -1,25 +1,37 @@
 import React, { useEffect, useState } from "react";
-import "./PlaylistSongs.css";
+import "./Trending.css";
+import "../playlistSongs/PlaylistSongs.css";
 import { useGetAllPlaylistItemsQuery } from "../../reduxtool/services/songsApi";
-import { useLocation, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BsPlayCircleFill } from "react-icons/bs";
+import Player from "../../components/player/Player";
 import { addSongInfo } from "../../reduxtool/slice/currentSongSlice";
-import PlaylistSongsSkeleton from "./PlaylistSongsSkeleton";
+import PlaylistSongsSkeleton from "../playlistSongs/PlaylistSongsSkeleton";
 
-const PlaylistSongs = () => {
-  const { urlTitle } = useParams();
-  const { state } = useLocation();
-  const { playlistId } = state;
-  const playlistTitle = urlTitle.replaceAll("-", " ");
-  const { data, isLoading } = useGetAllPlaylistItemsQuery(playlistId);
+const Trending = () => {
+  const [playlistInfo, setPlaylistInfo] = useState([]);
+  const [activeToggle, setActiveToggle] = useState("india");
+
+  const toggleList = [
+    { title: "India", value: "india" },
+    { title: "Global", value: "global" },
+  ];
+
+  const playlists = [
+    { name: "india", playlistId: "PL4fGSI1pDJn40WjZ6utkIuj2rNg-7iGsq" },
+    { name: "global", playlistId: "PL4fGSI1pDJn5kI81J1fYWK5eZRl1zJ5kM" },
+  ];
+
+  const activePlaylistId = playlists.find(
+    (item) => item.name === activeToggle
+  )?.playlistId;
+
+  const { data, isLoading } = useGetAllPlaylistItemsQuery(activePlaylistId);
 
   const currentSong = useSelector(
     (state) => state.currentSongSlice.currentSongInfo
   );
   const { id } = currentSong;
-
-  const [playlistInfo, setPlaylistInfo] = useState([]);
 
   useEffect(() => {
     if (data) {
@@ -39,39 +51,28 @@ const PlaylistSongs = () => {
   };
 
   return (
-    <div className="playlist-songs-container">
+    <div className="playlist-songs-container trending-songs-container">
       {isLoading || !playlistInfo.length ? (
-        <PlaylistSongsSkeleton amount={10} variant="playlist" />
+        <PlaylistSongsSkeleton amount={10} variant="trending" />
       ) : (
         <div className="container">
-          <div className="playlist-songs-header">
-            <div className="bg-poster-wrapper">
-              <img
-                className="bg-poster-image"
-                src={
-                  playlistInfo[0]?.snippet.thumbnails?.maxres
-                    ? playlistInfo[0]?.snippet.thumbnails?.maxres?.url
-                    : playlistInfo[0]?.snippet.thumbnails?.high?.url
-                }
-                alt="song poster"
-              />
-            </div>
-            <div className="playlist-songs-header-image-wrapper">
-              <img
-                className="playlist-songs-header-image"
-                src={
-                  playlistInfo[0]?.snippet.thumbnails?.maxres
-                    ? playlistInfo[0]?.snippet.thumbnails?.maxres?.url
-                    : playlistInfo[0]?.snippet.thumbnails?.high?.url
-                }
-                alt="playlist-poster"
-              />
-            </div>
-            <div className="playlist-title-wrapper">
-              <h1 className="playlist-title">{playlistTitle}</h1>
-              <p className="playlist-title-subtext">
-                Top {playlistTitle}, Refreshed daily
-              </p>
+          <div className="playlist-songs-header trending-header">
+            <h1 className="playlist-title">Top Trending music on YouTube</h1>
+
+            <div className="toggle-box">
+              {toggleList.map((toggle) => (
+                <button
+                  key={toggle.value}
+                  type="button"
+                  title={toggle.title}
+                  className={`toggle-button ${
+                    toggle.value === activeToggle ? "active-toggle" : ""
+                  }`}
+                  onClick={() => setActiveToggle(toggle.value)}
+                >
+                  {toggle.title}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -113,8 +114,9 @@ const PlaylistSongs = () => {
           ))}
         </div>
       )}
+      {id ? <Player /> : null}
     </div>
   );
 };
 
-export default PlaylistSongs;
+export default Trending;
