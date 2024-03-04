@@ -61,7 +61,7 @@
   width: 90%;
 }
 .playlist-songs-info-wrapper:hover {
-  background-color: #020e1e;
+  background-color: var(--secondary-bg);
 }
 .playlist-songs-image-wrapper {
   width: 100px;

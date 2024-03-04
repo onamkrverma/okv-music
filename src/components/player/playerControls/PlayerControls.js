@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./PlayerControls.css";
 import {
   BsFillSkipEndFill,
@@ -24,6 +24,7 @@ const PlayerControls = ({
 }) => {
   const localVolume = localStorage.getItem("localVolume");
   const [volumeLevel, setVolumeLevel] = useState(localVolume ?? 1.0);
+  const [seekTime, setSeekTime] = useState(0);
 
   useEffect(() => {
     audioRef.current.volume = volumeLevel;
@@ -56,31 +57,24 @@ const PlayerControls = ({
     // eslint-disable-next-line
   }, [autoPlay]);
 
-  const progressRef = useRef();
-
-  const handleJumpDuration = (e) => {
-    const totalWidth = progressRef.current.clientWidth;
-    const offsetX = e.nativeEvent.offsetX;
-    const divProgress = Math.floor((offsetX / totalWidth) * 100);
-    audioRef.current.currentTime =
-      (divProgress / 100) * audioRef.current.duration;
-  };
+  useEffect(() => {
+    audioRef.current.currentTime = seekTime;
+    // eslint-disable-next-line
+  }, [seekTime]);
 
   return (
     <div className="player-controls-container">
-      <div
-        className="player-progress-bar-wrapper cur-pointer"
-        onClick={handleJumpDuration}
-        ref={progressRef}
-      >
-        <div
-          className="player-progress "
-          style={{ width: `${progress}%` }}
-        ></div>
-        <span
-          className="player-progess-thumb"
-          style={{ left: `${progress - 1}%` }}
-        ></span>
+      <div className="player-progress-bar-wrapper cur-pointer">
+        <input
+          type="range"
+          title="seekbar"
+          step="any"
+          className="seekbar"
+          value={audioRef.current?.currentTime || 0}
+          min={0}
+          max={audioRef.current?.duration || 0}
+          onInput={(e) => setSeekTime(e.target.value)}
+        />
       </div>
       <div className="player-durations-wrapper">
         <p>
