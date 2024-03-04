@@ -12,6 +12,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import RelatedSongs from "./relatedSongs/RelatedSongs";
 import PlayerMoreInfo from "./playerMoreInfo/PlayerMoreInfo";
 import SongDetailsModel from "./songDetailsModel/SongDetailsModel";
+import { useLocation } from "react-router-dom";
 
 const Player = () => {
   const [songUrl, setSongUrl] = useState("");
@@ -218,6 +219,19 @@ const Player = () => {
     // eslint-disable-next-line
   }, [titleRef.current]);
 
+  // minimize player if back button press
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.addEventListener("popstate", () => {
+      if (!onMiniPlayer) {
+        dispatch(addSongInfo({ ...currentSong, onMiniPlayer: true }));
+      }
+    });
+
+    // eslint-disable-next-line
+  }, [pathname]);
+
   return (
     <div
       className={`player-page-section ${
@@ -287,7 +301,7 @@ const Player = () => {
               <SkeletonTheme
                 baseColor="#747070"
                 highlightColor="#615e5e"
-                duration="2s"
+                duration={2}
               >
                 <Skeleton height={"170px"} />
               </SkeletonTheme>
@@ -296,7 +310,13 @@ const Player = () => {
 
           {isLoading && !songsInfo.length ? (
             <div className="player-song-title-channel-wrapper absolute-center">
-              <Skeleton width={"200px"} />
+              <SkeletonTheme
+                baseColor="#747070"
+                highlightColor="#615e5e"
+                duration={2}
+              >
+                <Skeleton width={"250px"} />
+              </SkeletonTheme>
             </div>
           ) : (
             <div
@@ -327,6 +347,7 @@ const Player = () => {
               // Check the error code
               if (e.target.error.code === 4 && !e.target.error.message.length) {
                 // Handle the 403 error
+                setSongUrl("");
                 getSongAudioUrls();
               }
             }}

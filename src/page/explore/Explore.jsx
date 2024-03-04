@@ -78,7 +78,6 @@ const Explore = () => {
   // get my local playlist info
 
   const { data, isLoading } = useGetMyplaylistInfoQuery();
-  console.log(data);
 
   useEffect(() => {
     if (data) {
