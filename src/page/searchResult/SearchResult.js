@@ -8,10 +8,15 @@ const SearchResult = () => {
   const { q } = useParams();
   const { data, isLoading } = useGetSearchItemsQuery(q);
   const [searchResult, setSearchResult] = useState([]);
+  const [isNotFound, setIsNotFound] = useState(false);
 
   useEffect(() => {
+    setIsNotFound(false);
     if (data) {
       setSearchResult(data.items);
+      if (!data.items?.length) {
+        setIsNotFound(true);
+      }
     }
   }, [data]);
 
@@ -24,7 +29,7 @@ const SearchResult = () => {
         isLoading={isLoading}
       />
 
-      {!isLoading && !searchResult.length ? (
+      {!isLoading && isNotFound ? (
         <div className="search-not-found-wrapper container">
           <h1>404</h1>
           <p className="search-query-text">Search Query: {q}</p>
