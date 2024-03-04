@@ -14,7 +14,9 @@ const RelatedSongs = ({ songsList, setSongsList }) => {
   const { id } = currentSong;
   const [isUpClick, setIsUpClick] = useState(false);
 
-  const { data, isLoading, isError, error } = useGetRelatedSongsQuery(id);
+  const { data, isLoading, isError, error } = useGetRelatedSongsQuery(id, {
+    skip: songsList.length,
+  });
 
   useEffect(() => {
     if (data) {
