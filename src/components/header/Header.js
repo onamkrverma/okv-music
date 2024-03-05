@@ -65,7 +65,7 @@ const Header = () => {
   }, [isMoreOptions]);
 
   return (
-    <div className="header-nav-container">
+    <>
       <header className="header-section">
         <div className="header-container container">
           <Link to="/" className="header-logo-wrapper">
@@ -195,7 +195,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
