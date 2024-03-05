@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./About.css";
 import logo from "../../components/header/logo.png";
 import { FaGithub } from "react-icons/fa";
 
 const About = () => {
   const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    document.title = "About • Okv Music";
+  }, []);
 
   return (
     <section className="container about-container">

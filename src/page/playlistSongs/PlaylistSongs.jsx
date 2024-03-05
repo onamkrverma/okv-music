@@ -38,6 +38,12 @@ const PlaylistSongs = () => {
     );
   };
 
+  useEffect(() => {
+    document.title = `${
+      playlistTitle.slice(0, 1).toUpperCase() + playlistTitle.slice(1)
+    } - Playlist • Okv Music`;
+  }, [playlistTitle]);
+
   return (
     <div className="playlist-songs-container">
       {isLoading || !playlistInfo.length ? (

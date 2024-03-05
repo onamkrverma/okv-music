@@ -1,8 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Feedback.css";
 import { postFeedback } from "../../api/postFeedback";
 
 const Feedback = () => {
+  useEffect(() => {
+    document.title = "Feedback • Okv Music";
+  }, []);
+
   const [isLoading, setIsLoading] = useState(false);
   const [statusMessage, setStatusMessage] = useState(null);
   const formRef = useRef(null);

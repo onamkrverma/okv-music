@@ -20,6 +20,12 @@ const SearchResult = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    document.title = `${
+      q.slice(0, 1).toUpperCase() + q.slice(1)
+    } -Search • Okv Music"`;
+  }, [q]);
+
   return (
     <div className="search-result-container ">
       <SongsList

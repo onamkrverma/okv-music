@@ -9,6 +9,10 @@ import { addSongInfo } from "../../reduxtool/slice/currentSongSlice";
 import PlaylistSongsSkeleton from "../playlistSongs/PlaylistSongsSkeleton";
 
 const Trending = () => {
+  useEffect(() => {
+    document.title = "Trending • Okv Music";
+  }, []);
+
   const [playlistInfo, setPlaylistInfo] = useState([]);
   const [activeToggle, setActiveToggle] = useState("india");
 

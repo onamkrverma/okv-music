@@ -5,6 +5,10 @@ import ExploreList from "../../components/exploreList/ExploreList";
 import { useGetMyplaylistInfoQuery } from "../../reduxtool/services/myApi";
 
 const Explore = () => {
+  useEffect(() => {
+    document.title = "Explore • Okv Music";
+  }, []);
+
   const [localPlaylists, setLocalPlaylists] = useState([]);
   const [discoverNewMusic, setDiscoverNewMusic] = useState([]);
 

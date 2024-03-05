@@ -14,6 +14,10 @@ import AddPlaylist from "../../components/addPlaylist/AddPlaylist";
 import { MdDeleteForever } from "react-icons/md";
 
 const Home = () => {
+  useEffect(() => {
+    document.title = "Home • Okv Music";
+  }, []);
+
   const playlistId = {
     newRelesedId: "RDCLAK5uy_nNhhgRET3NcJ4SJBvqhAIJ6t7vjsQYowc",
     trendingSongsId: "OLAK5uy_lSTp1DIuzZBUyee3kDsXwPgP25WdfwB40",
