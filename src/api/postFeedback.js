@@ -1,4 +1,4 @@
-const baseUrl = process.env.REACT_APP_SERVER_BASE_URL;
+const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
 
 export const postFeedback = async ({ name, email, subject, message }) => {
   const response = await fetch(`${baseUrl}/feedback`, {

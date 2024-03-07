@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const selectRandomKey = () => {
-  if (process.env.REACT_APP_YT_API.search(",") !== -1) {
-    const apiKeys = process.env.REACT_APP_YT_API.split(","); //we are splitting the api keys to make an array
+  const apiKey = import.meta.env.VITE_YT_API;
+  if (apiKey.search(",") !== -1) {
+    const apiKeys = apiKey.split(","); //we are splitting the api keys to make an array
     const random = Math.floor(Math.random() * apiKeys.length); //this will get a random number
     return apiKeys[random];
   } else {
-    return process.env.REACT_APP_YT_API;
+    return apiKey;
   }
 };
 
