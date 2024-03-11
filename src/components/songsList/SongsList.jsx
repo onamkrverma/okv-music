@@ -18,10 +18,7 @@ const SongsList = ({
       <div className="songs-list-top-wrapper">
         <p className="songs-list-title">{title}</p>
         <Link
-          to={{
-            pathname: `/playlistsongs/${urlTitle}`,
-          }}
-          state={{ playlistId }}
+          to={`/playlistsongs/${urlTitle}/${playlistId}`}
           className="view-all cur-pointer"
         >
           view all

@@ -25,7 +25,10 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="playlistsongs/:urlTitle" element={<PlaylistSongs />} />
+        <Route
+          path="playlistsongs/:urlTitle/:playlistId"
+          element={<PlaylistSongs />}
+        />
         <Route path="/search/:q" element={<SearchResult />} />
         <Route path="/trending" element={<Trending />} />
         <Route path="/explore" element={<Explore />} />

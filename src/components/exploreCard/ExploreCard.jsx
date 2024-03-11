@@ -23,10 +23,7 @@ const ExploreCard = ({ item, dataType }) => {
 
   return (
     <Link
-      to={{
-        pathname: `/playlistsongs/${urlSlug}`,
-      }}
-      state={{ playlistId }}
+      to={`/playlistsongs/${urlSlug}/${playlistId}`}
       className="explore-card"
     >
       <div className="explore-card-image">
