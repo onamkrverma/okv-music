@@ -31,6 +31,8 @@ const Header = () => {
       return navigate(`/search/${videoId}`);
     }
     navigate(`/search/${searchQuery}`);
+    e.target.reset();
+    setIsSearchClick(false);
   };
 
   const navLinks = [
