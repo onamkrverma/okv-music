@@ -17,21 +17,35 @@ function App() {
   const currentSong = useSelector(
     (state) => state.currentSongSlice.currentSongInfo
   );
-  const { id } = currentSong;
+  const { id, miniPlayerActive } = currentSong;
+
+  const isMiniPlayerActive = miniPlayerActive ?? true;
 
   return (
     <BrowserRouter>
       <ScrollToTop />
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={<Home miniPlayerActive={isMiniPlayerActive} />}
+        />
         <Route
           path="playlistsongs/:urlTitle/:playlistId"
-          element={<PlaylistSongs />}
+          element={<PlaylistSongs miniPlayerActive={isMiniPlayerActive} />}
         />
-        <Route path="/search/:q" element={<SearchResult />} />
-        <Route path="/trending" element={<Trending />} />
-        <Route path="/explore" element={<Explore />} />
+        <Route
+          path="/search/:q"
+          element={<SearchResult miniPlayerActive={isMiniPlayerActive} />}
+        />
+        <Route
+          path="/trending"
+          element={<Trending miniPlayerActive={isMiniPlayerActive} />}
+        />
+        <Route
+          path="/explore"
+          element={<Explore miniPlayerActive={isMiniPlayerActive} />}
+        />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/about" element={<About />} />
 

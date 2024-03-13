@@ -35,7 +35,7 @@ const Player = () => {
   const currentSong = useSelector(
     (state) => state.currentSongSlice.currentSongInfo
   );
-  const { id, onMiniPlayer } = currentSong;
+  const { id, miniPlayerActive } = currentSong;
 
   const { data, isLoading } = useGetSongsByIdQuery(id);
 
@@ -199,12 +199,12 @@ const Player = () => {
   }
 
   useEffect(() => {
-    if (!onMiniPlayer) {
+    if (!miniPlayerActive) {
       document.body.style.overflowY = "hidden";
     } else {
       document.body.style.overflowY = "auto";
     }
-  }, [onMiniPlayer]);
+  }, [miniPlayerActive]);
 
   // scrolling song title
   const titleContainerRef = useRef(null);
@@ -224,8 +224,8 @@ const Player = () => {
 
   useEffect(() => {
     window.addEventListener("popstate", () => {
-      if (!onMiniPlayer) {
-        dispatch(addSongInfo({ ...currentSong, onMiniPlayer: true }));
+      if (!miniPlayerActive) {
+        dispatch(addSongInfo({ ...currentSong, miniPlayerActive: true }));
       }
     });
 
@@ -235,7 +235,7 @@ const Player = () => {
   return (
     <div
       className={`player-page-section ${
-        onMiniPlayer ? "miniplayer-active" : ""
+        miniPlayerActive ? "miniplayer-active" : ""
       }`}
     >
       <div className="bg-poster-wrapper">
@@ -246,14 +246,14 @@ const Player = () => {
         />
       </div>
       {/* <Header /> */}
-      {!onMiniPlayer && (
+      {!miniPlayerActive ? (
         <div className="top-player-controll-wrapper">
           <button
             type="button"
             title="minimize"
             className="player-minimize-wrapper cur-pointer"
             onClick={() =>
-              dispatch(addSongInfo({ ...currentSong, onMiniPlayer: true }))
+              dispatch(addSongInfo({ ...currentSong, miniPlayerActive: true }))
             }
           >
             <BsChevronDown style={{ width: "100%", height: "100%" }} />
@@ -266,7 +266,7 @@ const Player = () => {
             setAudioFormat={setAudioFormat}
           />
         </div>
-      )}
+      ) : null}
 
       <SongDetailsModel
         id={id}
@@ -278,7 +278,7 @@ const Player = () => {
 
       <div
         className={`player-section container ${
-          onMiniPlayer ? "hide-main-player" : ""
+          miniPlayerActive ? "hide-main-player" : ""
         } `}
       >
         <div className="player-container">
@@ -379,7 +379,7 @@ const Player = () => {
         <RelatedSongs songsList={songsList} setSongsList={setSongsList} />
       </div>
 
-      {onMiniPlayer && (
+      {miniPlayerActive ? (
         <MiniPlayer
           songsInfo={songsInfo}
           videoId={id}
@@ -394,7 +394,7 @@ const Player = () => {
           currentIndex={currentIndex}
           progress={progress}
         />
-      )}
+      ) : null}
     </div>
   );
 };

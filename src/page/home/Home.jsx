@@ -13,7 +13,7 @@ import HeroBanner from "./heroBanner/HeroBanner";
 import AddPlaylist from "../../components/addPlaylist/AddPlaylist";
 import { MdDeleteForever } from "react-icons/md";
 
-const Home = () => {
+const Home = ({ miniPlayerActive }) => {
   useEffect(() => {
     document.title = "Home • Okv Music";
   }, []);
@@ -34,19 +34,24 @@ const Home = () => {
     (state) => state.songsSlice.myPlaylistSongs
   );
 
-  const newSongs = useGetPlaylistItemsQuery(playlistId.newRelesedId);
-  const trendingSongs = useGetPlaylistItemsQuery(playlistId.trendingSongsId);
+  const newSongs = useGetPlaylistItemsQuery(playlistId.newRelesedId, {
+    skip: !miniPlayerActive,
+  });
+  const trendingSongs = useGetPlaylistItemsQuery(playlistId.trendingSongsId, {
+    skip: !miniPlayerActive,
+  });
   const bollywoodHitsSongs = useGetPlaylistItemsQuery(
-    playlistId.bollywoodHitsId
+    playlistId.bollywoodHitsId,
+    { skip: !miniPlayerActive }
   );
 
   const locaPlaylist0 = useGetPlaylistItemsQuery(
     myLocalPlaylist[0]?.playlistId,
-    { skip: !myLocalPlaylist[0]?.playlistId }
+    { skip: !myLocalPlaylist[0]?.playlistId || !miniPlayerActive }
   );
   const locaPlaylist1 = useGetPlaylistItemsQuery(
     myLocalPlaylist[1]?.playlistId,
-    { skip: !myLocalPlaylist[1]?.playlistId }
+    { skip: !myLocalPlaylist[1]?.playlistId || !miniPlayerActive }
   );
 
   useEffect(() => {

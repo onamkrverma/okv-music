@@ -4,7 +4,7 @@ import "./Explore.css";
 import ExploreList from "../../components/exploreList/ExploreList";
 import { useGetMyplaylistInfoQuery } from "../../reduxtool/services/myApi";
 
-const Explore = () => {
+const Explore = ({ miniPlayerActive }) => {
   useEffect(() => {
     document.title = "Explore • Okv Music";
   }, []);
@@ -40,13 +40,27 @@ const Explore = () => {
     },
   ];
 
-  const newReleased = useGetPlaylistQuery(playlists[0].id);
-  const newMusicHindi = useGetPlaylistQuery(playlists[1].id);
-  const newIndianPop = useGetPlaylistQuery(playlists[2].id);
-  const newMusicPanjab = useGetPlaylistQuery(playlists[3].id);
-  const newMusicHaryanvi = useGetPlaylistQuery(playlists[4].id);
-  const newMusicTelgu = useGetPlaylistQuery(playlists[5].id);
-  const newMusicTamil = useGetPlaylistQuery(playlists[6].id);
+  const newReleased = useGetPlaylistQuery(playlists[0].id, {
+    skip: !miniPlayerActive,
+  });
+  const newMusicHindi = useGetPlaylistQuery(playlists[1].id, {
+    skip: !miniPlayerActive,
+  });
+  const newIndianPop = useGetPlaylistQuery(playlists[2].id, {
+    skip: !miniPlayerActive,
+  });
+  const newMusicPanjab = useGetPlaylistQuery(playlists[3].id, {
+    skip: !miniPlayerActive,
+  });
+  const newMusicHaryanvi = useGetPlaylistQuery(playlists[4].id, {
+    skip: !miniPlayerActive,
+  });
+  const newMusicTelgu = useGetPlaylistQuery(playlists[5].id, {
+    skip: !miniPlayerActive,
+  });
+  const newMusicTamil = useGetPlaylistQuery(playlists[6].id, {
+    skip: !miniPlayerActive,
+  });
 
   useEffect(() => {
     if (

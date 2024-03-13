@@ -35,7 +35,7 @@ const HeroBanner = ({ songsData, isLoading }) => {
     dispatch(
       addSongInfo({
         id: videoId,
-        onMiniPlayer: false,
+        miniPlayerActive: false,
       })
     );
   };

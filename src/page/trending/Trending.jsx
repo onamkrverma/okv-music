@@ -8,7 +8,7 @@ import Player from "../../components/player/Player";
 import { addSongInfo } from "../../reduxtool/slice/currentSongSlice";
 import PlaylistSongsSkeleton from "../playlistSongs/PlaylistSongsSkeleton";
 
-const Trending = () => {
+const Trending = ({ miniPlayerActive }) => {
   useEffect(() => {
     document.title = "Trending • Okv Music";
   }, []);
@@ -30,7 +30,9 @@ const Trending = () => {
     (item) => item.name === activeToggle
   )?.playlistId;
 
-  const { data, isLoading } = useGetAllPlaylistItemsQuery(activePlaylistId);
+  const { data, isLoading } = useGetAllPlaylistItemsQuery(activePlaylistId, {
+    skip: !miniPlayerActive,
+  });
 
   const currentSong = useSelector(
     (state) => state.currentSongSlice.currentSongInfo
@@ -49,7 +51,7 @@ const Trending = () => {
     dispatch(
       addSongInfo({
         id: videoId,
-        onMiniPlayer: false,
+        miniPlayerActive: false,
       })
     );
   };

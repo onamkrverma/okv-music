@@ -33,7 +33,7 @@ const MiniPlayer = ({
 
   const handleClosePlayer = () => {
     setPlayerClose(true);
-    dispatch(addSongInfo({ onMiniPlayer: false }));
+    dispatch(addSongInfo({ miniPlayerActive: false }));
     localStorage.removeItem("currentSongInfo");
   };
 
@@ -46,7 +46,7 @@ const MiniPlayer = ({
         <div
           className="mini-player-song-info-wrapper cur-pointer"
           onClick={() =>
-            dispatch(addSongInfo({ ...currentSong, onMiniPlayer: false }))
+            dispatch(addSongInfo({ ...currentSong, miniPlayerActive: false }))
           }
         >
           <div className="mini-player-image-wrapper">
@@ -117,7 +117,7 @@ const MiniPlayer = ({
           </div>
         </div>
 
-        {/* <div className="player-maximize-wrapper" onClick={() => dispatch(addSongInfo({ ...currentSong, onMiniPlayer: false }))}>
+        {/* <div className="player-maximize-wrapper" onClick={() => dispatch(addSongInfo({ ...currentSong, miniPlayerActive: false }))}>
           <BsChevronUp style={{ width: '100%', height: '100%' }} />
         </div> */}
         <div

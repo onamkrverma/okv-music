@@ -7,7 +7,7 @@ const SongsCard = ({ songs }) => {
   const dispatch = useDispatch();
 
   const handleRedirect = (videoId) => {
-    dispatch(addSongInfo({ id: videoId, onMiniPlayer: false }));
+    dispatch(addSongInfo({ id: videoId, miniPlayerActive: false }));
   };
 
   return (

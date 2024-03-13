@@ -7,10 +7,12 @@ import { BsPlayCircleFill } from "react-icons/bs";
 import { addSongInfo } from "../../reduxtool/slice/currentSongSlice";
 import PlaylistSongsSkeleton from "./PlaylistSongsSkeleton";
 
-const PlaylistSongs = () => {
+const PlaylistSongs = ({ miniPlayerActive }) => {
   const { urlTitle, playlistId } = useParams();
   const playlistTitle = urlTitle.replaceAll("-", " ");
-  const { data, isLoading } = useGetAllPlaylistItemsQuery(playlistId);
+  const { data, isLoading } = useGetAllPlaylistItemsQuery(playlistId, {
+    skip: !miniPlayerActive,
+  });
 
   const currentSong = useSelector(
     (state) => state.currentSongSlice.currentSongInfo
@@ -31,7 +33,7 @@ const PlaylistSongs = () => {
     dispatch(
       addSongInfo({
         id: videoId,
-        onMiniPlayer: false,
+        miniPlayerActive: false,
       })
     );
   };

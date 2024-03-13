@@ -4,9 +4,11 @@ import SongsList from "../../components/songsList/SongsList";
 import { useGetSearchItemsQuery } from "../../reduxtool/services/songsApi";
 import "./SearchResult.css";
 
-const SearchResult = () => {
+const SearchResult = ({ miniPlayerActive }) => {
   const { q } = useParams();
-  const { data, isLoading } = useGetSearchItemsQuery(q);
+  const { data, isLoading } = useGetSearchItemsQuery(q, {
+    skip: !miniPlayerActive,
+  });
   const [searchResult, setSearchResult] = useState([]);
   const [isNotFound, setIsNotFound] = useState(false);
 
