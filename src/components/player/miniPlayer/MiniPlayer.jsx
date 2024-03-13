@@ -33,7 +33,7 @@ const MiniPlayer = ({
 
   const handleClosePlayer = () => {
     setPlayerClose(true);
-    dispatch(addSongInfo({ miniPlayerActive: false }));
+    dispatch(addSongInfo({}));
     localStorage.removeItem("currentSongInfo");
   };
 

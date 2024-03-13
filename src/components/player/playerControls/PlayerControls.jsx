@@ -65,14 +65,17 @@ const PlayerControls = ({
 
   // get audio buffered end amount
   useEffect(() => {
-    if (!audioRef?.current?.duration) return;
-    const bufferedLength = audioRef?.current?.buffered?.length;
+    const bufferedLength = audioRef.current?.buffered?.length;
+    const bufferedLoaded =
+      typeof audioRef.current?.buffered !== "undefined" && bufferedLength > 0;
+
+    if (!bufferedLoaded) return;
     const bufferedEnd = audioRef?.current?.buffered?.end(bufferedLength - 1);
     const bufferedAmount = Math.floor(
       (bufferedEnd / audioRef.current?.duration) * 100
     );
     setBufferedAmount(bufferedAmount);
-  }, [audioRef?.current?.duration, audioRef?.current?.currentTime]);
+  }, [audioRef?.current?.currentTime]);
 
   return (
     <div className="player-controls-container">
