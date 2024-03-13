@@ -25,6 +25,7 @@ const PlayerControls = ({
   const localVolume = localStorage.getItem("localVolume");
   const [volumeLevel, setVolumeLevel] = useState(localVolume ?? 1.0);
   const [seekTime, setSeekTime] = useState(0);
+  const [bufferedAmount, setBufferedAmount] = useState(0);
 
   useEffect(() => {
     audioRef.current.volume = volumeLevel;
@@ -62,6 +63,17 @@ const PlayerControls = ({
     // eslint-disable-next-line
   }, [seekTime]);
 
+  // get audio buffered end amount
+  useEffect(() => {
+    if (!audioRef?.current?.duration) return;
+    const bufferedLength = audioRef?.current?.buffered?.length;
+    const bufferedEnd = audioRef?.current?.buffered?.end(bufferedLength - 1);
+    const bufferedAmount = Math.floor(
+      (bufferedEnd / audioRef.current?.duration) * 100
+    );
+    setBufferedAmount(bufferedAmount);
+  }, [audioRef?.current?.duration, audioRef?.current?.currentTime]);
+
   return (
     <div className="player-controls-container">
       <div className="player-progress-bar-wrapper cur-pointer">
@@ -74,6 +86,9 @@ const PlayerControls = ({
           min={0}
           max={audioRef.current?.duration || 0}
           onInput={(e) => setSeekTime(e.target.value)}
+          style={{
+            "--buffered-width": `${bufferedAmount}%`,
+          }}
         />
       </div>
       <div className="player-durations-wrapper">

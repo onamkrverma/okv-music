@@ -20,7 +20,7 @@ input[type="range"] {
   outline: none;
   border-radius: 15px;
   overflow: hidden;
-  background: gray;
+  background: rgb(144 144 144 / 50%);
 }
 
 /* Thumb: webkit */
@@ -49,6 +49,22 @@ input[type="range"]::-moz-range-thumb {
   border: 1px solid var(--primary-text-color);
   box-shadow: -404px 0 0 400px var(--primary-text-color);
   transition: 0.2s ease-in-out;
+}
+.seekbar {
+  position: relative;
+  z-index: 1;
+  --buffered-width: 0px;
+}
+.seekbar::before {
+  position: absolute;
+  content: "";
+  top: 0px;
+  left: 0;
+  width: var(--buffered-width);
+  height: 100%;
+  background: #8e8e8e;
+  border-radius: inherit;
+  z-index: -1;
 }
 
 .player-durations-wrapper {
