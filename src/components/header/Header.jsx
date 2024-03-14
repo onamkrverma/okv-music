@@ -19,6 +19,8 @@ const Header = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     const searchQuery = e.target[0].value;
+    e.target.reset();
+    setIsSearchClick(false);
     const isYoutubeSharedLink = searchQuery.indexOf("https://youtu.be");
     const isYoutubeURLLink = searchQuery.indexOf("https://www.youtube.com");
     if (isYoutubeSharedLink !== -1) {
@@ -31,8 +33,6 @@ const Header = () => {
       return navigate(`/search/${videoId}`);
     }
     navigate(`/search/${searchQuery}`);
-    e.target.reset();
-    setIsSearchClick(false);
   };
 
   const navLinks = [
