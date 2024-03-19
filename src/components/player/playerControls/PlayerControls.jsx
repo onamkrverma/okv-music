@@ -77,8 +77,6 @@ const PlayerControls = ({
     setBufferedAmount(bufferedAmount);
   }, [audioRef?.current?.currentTime]);
 
-  console.log({ audioLoading }, audioRef.current?.duration);
-
   return (
     <div className="player-controls-container">
       <div className="player-progress-bar-wrapper cur-pointer">
