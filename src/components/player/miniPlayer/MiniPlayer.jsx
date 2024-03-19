@@ -93,7 +93,7 @@ const MiniPlayer = ({
               )}
             </div>
 
-            {audioLoading || !audioRef.current?.duration ? (
+            {audioLoading ? (
               <div className="loading-spin">
                 <svg style={{ width: "100%", height: "100%" }}>
                   <circle
