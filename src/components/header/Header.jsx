@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import { RxCross2 } from "react-icons/rx";
 import { BsSearch } from "react-icons/bs";
-import logo from "./logo.png";
 import { Link } from "react-router-dom";
 import { HiHome, HiBars3BottomRight } from "react-icons/hi2";
 import { IoCompass, IoTrendingUp } from "react-icons/io5";
@@ -71,7 +70,7 @@ const Header = () => {
       <header className="header-section">
         <div className="header-container container">
           <Link to="/" className="header-logo-wrapper">
-            <img className="header-logo" src={logo} alt="logo" />
+            <img className="header-logo" src="/logo.png" alt="okv-music" />
           </Link>
           <div
             className="search-icon-wrapper mobile-search-icon absolute-center"
@@ -173,7 +172,7 @@ const Header = () => {
           }`}
         >
           <div className="more-options-logo-wrapper">
-            <img className="header-logo" src={logo} alt="logo" />
+            <img className="header-logo" src="/logo.png" alt="okv-music" />
             <button
               type="button"
               title="close"

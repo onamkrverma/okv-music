@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import "./About.css";
-import logo from "../../components/header/logo.png";
 import { FaGithub } from "react-icons/fa";
 
 const About = () => {
@@ -14,7 +13,7 @@ const About = () => {
     <section className="container about-container">
       <div className="about-wrapper">
         <div className="about-header-wrapper">
-          <img src={logo} alt="okv-music" />
+          <img src="/logo.png" alt="okv-music" />
         </div>
         <div className="about-content-wrapper">
           <p>Okv Music is an open-source project and can be found on GitHub</p>
