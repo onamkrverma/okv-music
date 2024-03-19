@@ -60,7 +60,7 @@ const Player = () => {
         setAlertMessage("");
       }, 3000);
     } finally {
-      setAudioLoading(false);
+      // setAudioLoading(false);
       setIsPlaying(false);
     }
   };
@@ -94,7 +94,6 @@ const Player = () => {
   useEffect(() => {
     setProgress(0);
     setIsPlaying(false);
-    setAudioLoading(false);
   }, [id]);
 
   const mapVideoId = songsList?.map((song) => song.videoId);
