@@ -26,6 +26,21 @@
       "purpose": "maskable"
     }
   ],
+  "screenshots": [
+    {
+      "src": "screenshot.webp",
+      "sizes": "945x987",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "Okv Music"
+    },
+    {
+      "src": "screenshot.webp",
+      "sizes": "945x987",
+      "type": "image/webp",
+      "label": "Okv Music"
+    }
+  ],
   "start_url": "/",
   "description": "Okv Music is a PWA that lets you explore and listen to new music and songs online. it offers a smooth and responsive web experience with a robust YouTube search functionality.",
   "display": "standalone",

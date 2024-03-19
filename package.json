@@ -24,6 +24,9 @@
     "dev": "vite",
     "start": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite-plugin-pwa": "^0.19.4"
   }
 }
