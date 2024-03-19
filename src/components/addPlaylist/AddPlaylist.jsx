@@ -27,7 +27,7 @@ const AddPlaylist = () => {
     try {
       if (formRef.current) {
         const formData = new FormData(formRef.current);
-        const title = formData.get("title");
+        const title = formData.get("title").trim();
         const playlistLink = formData.get("playlistLink");
         const url = new URL(playlistLink);
         const playlistId = url.searchParams.get("list");
