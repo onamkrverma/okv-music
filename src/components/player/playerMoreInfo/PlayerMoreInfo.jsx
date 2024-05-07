@@ -1,7 +1,9 @@
 import React from "react";
 import { AiFillInfoCircle, AiFillSetting } from "react-icons/ai";
-import { BsThreeDotsVertical, BsYoutube } from "react-icons/bs";
+import { BiSolidDownload } from "react-icons/bi";
+import { BsThreeDotsVertical, BsYoutube, BsDownload } from "react-icons/bs";
 import "./PlayerMoreInfo.css";
+import { getDownloadAudio } from "../../../api/downloadAudio";
 
 const PlayerMoreInfo = ({
   id,
@@ -9,8 +11,19 @@ const PlayerMoreInfo = ({
   setPlayerInfo,
   audioFormat,
   setAudioFormat,
+  setAlertMessage,
 }) => {
   localStorage.setItem("audioQuality", audioFormat);
+
+  const handleDownload = async () => {
+    try {
+      await getDownloadAudio({ id: id });
+    } catch (error) {
+      setAlertMessage("Downloading audio failed!");
+      console.error("Error downloading audio:", error);
+    }
+  };
+
   return (
     <div>
       <button
@@ -28,8 +41,10 @@ const PlayerMoreInfo = ({
         style={{ top: playerInfo.isMoreInfoClick ? "50px" : "" }}
       >
         <div className="audio-quality-wrapper  ">
-          <div
-            className="audio-quality absolute-center cur-pointer"
+          <button
+            type="button"
+            title="audio quality"
+            className="player-more-info-btn absolute-center cur-pointer"
             onClick={() =>
               setPlayerInfo({
                 ...playerInfo,
@@ -41,7 +56,7 @@ const PlayerMoreInfo = ({
               <AiFillSetting style={{ width: "100%", height: "100%" }} />
             </div>
             <span>Audio Quality</span>
-          </div>
+          </button>
           <div
             className="audio-selection-wrapper cur-pointer"
             style={{ display: !playerInfo.isAudioQualityClick && "none" }}
@@ -58,21 +73,36 @@ const PlayerMoreInfo = ({
             </select>
           </div>
         </div>
-        <div className="watch-video-wrapper  ">
-          <a
-            className="absolute-center cur-pointer"
-            href={`https://youtube.com/watch?v=${id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <div className="player-more-info-icons">
-              <BsYoutube style={{ width: "100%", height: "100%" }} />
-            </div>
-            Watch Video
-          </a>
-        </div>
-        <div
-          className="song-details-wrapper absolute-center cur-pointer"
+
+        <a
+          className="watch-video absolute-center cur-pointer"
+          href={`https://youtube.com/watch?v=${id}`}
+          target="_blank"
+          title="watch video"
+          rel="noopener noreferrer"
+        >
+          <div className="player-more-info-icons">
+            <BsYoutube style={{ width: "100%", height: "100%" }} />
+          </div>
+          Watch Video
+        </a>
+
+        <button
+          type="button"
+          title="download"
+          className="player-more-info-btn absolute-center cur-pointer"
+          onClick={handleDownload}
+        >
+          <span className="player-more-info-icons">
+            <BiSolidDownload style={{ width: "100%", height: "100%" }} />
+          </span>
+          Download
+        </button>
+
+        <button
+          type="button"
+          title="song details"
+          className="player-more-info-btn absolute-center cur-pointer"
           onClick={() =>
             setPlayerInfo({ ...playerInfo, isSongDetailsClick: true })
           }
@@ -81,7 +111,7 @@ const PlayerMoreInfo = ({
             <AiFillInfoCircle style={{ width: "100%", height: "100%" }} />
           </div>
           Song details
-        </div>
+        </button>
       </div>
     </div>
   );

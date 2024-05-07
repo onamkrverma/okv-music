@@ -105,7 +105,8 @@
   color: var(--primary-text-color);
   width: 60%;
 }
-.related-songs-title-wrapper {
+.related-songs-title-wrapper,
+.related-songs-channel-wrapper {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow-x: clip;
