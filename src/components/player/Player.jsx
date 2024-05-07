@@ -13,6 +13,7 @@ import RelatedSongs from "./relatedSongs/RelatedSongs";
 import PlayerMoreInfo from "./playerMoreInfo/PlayerMoreInfo";
 import SongDetailsModel from "./songDetailsModel/SongDetailsModel";
 import { useLocation } from "react-router-dom";
+import { useGetServerStatusQuery } from "../../reduxtool/services/activateDownloadApi";
 
 const Player = () => {
   const [songUrl, setSongUrl] = useState("");
@@ -29,8 +30,8 @@ const Player = () => {
   });
   const localAudioFormat = localStorage.getItem("audioQuality");
   const [audioFormat, setAudioFormat] = useState(localAudioFormat ?? "high");
+  const [isDownloadServerActive, setIsDownloadServerActive] = useState(false);
 
-  // const { id } = JSON.parse(localStorage.getItem('currentSongInfo'));
   const dispatch = useDispatch();
   const currentSong = useSelector(
     (state) => state.currentSongSlice.currentSongInfo
@@ -38,6 +39,9 @@ const Player = () => {
   const { id, miniPlayerActive } = currentSong;
 
   const { data, isLoading } = useGetSongsByIdQuery(id);
+  const downloadServerInfo = useGetServerStatusQuery({
+    skip: isDownloadServerActive,
+  });
 
   const [progress, setProgress] = useState(0);
 
@@ -73,6 +77,13 @@ const Player = () => {
       setSongsInfo(data.items);
     }
   }, [data]);
+
+  useEffect(() => {
+    const isSuccess = downloadServerInfo?.isSuccess;
+    if (isSuccess) {
+      setIsDownloadServerActive(isSuccess);
+    }
+  }, []);
 
   useEffect(() => {
     if (songsInfo[0]?.snippet?.liveBroadcastContent === "live") {
@@ -262,6 +273,7 @@ const Player = () => {
             setPlayerInfo={setPlayerInfo}
             audioFormat={audioFormat}
             setAudioFormat={setAudioFormat}
+            setAlertMessage={setAlertMessage}
           />
         </div>
       ) : null}
