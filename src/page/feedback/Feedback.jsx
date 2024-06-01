@@ -55,6 +55,7 @@ const Feedback = () => {
               placeholder="Name"
               minLength={3}
               maxLength={20}
+              required
             />
           </div>
           <div className="form-label-input-wrapper">
@@ -65,6 +66,7 @@ const Feedback = () => {
               type="email"
               placeholder="Email"
               className="feedback-form-input"
+              required
             />
           </div>
         </div>
@@ -77,6 +79,7 @@ const Feedback = () => {
             placeholder="Subject"
             className="feedback-form-input"
             minLength={3}
+            required
           />
         </div>
         <div className="form-label-input-wrapper">
@@ -89,6 +92,7 @@ const Feedback = () => {
             cols="50"
             rows="10"
             minLength={5}
+            required
           />
         </div>
 

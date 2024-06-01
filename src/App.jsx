@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Home from "./page/home/Home";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet,
+  Navigate,
+} from "react-router-dom";
 import SearchResult from "./page/searchResult/SearchResult";
 import PlaylistSongs from "./page/playlistSongs/PlaylistSongs";
 import ScrollToTop from "./utils/ScrollToUp";
@@ -12,6 +18,7 @@ import Explore from "./page/explore/Explore";
 import Header from "./components/header/Header";
 import Feedback from "./page/feedback/Feedback";
 import About from "./page/about/About";
+import OfflineBanner from "./components/offlineBanner/OfflineBanner";
 
 function App() {
   const currentSong = useSelector(
@@ -21,31 +28,41 @@ function App() {
 
   const isMiniPlayerActive = miniPlayerActive ?? true;
 
+  // offline status
+  const [isOffline, setIsOffline] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("offline", (e) => {
+      console.log(e);
+      setIsOffline(true);
+    });
+    window.addEventListener("online", (e) => {
+      console.log(e);
+      setIsOffline(false);
+    });
+  }, []);
+
+  const OnlineRoute = (PageRoute) => {
+    return !isOffline ? (
+      <PageRoute miniPlayerActive={isMiniPlayerActive} />
+    ) : (
+      <OfflineBanner />
+    );
+  };
+
   return (
     <BrowserRouter>
       <ScrollToTop />
       <Header />
       <Routes>
-        <Route
-          path="/"
-          element={<Home miniPlayerActive={isMiniPlayerActive} />}
-        />
+        <Route path="/" element={OnlineRoute(Home)} />
         <Route
           path="playlistsongs/:urlTitle/:playlistId"
-          element={<PlaylistSongs miniPlayerActive={isMiniPlayerActive} />}
+          element={OnlineRoute(PlaylistSongs)}
         />
-        <Route
-          path="/search/:q"
-          element={<SearchResult miniPlayerActive={isMiniPlayerActive} />}
-        />
-        <Route
-          path="/trending"
-          element={<Trending miniPlayerActive={isMiniPlayerActive} />}
-        />
-        <Route
-          path="/explore"
-          element={<Explore miniPlayerActive={isMiniPlayerActive} />}
-        />
+        <Route path="/search/:q" element={OnlineRoute(SearchResult)} />
+        <Route path="/trending" element={OnlineRoute(Trending)} />
+        <Route path="/explore" element={OnlineRoute(Explore)} />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/about" element={<About />} />
 

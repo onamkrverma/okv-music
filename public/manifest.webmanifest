@@ -1,0 +1,49 @@
+{
+  "short_name": "OKV Music",
+  "name": "OKV Music",
+  "icons": [
+    {
+      "src": "logo144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot.webp",
+      "sizes": "945x987",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "Okv Music"
+    },
+    {
+      "src": "screenshot.webp",
+      "sizes": "945x987",
+      "type": "image/webp",
+      "label": "Okv Music"
+    }
+  ],
+  "start_url": "/",
+  "description": "Okv Music is a PWA that lets you explore and listen to new music and songs online. it offers a smooth and responsive web experience with a robust YouTube search functionality.",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

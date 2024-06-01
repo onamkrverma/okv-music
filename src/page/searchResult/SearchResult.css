@@ -57,3 +57,12 @@
     height: 180px;
   }
 }
+
+@media (max-width: 374px) {
+  .search-result-container .songs-card-wrapper {
+    max-width: 270px;
+  }
+  .search-result-container .songs-image-wrapper {
+    height: 150px;
+  }
+}
