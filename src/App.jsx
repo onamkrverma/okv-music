@@ -29,7 +29,7 @@ function App() {
   const isMiniPlayerActive = miniPlayerActive ?? true;
 
   // offline status
-  const [isOffline, setIsOffline] = useState(false);
+  const [isOffline, setIsOffline] = useState(!navigator.onLine);
 
   useEffect(() => {
     window.addEventListener("offline", (e) => {
