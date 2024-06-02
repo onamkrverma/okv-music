@@ -25,8 +25,6 @@ export default defineConfig({
     VitePWA({
       workbox: {
         offlineGoogleAnalytics: true,
-        globIgnores: ["/_redirects/"],
-        navigateFallbackDenylist: [/_redirects/],
         // runtimeCaching: [
         //   getCache({
         //     name: "youtube-assets",
