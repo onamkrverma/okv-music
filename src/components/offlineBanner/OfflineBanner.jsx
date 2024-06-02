@@ -7,7 +7,7 @@ const OfflineBanner = () => {
       <div className="offline-content-wrapper">
         <BsWifiOff size={80} />
         <h1>No Internet</h1>
-        <p>Opps...it appears that you are currently offline.</p>
+        <p>Opps... You are currently offline</p>
         <p>Please verify your internet connection and try again</p>
       </div>
     </div>

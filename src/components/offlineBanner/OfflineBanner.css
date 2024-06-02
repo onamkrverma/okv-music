@@ -16,4 +16,5 @@
 }
 .offline-content-wrapper p {
   text-align: center;
+  opacity: 0.5;
 }
