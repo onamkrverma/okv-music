@@ -33,11 +33,9 @@ function App() {
 
   useEffect(() => {
     window.addEventListener("offline", (e) => {
-      console.log(e);
       setIsOffline(true);
     });
     window.addEventListener("online", (e) => {
-      console.log(e);
       setIsOffline(false);
     });
   }, []);

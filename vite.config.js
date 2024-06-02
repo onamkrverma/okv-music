@@ -26,6 +26,7 @@ export default defineConfig({
       workbox: {
         globPatterns: ["**/*"],
         offlineGoogleAnalytics: true,
+        navigateFallbackDenylist: [/^\/netlify*/],
         // runtimeCaching: [
         //   getCache({
         //     name: "youtube-assets",
