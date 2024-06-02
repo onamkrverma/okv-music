@@ -24,8 +24,9 @@ export default defineConfig({
     svgr(),
     VitePWA({
       workbox: {
-        globPatterns: ["**/*.{jsx,js,css,html}"],
         offlineGoogleAnalytics: true,
+        globIgnores: ["/_redirects/"],
+        navigateFallbackDenylist: [/_redirects/],
         // runtimeCaching: [
         //   getCache({
         //     name: "youtube-assets",
