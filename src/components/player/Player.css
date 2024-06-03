@@ -2,7 +2,7 @@
   position: fixed;
   width: 100%;
   bottom: 0px;
-  background: #04152d;
+  background: var(--secondary-bg);
   z-index: 10;
   height: 100%;
   overflow-y: scroll;

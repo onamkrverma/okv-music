@@ -313,22 +313,12 @@ const Player = () => {
                 highlightColor="#615e5e"
                 duration={2}
               >
-                <Skeleton height={"170px"} />
+                <Skeleton height={"200px"} />
               </SkeletonTheme>
             )}
           </div>
 
-          {isLoading && !songsInfo.length ? (
-            <div className="player-song-title-channel-wrapper absolute-center">
-              <SkeletonTheme
-                baseColor="#747070"
-                highlightColor="#615e5e"
-                duration={2}
-              >
-                <Skeleton width={"250px"} />
-              </SkeletonTheme>
-            </div>
-          ) : (
+          {!isLoading && songsInfo.length ? (
             <div
               className="player-song-title-channel-wrapper absolute-center"
               ref={titleContainerRef}
@@ -344,6 +334,16 @@ const Player = () => {
               <p className="player-song-channel">
                 • {songsInfo[0]?.snippet?.channelTitle}
               </p>
+            </div>
+          ) : (
+            <div className="player-song-title-channel-wrapper absolute-center">
+              <SkeletonTheme
+                baseColor="#747070"
+                highlightColor="#615e5e"
+                duration={2}
+              >
+                <Skeleton width={"250px"} />
+              </SkeletonTheme>
             </div>
           )}
 

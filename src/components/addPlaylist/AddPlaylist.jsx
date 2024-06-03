@@ -55,7 +55,7 @@ const AddPlaylist = () => {
         className="add-your-playlist-btn cur-pointer"
         onClick={() => setIsAddPlaylist(true)}
       >
-        <BsYoutube style={{ width: "30%", height: "30%", color: "#04152d" }} />
+        <BsYoutube style={{ width: "30%", height: "30%", color: "#171717" }} />
         <span>Import Youtube Playlist</span>
       </button>
 
