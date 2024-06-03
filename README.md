@@ -27,6 +27,9 @@ https://github.com/onamkrverma/okv-music/assets/106578262/86e5d3c1-25fd-42e9-96e
 - Direct click to watch youtube video (done ✔)
 - Get song info button (done ✔)
 - Import Youtube playlists (done ✔)
+- Add explore page for diffrent playist (done ✔)
+- Add trending page to show trending song list for global and india (done ✔)
+- Download audio as mp3 (done ✔)
 - many more..
 
 ### Don't forget to :star: the repo
@@ -63,6 +66,38 @@ https://github.com/onamkrverma/okv-music/assets/106578262/86e5d3c1-25fd-42e9-96e
 Runs the app in the development mode.\
 Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 The page will reload when you make changes.
+
+
+### Sample code for backend to get audio url with youtube id
+- setup backend with nodejs, expressjs and install Ytdl-core package 
+```
+const express = require("express");
+const app = express();
+const ytdl = require("ytdl-core");
+
+app.get("/song/:id", async (req, res) => {
+  try {
+    let info = await ytdl.getInfo(req.params.id);
+    let audioFormatHigh = ytdl.chooseFormat(info.formats, {
+      quality: "highest",
+      filter: "audioonly",
+    });
+    let audioFormatLow = ytdl.chooseFormat(info.formats, {
+      quality: "lowest",
+      filter: "audioonly",
+    });
+    res.status(200).json({
+      audioFormatHigh: audioFormatHigh.url,
+      audioFormatLow: audioFormatLow.url,
+    });
+  } catch (err) {
+    // console.error(error);
+    if (err instanceof Error)
+      res.status(500).send(`internal server error "${err.message}"`);
+  }
+```
+
+
 
 ## Queries
 
