@@ -3,7 +3,7 @@ import { useGetPlaylistQuery } from "../../reduxtool/services/songsApi";
 import "./Explore.css";
 import ExploreList from "../../components/exploreList/ExploreList";
 import { useGetMyplaylistInfoQuery } from "../../reduxtool/services/myApi";
-
+import { latestPlaylists } from "../../utils/latestPlaylists";
 const Explore = ({ miniPlayerActive }) => {
   useEffect(() => {
     document.title = "Explore • Okv Music";
@@ -12,53 +12,25 @@ const Explore = ({ miniPlayerActive }) => {
   const [localPlaylists, setLocalPlaylists] = useState([]);
   const [discoverNewMusic, setDiscoverNewMusic] = useState([]);
 
-  const playlists = [
-    { title: "Released", id: "RDCLAK5uy_ksEjgm3H_7zOJ_RHzRjN1wY-_FFcs7aAU" },
-    {
-      title: "New Music Hindi",
-      id: "RDCLAK5uy_nNhhgRET3NcJ4SJBvqhAIJ6t7vjsQYowc",
-    },
-    {
-      title: "New Indian Pop",
-      id: "RDCLAK5uy_k66J6mE65JgdE4zoeNSzmw_16JB_ueINE",
-    },
-    {
-      title: "New Music Panjab",
-      id: "RDCLAK5uy_mk3xwsayv9PxawuXS-U6ao9eMeNmSwYAM",
-    },
-    {
-      title: "New Music Haryanvi",
-      id: "RDCLAK5uy_nTkyDVpCk3iCQG_3bDJyhGgb1uzcBZM4A",
-    },
-    {
-      title: "New Music Telgu",
-      id: "RDCLAK5uy_l8CaYQvBQWVT2st1VsW9JjODWisR_vd3U",
-    },
-    {
-      title: "New Music Tamil",
-      id: "RDCLAK5uy_nVQAtE2KBWk-ROQIc5o39Oup3hOLnYV0g",
-    },
-  ];
-
-  const newReleased = useGetPlaylistQuery(playlists[0].id, {
+  const newReleased = useGetPlaylistQuery(latestPlaylists[0].id, {
     skip: !miniPlayerActive,
   });
-  const newMusicHindi = useGetPlaylistQuery(playlists[1].id, {
+  const newMusicHindi = useGetPlaylistQuery(latestPlaylists[1].id, {
     skip: !miniPlayerActive,
   });
-  const newIndianPop = useGetPlaylistQuery(playlists[2].id, {
+  const newIndianPop = useGetPlaylistQuery(latestPlaylists[2].id, {
     skip: !miniPlayerActive,
   });
-  const newMusicPanjab = useGetPlaylistQuery(playlists[3].id, {
+  const newMusicPanjab = useGetPlaylistQuery(latestPlaylists[3].id, {
     skip: !miniPlayerActive,
   });
-  const newMusicHaryanvi = useGetPlaylistQuery(playlists[4].id, {
+  const newMusicHaryanvi = useGetPlaylistQuery(latestPlaylists[4].id, {
     skip: !miniPlayerActive,
   });
-  const newMusicTelgu = useGetPlaylistQuery(playlists[5].id, {
+  const newMusicTelgu = useGetPlaylistQuery(latestPlaylists[5].id, {
     skip: !miniPlayerActive,
   });
-  const newMusicTamil = useGetPlaylistQuery(playlists[6].id, {
+  const newMusicTamil = useGetPlaylistQuery(latestPlaylists[6].id, {
     skip: !miniPlayerActive,
   });
 

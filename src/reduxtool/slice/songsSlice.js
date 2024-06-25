@@ -24,20 +24,23 @@ export const songsSlice = createSlice({
       state.myPlaylistSongs = action.payload;
     },
     removePlaylistSongs: (state, action) => {
-      state.myPlaylistSongs.splice(
-        state.myPlaylistSongs.findIndex(
-          (item) => item.metaData?.playlistId === action.payload
-        ),
-        1
+      const playlistIdToRemove = action.payload;
+      const indexToRemove = state.myPlaylistSongs.findIndex(
+        (item) => item.metaData?.playlistId === playlistIdToRemove
       );
+      if (indexToRemove !== -1) {
+        state.myPlaylistSongs.splice(indexToRemove, 1);
+      }
     },
+
     removePlaylist: (state, action) => {
-      state.myPlaylistData.splice(
-        state.myPlaylistData.findIndex(
-          (item) => item.playlistId === action.payload
-        ),
-        1
+      const playlistIdToRemove = action.payload;
+      const indexToRemove = state.myPlaylistData.findIndex(
+        (item) => item.playlistId === playlistIdToRemove
       );
+      if (indexToRemove !== -1) {
+        state.myPlaylistData.splice(indexToRemove, 1);
+      }
     },
   },
 });

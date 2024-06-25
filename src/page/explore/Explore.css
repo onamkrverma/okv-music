@@ -4,7 +4,6 @@
 
 .explore-container {
   color: var(--primary-text-color);
-  padding-bottom: 150px;
 }
 
 @media (max-width: 426px) {

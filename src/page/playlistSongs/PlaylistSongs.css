@@ -1,6 +1,5 @@
 .playlist-songs-container {
   color: var(--primary-text-color);
-  padding-bottom: 150px;
 }
 .playlist-songs-header {
   display: flex;

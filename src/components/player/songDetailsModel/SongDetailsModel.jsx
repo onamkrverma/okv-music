@@ -22,25 +22,25 @@ const SongDetailsModel = ({
 
   return (
     <div
-      className="song-details-model-wrapper absolute-center"
+      className="popup-wrapper absolute-center"
       style={{
         display: playerInfo.isSongDetailsClick ? "flex" : "none",
       }}
     >
       <div
-        className="model-overlayer"
+        className="popup-overlayer"
         onClick={() =>
           setPlayerInfo({ ...playerInfo, isSongDetailsClick: false })
         }
       ></div>
       <div className="song-details-model">
         <span
-          className="song-details-model-close cur-pointer"
+          className="popup-close-btn cur-pointer"
           onClick={() =>
             setPlayerInfo({ ...playerInfo, isSongDetailsClick: false })
           }
         >
-          <RxCross2 style={{ width: "100%", height: "100%" }} />
+          <RxCross2 size={25} />
         </span>
         <p className="song-details">Id: {songsInfo[0]?.id}</p>
         <p className="song-details">

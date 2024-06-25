@@ -63,20 +63,24 @@ const AddPlaylist = () => {
 
       <div
         className={`${
-          isAddPlaylist ? "add-playlist-model-wrapper absolute-center" : "hide"
+          isAddPlaylist ? "popup-wrapper absolute-center" : "hide"
         }`}
       >
         <div
-          className="model-overlayer"
+          className="popup-overlayer"
           onClick={() => setIsAddPlaylist(false)}
         ></div>
-        <div className="add-playlist-model">
-          <span
-            className="add-playlist-model-close cur-pointer"
-            onClick={() => setIsAddPlaylist(false)}
+        <div className="popup">
+          <button
+            type="button"
+            title="close"
+            className="popup-close-btn cur-pointer"
+            onClick={() => {
+              setIsAddPlaylist(false), formRef.current?.reset();
+            }}
           >
-            <RxCross2 style={{ width: "100%", height: "100%" }} />
-          </span>
+            <RxCross2 size={25} />
+          </button>
           <form
             className="add-playlist-form"
             onSubmit={handleSubmit}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { useGetPlaylistItemsQuery } from "../../reduxtool/services/songsApi";
 import SongsList from "../../components/songsList/SongsList";
@@ -12,8 +12,13 @@ import {
 import HeroBanner from "./heroBanner/HeroBanner";
 import AddPlaylist from "../../components/addPlaylist/AddPlaylist";
 import { MdDeleteForever } from "react-icons/md";
+import Popup from "../../components/popup/Popup";
+import { HiOutlineTrash } from "react-icons/hi2";
 
 const Home = ({ miniPlayerActive }) => {
+  const [isPopup, setIsPopup] = useState(false);
+  const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
+
   useEffect(() => {
     document.title = "Home • Okv Music";
   }, []);
@@ -45,13 +50,14 @@ const Home = ({ miniPlayerActive }) => {
     { skip: !miniPlayerActive }
   );
 
-  const locaPlaylist0 = useGetPlaylistItemsQuery(
+  const localPlaylist0 = useGetPlaylistItemsQuery(
     myLocalPlaylist[0]?.playlistId,
-    { skip: !myLocalPlaylist[0]?.playlistId || !miniPlayerActive }
+    { skip: myLocalPlaylist[0] === undefined || !miniPlayerActive }
   );
-  const locaPlaylist1 = useGetPlaylistItemsQuery(
+
+  const localPlaylist1 = useGetPlaylistItemsQuery(
     myLocalPlaylist[1]?.playlistId,
-    { skip: !myLocalPlaylist[1]?.playlistId || !miniPlayerActive }
+    { skip: myLocalPlaylist[1] === undefined || !miniPlayerActive }
   );
 
   useEffect(() => {
@@ -93,46 +99,46 @@ const Home = ({ miniPlayerActive }) => {
   // add local playlist songs
 
   useEffect(() => {
-    if (locaPlaylist0?.data) {
-      dispatch(
-        addMyPlaylistSongs([
-          {
-            data: locaPlaylist0?.data,
-            metaData: {
-              title: myLocalPlaylist[0]?.title,
-              playlist: myLocalPlaylist[0]?.playlistId,
-              isLoading: locaPlaylist0.isLoading,
-            },
-          },
-        ])
-      );
+    const playlistSongs = [];
+    if (localPlaylist0?.currentData) {
+      playlistSongs.push({
+        data: localPlaylist0.data,
+        metaData: {
+          title: myLocalPlaylist[0]?.title,
+          playlist: myLocalPlaylist[0]?.playlistId,
+          isLoading: localPlaylist0.isLoading,
+        },
+      });
     }
 
-    if (locaPlaylist1?.data) {
-      dispatch(
-        addMyPlaylistSongs([
-          {
-            data: locaPlaylist0?.data,
-            metaData: {
-              title: myLocalPlaylist[0]?.title,
-              playlist: myLocalPlaylist[0]?.playlistId,
-              isLoading: locaPlaylist0.isLoading,
-            },
-          },
-          {
-            data: locaPlaylist1?.data,
-            metaData: {
-              title: myLocalPlaylist[1]?.title,
-              playlist: myLocalPlaylist[1]?.playlistId,
-              isLoading: locaPlaylist1.isLoading,
-            },
-          },
-        ])
-      );
+    if (localPlaylist1?.currentData) {
+      playlistSongs.push({
+        data: localPlaylist1.data,
+        metaData: {
+          title: myLocalPlaylist[1]?.title,
+          playlist: myLocalPlaylist[1]?.playlistId,
+          isLoading: localPlaylist1.isLoading,
+        },
+      });
     }
 
-    // eslint-disable-next-line
-  }, [myLocalPlaylist, locaPlaylist0?.data, locaPlaylist1?.data]);
+    if (playlistSongs.length > 0) {
+      dispatch(addMyPlaylistSongs(playlistSongs));
+    }
+  }, [myLocalPlaylist, localPlaylist0?.data, localPlaylist1?.data]);
+
+  // handle delete local playlist
+
+  const handleDeleteLocalplaylist = () => {
+    dispatch(removePlaylistSongs(selectedPlaylistId));
+    dispatch(removePlaylist(selectedPlaylistId));
+    setIsPopup(false);
+  };
+  useEffect(() => {
+    if (!isPopup) {
+      setSelectedPlaylistId(null);
+    }
+  }, [isPopup]);
 
   return (
     <div className="home-section">
@@ -161,7 +167,7 @@ const Home = ({ miniPlayerActive }) => {
 
       {/* my playlist */}
       {myPlaylistSongs?.map((songs, index) => (
-        <div key={songs.metaData?.title}>
+        <div key={index}>
           <div className="local-playlist-container container ">
             <p>Your imported Youtube playlist {index + 1} </p>
             <button
@@ -169,8 +175,8 @@ const Home = ({ miniPlayerActive }) => {
               title="delete playlist"
               className="playlist-delete-btn"
               onClick={() => {
-                dispatch(removePlaylistSongs(songs.metaData?.playlistId));
-                dispatch(removePlaylist(songs.metaData?.playlistId));
+                setIsPopup(true),
+                  setSelectedPlaylistId(songs.metaData?.playlist);
               }}
             >
               <MdDeleteForever style={{ width: "100%", height: "100%" }} />
@@ -185,6 +191,20 @@ const Home = ({ miniPlayerActive }) => {
           />
         </div>
       ))}
+      <Popup
+        Icon={<HiOutlineTrash size={50} color="white" />}
+        title={"Delete Playlist"}
+        subtitle={"Are you sure you want to delete this playlist?"}
+        primaryBtnText={"Delete"}
+        secondaryBtnText={"Cancel"}
+        isPopup={isPopup}
+        setIsPopup={setIsPopup}
+        handleSecondaryBtn={() => {
+          setIsPopup(false);
+        }}
+        handlePrimaryBtn={handleDeleteLocalplaylist}
+      />
+
       {/* add playlist button */}
       <AddPlaylist />
     </div>

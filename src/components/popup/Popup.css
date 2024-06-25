@@ -1,0 +1,38 @@
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  text-align: center;
+}
+.popup-icon {
+  background: var(--gradient);
+  padding: 8px;
+  border-radius: 50%;
+}
+.popup-content h2 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.popup-btn-wrapper {
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+.popup-btn-wrapper button {
+  outline: none;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: var(--primary-text-color);
+  cursor: pointer;
+  flex: 1;
+}
+.popup-btn-wrapper .popup-primary-btn {
+  background: var(--gradient);
+}
+.popup-btn-wrapper .popup-secondary-btn {
+  background: none;
+  border: 1px solid var(--primary-text-color);
+}
