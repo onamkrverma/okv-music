@@ -19,6 +19,7 @@ import Header from "./components/header/Header";
 import Feedback from "./page/feedback/Feedback";
 import About from "./page/about/About";
 import OfflineBanner from "./components/offlineBanner/OfflineBanner";
+import Footer from "./components/footer/Footer";
 
 function App() {
   const currentSong = useSelector(
@@ -66,6 +67,7 @@ function App() {
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      <Footer />
       {id ? <Player /> : null}
     </BrowserRouter>
   );
