@@ -7,14 +7,17 @@ import { BsPlayCircleFill } from "react-icons/bs";
 import Player from "../../components/player/Player";
 import { addSongInfo } from "../../reduxtool/slice/currentSongSlice";
 import PlaylistSongsSkeleton from "../playlistSongs/PlaylistSongsSkeleton";
+import { useSearchParams } from "react-router-dom";
 
 const Trending = ({ miniPlayerActive }) => {
   useEffect(() => {
     document.title = "Trending • Okv Music";
   }, []);
 
+  const searchParams = useSearchParams();
+  const location = searchParams[0].get("loc");
   const [playlistInfo, setPlaylistInfo] = useState([]);
-  const [activeToggle, setActiveToggle] = useState("india");
+  const [activeToggle, setActiveToggle] = useState(location || "india");
 
   const toggleList = [
     { title: "India", value: "india" },

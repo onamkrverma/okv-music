@@ -7,6 +7,44 @@ const Footer = () => {
     {
       title: "Latest",
       links: latestPlaylists,
+      type: "playlists",
+    },
+    {
+      title: "Browse",
+      type: "songs",
+      links: [
+        {
+          title: "Trending Songs",
+          link: "/playlistsongs/trending-songs/OLAK5uy_lSTp1DIuzZBUyee3kDsXwPgP25WdfwB40",
+        },
+        {
+          title: "Bollywood Hits",
+          link: "/playlistsongs/bollywood-hits/RDCLAK5uy_n9Fbdw7e6ap-98_A-8JYBmPv64v-Uaq1g",
+        },
+
+        {
+          title: "India Trends",
+          link: "/trending?loc=india",
+        },
+        {
+          title: "Global Trends ",
+          link: "/trending?loc=global",
+        },
+      ],
+    },
+    {
+      title: "About",
+      type: "pages",
+      links: [
+        {
+          title: "About App",
+          link: "/about",
+        },
+        {
+          title: "Feedback",
+          link: "/feedback",
+        },
+      ],
     },
   ];
 
@@ -19,9 +57,13 @@ const Footer = () => {
             {item.links.map((linkItem, index) => (
               <Link
                 key={index}
-                to={`/playlistsongs/${linkItem.title
-                  ?.replaceAll(" ", "-")
-                  .toLowerCase()}/${linkItem.id}`}
+                to={
+                  item.type === "playlists"
+                    ? `/playlistsongs/${linkItem.title
+                        ?.replaceAll(" ", "-")
+                        .toLowerCase()}/${linkItem.id}`
+                    : linkItem.link
+                }
               >
                 {linkItem.title}
               </Link>
@@ -29,6 +71,12 @@ const Footer = () => {
           </div>
         ))}
       </nav>
+
+      <div className="footer-copyright">
+        <small>
+          © {new Date().getFullYear()} Okv-Music All rights reserved.
+        </small>
+      </div>
     </footer>
   );
 };
