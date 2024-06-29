@@ -30,7 +30,6 @@ const Player = () => {
   });
   const localAudioFormat = localStorage.getItem("audioQuality");
   const [audioFormat, setAudioFormat] = useState(localAudioFormat ?? "high");
-  const [isDownloadServerActive, setIsDownloadServerActive] = useState(false);
 
   const dispatch = useDispatch();
   const currentSong = useSelector(
@@ -39,9 +38,6 @@ const Player = () => {
   const { id, miniPlayerActive } = currentSong;
 
   const { data, isLoading } = useGetSongsByIdQuery(id);
-  const downloadServerInfo = useGetServerStatusQuery({
-    skip: isDownloadServerActive,
-  });
 
   const [progress, setProgress] = useState(0);
 
@@ -77,13 +73,6 @@ const Player = () => {
       setSongsInfo(data.items);
     }
   }, [data]);
-
-  useEffect(() => {
-    const isSuccess = downloadServerInfo?.isSuccess;
-    if (isSuccess) {
-      setIsDownloadServerActive(isSuccess);
-    }
-  }, []);
 
   useEffect(() => {
     if (songsInfo[0]?.snippet?.liveBroadcastContent === "live") {

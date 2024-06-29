@@ -26,6 +26,10 @@
   border: none;
   color: var(--primary-text-color);
 }
+.player-more-info-btn:disabled {
+  color: gray;
+  font-size: 12px;
+}
 
 .audio-quality-wrapper {
   position: relative;

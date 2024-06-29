@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillInfoCircle, AiFillSetting } from "react-icons/ai";
 import { BiSolidDownload } from "react-icons/bi";
 import { BsThreeDotsVertical, BsYoutube, BsDownload } from "react-icons/bs";
 import "./PlayerMoreInfo.css";
 import { getDownloadAudio } from "../../../api/downloadAudio";
+import { useGetServerStatusQuery } from "../../../reduxtool/services/activateDownloadApi";
 
 const PlayerMoreInfo = ({
   id,
@@ -14,6 +15,17 @@ const PlayerMoreInfo = ({
   setAlertMessage,
 }) => {
   localStorage.setItem("audioQuality", audioFormat);
+  const [isDownloadServerActive, setIsDownloadServerActive] = useState(false);
+
+  const { isSuccess } = useGetServerStatusQuery({
+    skip: isDownloadServerActive,
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setIsDownloadServerActive(isSuccess);
+    }
+  }, [isSuccess]);
 
   const handleDownload = async () => {
     try {
@@ -92,11 +104,12 @@ const PlayerMoreInfo = ({
           title="download"
           className="player-more-info-btn absolute-center cur-pointer"
           onClick={handleDownload}
+          disabled={!isDownloadServerActive}
         >
           <span className="player-more-info-icons">
             <BiSolidDownload style={{ width: "100%", height: "100%" }} />
           </span>
-          Download
+          {!isDownloadServerActive ? "connecting server.." : "Download"}
         </button>
 
         <button
