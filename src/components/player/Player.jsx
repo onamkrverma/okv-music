@@ -129,72 +129,73 @@ const Player = () => {
   }, [currentSong]);
 
   // web media session
-
-  if ("mediaSession" in navigator) {
-    navigator.mediaSession.metadata = new MediaMetadata({
-      title: songsInfo[0]?.snippet?.title,
-      album: songsInfo[0]?.snippet?.channelTitle,
-      artwork: [
-        {
-          src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
-          sizes: "96x96",
-          type: "image/png",
-        },
-        {
-          src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
-          sizes: "128x128",
-          type: "image/png",
-        },
-        {
-          src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
-          sizes: "192x192",
-          type: "image/png",
-        },
-        {
-          src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
-          sizes: "256x256",
-          type: "image/png",
-        },
-        {
-          src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
-          sizes: "384x384",
-          type: "image/png",
-        },
-        {
-          src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
-          sizes: "512x512",
-          type: "image/png",
-        },
-      ],
-    });
-
-    navigator.mediaSession.setActionHandler("play", () => {
-      audioRef.current.play();
-      setIsPlaying(true);
-    });
-    navigator.mediaSession.setActionHandler("pause", () => {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    });
-
-    if (currentIndex > 0) {
-      navigator.mediaSession.setActionHandler("previoustrack", () => {
-        handlePrev();
+  useEffect(() => {
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: songsInfo[0]?.snippet?.title,
+        album: songsInfo[0]?.snippet?.channelTitle,
+        artwork: [
+          {
+            src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+            sizes: "96x96",
+            type: "image/png",
+          },
+          {
+            src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+            sizes: "128x128",
+            type: "image/png",
+          },
+          {
+            src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+            sizes: "256x256",
+            type: "image/png",
+          },
+          {
+            src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+            sizes: "384x384",
+            type: "image/png",
+          },
+          {
+            src: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+            sizes: "512x512",
+            type: "image/png",
+          },
+        ],
       });
-    } else {
-      // Unset the "previoustrack" action handler at the end of a list.
-      navigator.mediaSession.setActionHandler("previoustrack", null);
-    }
 
-    if (currentIndex < mapVideoId.length - 1) {
-      navigator.mediaSession.setActionHandler("nexttrack", () => {
-        handleNext();
+      navigator.mediaSession.setActionHandler("play", () => {
+        audioRef.current.play();
+        setIsPlaying(true);
       });
-    } else {
-      // Unset the "nexttrack" action handler at the end of a playlist.
-      navigator.mediaSession.setActionHandler("nexttrack", null);
+      navigator.mediaSession.setActionHandler("pause", () => {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      });
+
+      if (currentIndex > 0) {
+        navigator.mediaSession.setActionHandler("previoustrack", () => {
+          handlePrev();
+        });
+      } else {
+        // Unset the "previoustrack" action handler at the end of a list.
+        navigator.mediaSession.setActionHandler("previoustrack", null);
+      }
+
+      if (currentIndex < mapVideoId.length - 1) {
+        navigator.mediaSession.setActionHandler("nexttrack", () => {
+          handleNext();
+        });
+      } else {
+        // Unset the "nexttrack" action handler at the end of a playlist.
+        navigator.mediaSession.setActionHandler("nexttrack", null);
+      }
     }
-  }
+  }, [id]);
 
   useEffect(() => {
     if (!miniPlayerActive) {

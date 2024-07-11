@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { AiFillInfoCircle, AiFillSetting } from "react-icons/ai";
 import { BiSolidDownload } from "react-icons/bi";
-import { BsThreeDotsVertical, BsYoutube, BsDownload } from "react-icons/bs";
+import { BsThreeDotsVertical, BsYoutube } from "react-icons/bs";
 import "./PlayerMoreInfo.css";
 import { getDownloadAudio } from "../../../api/downloadAudio";
 import { useGetServerStatusQuery } from "../../../reduxtool/services/activateDownloadApi";
+import DownloadIcon from "../../../assets/downloading.svg?react";
 
 const PlayerMoreInfo = ({
   id,
@@ -16,7 +17,7 @@ const PlayerMoreInfo = ({
 }) => {
   localStorage.setItem("audioQuality", audioFormat);
   const [isDownloadServerActive, setIsDownloadServerActive] = useState(false);
-
+  const [isDownloadStart, setIsDownloadStart] = useState(false);
   const { isSuccess } = useGetServerStatusQuery({
     skip: isDownloadServerActive,
   });
@@ -27,13 +28,14 @@ const PlayerMoreInfo = ({
     }
   }, [isSuccess]);
 
-  const handleDownload = async () => {
-    try {
-      await getDownloadAudio({ id: id });
-    } catch (error) {
-      setAlertMessage("Downloading audio failed!");
-      console.error("Error downloading audio:", error);
-    }
+  const handleDownload = () => {
+    setIsDownloadStart(true);
+    setAlertMessage("Download may take a moment. Be patient😊");
+    getDownloadAudio({ id: id });
+    setTimeout(() => {
+      setAlertMessage("");
+      setIsDownloadStart(false);
+    }, 60000);
   };
 
   return (
@@ -107,9 +109,17 @@ const PlayerMoreInfo = ({
           disabled={!isDownloadServerActive}
         >
           <span className="player-more-info-icons">
-            <BiSolidDownload style={{ width: "100%", height: "100%" }} />
+            {!isDownloadStart ? (
+              <BiSolidDownload style={{ width: "100%", height: "100%" }} />
+            ) : (
+              <DownloadIcon width={20} height={20} />
+            )}
           </span>
-          {!isDownloadServerActive ? "connecting server.." : "Download"}
+          {!isDownloadServerActive
+            ? "connecting server.."
+            : isDownloadStart
+            ? "Downloading.."
+            : "Download"}
         </button>
 
         <button
