@@ -4,6 +4,7 @@ import {
   BsFillSkipEndFill,
   BsFillSkipStartFill,
   BsFillVolumeUpFill,
+  BsFillVolumeMuteFill,
   BsPauseCircleFill,
   BsPlayCircleFill,
 } from "react-icons/bs";
@@ -173,9 +174,18 @@ const PlayerControls = ({
       </div>
 
       <div className="audio-volume-wrapper">
-        <div className="audio-volume-icon next-prev-icons">
-          <BsFillVolumeUpFill style={{ width: "100%", height: "100%" }} />
-        </div>
+        <button
+          type="button"
+          title="mute/unmute"
+          className="audio-volume-btn next-prev-icons"
+          onClick={() => setVolumeLevel(volumeLevel > 0 ? 0 : 0.5)}
+        >
+          {volumeLevel > 0 ? (
+            <BsFillVolumeUpFill style={{ width: "100%", height: "100%" }} />
+          ) : (
+            <BsFillVolumeMuteFill style={{ width: "100%", height: "100%" }} />
+          )}
+        </button>
 
         <div className="audio-volume">
           <input

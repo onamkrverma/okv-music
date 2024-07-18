@@ -130,7 +130,12 @@ input[type="range"]::-moz-range-thumb {
 .volume-input {
   width: 70% !important;
 }
-
+.audio-volume-btn {
+  border: none;
+  background: none;
+  color: white;
+  cursor: pointer;
+}
 .audio-autoplay-wrapper {
   position: absolute;
   bottom: 10px;

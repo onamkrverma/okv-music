@@ -195,7 +195,7 @@ const Player = () => {
         navigator.mediaSession.setActionHandler("nexttrack", null);
       }
     }
-  }, [id]);
+  }, [currentSong, songsInfo, currentIndex]);
 
   useEffect(() => {
     if (!miniPlayerActive) {
