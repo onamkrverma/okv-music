@@ -13,7 +13,7 @@ import RelatedSongs from "./relatedSongs/RelatedSongs";
 import PlayerMoreInfo from "./playerMoreInfo/PlayerMoreInfo";
 import SongDetailsModel from "./songDetailsModel/SongDetailsModel";
 import { useLocation } from "react-router-dom";
-import { useGetServerStatusQuery } from "../../reduxtool/services/activateDownloadApi";
+import { RxCross2 } from "react-icons/rx";
 
 const Player = () => {
   const [songUrl, setSongUrl] = useState("");
@@ -372,7 +372,17 @@ const Player = () => {
           />
 
           <div className={`${alertMessage ? "alert-message-wrapper" : "hide"}`}>
-            <div className="alert-message">{alertMessage}</div>
+            <div className="alert-message">
+              <p>{alertMessage}</p>
+              <button
+                type="button"
+                title="close"
+                className="absolute-center"
+                onClick={() => setAlertMessage("")}
+              >
+                <RxCross2 size={15} />
+              </button>
+            </div>
           </div>
         </div>
 

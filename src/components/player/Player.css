@@ -119,6 +119,19 @@
   border-radius: 10px;
   text-transform: capitalize;
 }
+.alert-message {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.alert-message button {
+  cursor: pointer;
+  background: red;
+  color: white;
+  border: none;
+  padding: 2px;
+  border-radius: 50%;
+}
 
 @media (max-width: 426px) {
   .player-container {

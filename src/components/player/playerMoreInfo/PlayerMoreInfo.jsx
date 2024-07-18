@@ -30,12 +30,12 @@ const PlayerMoreInfo = ({
 
   const handleDownload = () => {
     setIsDownloadStart(true);
-    setAlertMessage("Download may take a moment. Be patient😊");
+    setAlertMessage("Download may take a moment. Please be patient 😊");
     getDownloadAudio({ id: id });
     setTimeout(() => {
       setAlertMessage("");
       setIsDownloadStart(false);
-    }, 60000);
+    }, 120 * 1000);
   };
 
   return (
@@ -106,7 +106,7 @@ const PlayerMoreInfo = ({
           title="download"
           className="player-more-info-btn absolute-center cur-pointer"
           onClick={handleDownload}
-          disabled={!isDownloadServerActive}
+          disabled={!isDownloadServerActive || isDownloadStart}
         >
           <span className="player-more-info-icons">
             {!isDownloadStart ? (

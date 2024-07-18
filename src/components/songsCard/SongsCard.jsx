@@ -38,7 +38,7 @@ const SongsCard = ({ songs }) => {
           ) : null}
         </div>
         <div className="songs-title-channel-wrapper">
-          <p className="songs-title">{songs.snippet.title + " download mp3"}</p>
+          <p className="songs-title">{songs.snippet.title}</p>
           {/* visible only in search page */}
           <p className="songs-channel">• {songs?.snippet?.channelTitle}</p>
         </div>
