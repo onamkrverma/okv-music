@@ -22,10 +22,7 @@ const ExploreCard = ({ item, dataType }) => {
       : item.snippet.description;
 
   return (
-    <Link
-      to={`/playlistsongs/${urlSlug}/${playlistId}`}
-      className="explore-card"
-    >
+    <Link to={`/${urlSlug}/${playlistId}`} className="explore-card">
       <div className="explore-card-image">
         <img src={poster} alt={title} />
       </div>

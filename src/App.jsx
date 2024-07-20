@@ -56,7 +56,7 @@ function App() {
       <Routes>
         <Route path="/" element={OnlineRoute(Home)} />
         <Route
-          path="playlistsongs/:urlTitle/:playlistId"
+          path="/:urlTitle/:playlistId"
           element={OnlineRoute(PlaylistSongs)}
         />
         <Route path="/search/:q" element={OnlineRoute(SearchResult)} />

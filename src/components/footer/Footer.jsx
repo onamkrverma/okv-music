@@ -15,11 +15,11 @@ const Footer = () => {
       links: [
         {
           title: "Trending Songs",
-          link: "/playlistsongs/trending-songs/OLAK5uy_lSTp1DIuzZBUyee3kDsXwPgP25WdfwB40",
+          link: "/trending-songs/OLAK5uy_lSTp1DIuzZBUyee3kDsXwPgP25WdfwB40",
         },
         {
           title: "Bollywood Hits",
-          link: "/playlistsongs/bollywood-hits/RDCLAK5uy_n9Fbdw7e6ap-98_A-8JYBmPv64v-Uaq1g",
+          link: "/bollywood-hits/RDCLAK5uy_n9Fbdw7e6ap-98_A-8JYBmPv64v-Uaq1g",
         },
 
         {
@@ -59,9 +59,9 @@ const Footer = () => {
                 key={index}
                 to={
                   item.type === "playlists"
-                    ? `/playlistsongs/${linkItem.title
-                        ?.replaceAll(" ", "-")
-                        .toLowerCase()}/${linkItem.id}`
+                    ? `/${linkItem.title?.replaceAll(" ", "-").toLowerCase()}/${
+                        linkItem.id
+                      }`
                     : linkItem.link
                 }
               >
