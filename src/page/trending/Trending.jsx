@@ -11,7 +11,7 @@ import { useSearchParams } from "react-router-dom";
 
 const Trending = ({ miniPlayerActive }) => {
   useEffect(() => {
-    document.title = "Trending • Okv Music";
+    document.title = "Trending Songs • Okv Music";
   }, []);
 
   const searchParams = useSearchParams();

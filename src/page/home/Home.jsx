@@ -20,7 +20,7 @@ const Home = ({ miniPlayerActive }) => {
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
 
   useEffect(() => {
-    document.title = "Home • Okv Music";
+    document.title = "Trending Songs in india • Okv Music";
   }, []);
 
   const playlistId = {

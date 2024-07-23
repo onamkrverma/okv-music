@@ -6,7 +6,7 @@ import { useGetMyplaylistInfoQuery } from "../../reduxtool/services/myApi";
 import { latestPlaylists } from "../../utils/latestPlaylists";
 const Explore = ({ miniPlayerActive }) => {
   useEffect(() => {
-    document.title = "Explore • Okv Music";
+    document.title = "Explore Songs • Okv Music";
   }, []);
 
   const [localPlaylists, setLocalPlaylists] = useState([]);

@@ -86,9 +86,9 @@ const AddPlaylist = () => {
             onSubmit={handleSubmit}
             ref={formRef}
           >
-            <p className="add-playlist-form-title">
+            <h1 className="add-playlist-form-title">
               Add your favourite Youtube playlist
-            </p>
+            </h1>
 
             <div className="title-input-wrapper">
               <p>Title</p>

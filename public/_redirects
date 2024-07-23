@@ -1,0 +1,3 @@
+# Redirect from www to non-www
+
+https://www.okv-music.netlify.app/* https://okv-music.netlify.app/:splat 301!
