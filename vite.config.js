@@ -32,8 +32,6 @@ export default defineConfig({
         //     pattern: ({ url }) => url.origin === "https://i.ytimg.com",
         //   }),
         // ],
-
-        globIgnores: ["**/node_modules/**/*", "**/_redirects/**/*"],
       },
 
       includeAssets: ["**/*"],
