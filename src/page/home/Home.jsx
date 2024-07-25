@@ -76,7 +76,7 @@ const Home = ({ miniPlayerActive }) => {
           {
             data: newSongs.data,
             metaData: {
-              title: "New Relased",
+              title: "New Music Hindi",
               playlist: playlistId.newRelesedId,
               isLoading: newSongs.isLoading,
             },
@@ -133,6 +133,7 @@ const Home = ({ miniPlayerActive }) => {
     dispatch(removePlaylistSongs(selectedPlaylistId));
     dispatch(removePlaylist(selectedPlaylistId));
     setIsPopup(false);
+    window.location.reload();
   };
   useEffect(() => {
     if (!isPopup) {
@@ -191,19 +192,21 @@ const Home = ({ miniPlayerActive }) => {
           />
         </div>
       ))}
-      <Popup
-        Icon={<HiOutlineTrash size={50} color="white" />}
-        title={"Delete Playlist"}
-        subtitle={"Are you sure you want to delete this playlist?"}
-        primaryBtnText={"Delete"}
-        secondaryBtnText={"Cancel"}
-        isPopup={isPopup}
-        setIsPopup={setIsPopup}
-        handleSecondaryBtn={() => {
-          setIsPopup(false);
-        }}
-        handlePrimaryBtn={handleDeleteLocalplaylist}
-      />
+      {isPopup ? (
+        <Popup
+          Icon={<HiOutlineTrash size={50} color="white" />}
+          title={"Delete Playlist"}
+          subtitle={"Are you sure you want to delete this playlist?"}
+          primaryBtnText={"Delete"}
+          secondaryBtnText={"Cancel"}
+          isPopup={isPopup}
+          setIsPopup={setIsPopup}
+          handleSecondaryBtn={() => {
+            setIsPopup(false);
+          }}
+          handlePrimaryBtn={handleDeleteLocalplaylist}
+        />
+      ) : null}
 
       {/* add playlist button */}
       <AddPlaylist />

@@ -16,7 +16,7 @@ const SongsList = ({
   return (
     <div className="songs-list-container container">
       <div className="songs-list-top-wrapper">
-        <h1 className="songs-list-title">{title}</h1>
+        <h2 className="songs-list-title">{title}</h2>
         <Link
           to={`/${urlTitle}/${playlistId}`}
           className="view-all cur-pointer"

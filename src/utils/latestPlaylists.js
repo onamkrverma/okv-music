@@ -1,5 +1,5 @@
 export const latestPlaylists = [
-  { title: "Released", id: "RDCLAK5uy_ksEjgm3H_7zOJ_RHzRjN1wY-_FFcs7aAU" },
+  { title: "New Released", id: "RDCLAK5uy_ksEjgm3H_7zOJ_RHzRjN1wY-_FFcs7aAU" },
   {
     title: "New Music Hindi",
     id: "RDCLAK5uy_nNhhgRET3NcJ4SJBvqhAIJ6t7vjsQYowc",

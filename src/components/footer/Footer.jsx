@@ -18,8 +18,8 @@ const Footer = () => {
           link: "/trending-songs/OLAK5uy_lSTp1DIuzZBUyee3kDsXwPgP25WdfwB40",
         },
         {
-          title: "Bollywood Hits",
-          link: "/bollywood-hits/RDCLAK5uy_n9Fbdw7e6ap-98_A-8JYBmPv64v-Uaq1g",
+          title: "Bollywood Romance",
+          link: "bollywood-love-aaj-kal/RDCLAK5uy_kvB-Tek1AZcCVmlbyA8iDfBgD4hPxgec8",
         },
 
         {

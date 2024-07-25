@@ -20,6 +20,7 @@ const SongsCard = ({ songs }) => {
             : songs.id.videoId
         )
       }
+      title={songs.snippet.title.slice(0, 30) + "..."}
     >
       <div className="songs-card-wrapper">
         <div className="songs-image-wrapper">
@@ -30,7 +31,7 @@ const SongsCard = ({ songs }) => {
                 : songs?.snippet.thumbnails?.high?.url
             }
             className="songs-image"
-            alt="song-poster"
+            alt={songs.snippet.title + " (audio mp3)" || "song-poster"}
           />
           {/* visible only in search page */}
           {songs.snippet?.liveBroadcastContent === "live" ? (
@@ -38,9 +39,13 @@ const SongsCard = ({ songs }) => {
           ) : null}
         </div>
         <div className="songs-title-channel-wrapper">
-          <p className="songs-title">{songs.snippet.title}</p>
+          <p className="songs-title">{songs.snippet.title + " (audio mp3)"}</p>
           {/* visible only in search page */}
-          <p className="songs-channel">• {songs?.snippet?.channelTitle}</p>
+          <p className="songs-channel">
+            {songs?.snippet?.channelTitle === "YouTube"
+              ? "Okv Music"
+              : songs?.snippet?.channelTitle}
+          </p>
         </div>
       </div>
     </div>

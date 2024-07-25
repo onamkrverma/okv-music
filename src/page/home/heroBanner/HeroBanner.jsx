@@ -60,7 +60,7 @@ const HeroBanner = ({ songsData, isLoading }) => {
                       : songs.snippet?.thumbnails.high?.url
                   }
                   className="hero-image"
-                  alt="hero poster"
+                  alt={songs.snippet.title + " (audio mp3)" || "hero poster"}
                 />
               </div>
               <div className="image-shadow"></div>

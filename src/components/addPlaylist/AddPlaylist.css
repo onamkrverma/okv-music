@@ -14,7 +14,7 @@
 .add-playlist-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 }
 .add-playlist-form-title {
   font-size: large;
@@ -24,12 +24,12 @@
 .title-input-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
 }
 .title-input-wrapper input {
   outline: none;
   border: none;
-  padding: 5px;
+  padding: 8px 10px;
   border-radius: 5px;
 }
 
