@@ -24,6 +24,10 @@ body {
   height: 0;
 }
 
+#googletagmanager {
+  display: none;
+}
+
 /* common classes */
 .absolute-center {
   display: flex;
