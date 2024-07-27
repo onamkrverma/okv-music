@@ -16,7 +16,13 @@ const About = () => {
           <img src="/logo.png" alt="okv-music" />
         </div>
         <div className="about-content-wrapper">
-          <p>Okv Music is an open-source project and can be found on GitHub</p>
+          <p>
+            Okv Music is a Progressive Web App that enables users to discover
+            and enjoy new music and songs. It utilizes JavaScript, React.js, and
+            YouTube API to build a user-friendly application with a powerful
+            YouTube search feature. Okv Music is an open-source project and can
+            be found on GitHub
+          </p>
           <a
             href="https://github.com/onamkrverma/okv-music"
             target="_blank"
@@ -38,7 +44,7 @@ const About = () => {
           </small>
           <small>
             Made with ❤️ by{" "}
-            <a href="https://onam.vercel.app" target="_blank" rel="noreferrer">
+            <a href="https://onam.vercel.app" target="_blank">
               onamkrverma
             </a>
           </small>

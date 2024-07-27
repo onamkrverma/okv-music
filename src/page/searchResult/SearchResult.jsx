@@ -25,7 +25,7 @@ const SearchResult = ({ miniPlayerActive }) => {
   useEffect(() => {
     document.title = `${
       q.slice(0, 1).toUpperCase() + q.slice(1)
-    } -Search • Okv Music"`;
+    } -Search • Okv Music`;
   }, [q]);
 
   return (

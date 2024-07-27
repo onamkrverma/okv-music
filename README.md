@@ -1,14 +1,16 @@
 # Okv Music
 
-- **A progressive music app made with Javascript using React jS and YouTube Api that allows user to discover and listen to new music from around the world. The website features a clean and modern design, a user-friendly interface, and a powerful search feature of youtube.**
+- **[Okv Music](https://okv-music.netlify.app/) is a Progressive Web App (PWA) music app made with Javascript using React.js and YouTube Api that allows user to discover and listen to new music from around the world. The website features a clean and modern design, a user-friendly interface, and a powerful search feature of youtube.**
 
 ## Screenshots
 
-![okvmusic](https://user-images.githubusercontent.com/106578262/224484464-6ef06a58-9aba-4f3e-99ac-150857672f2b.png)
+![okv music](https://user-images.githubusercontent.com/106578262/224484464-6ef06a58-9aba-4f3e-99ac-150857672f2b.png)
 
 ## Demo video
 
 https://github.com/onamkrverma/okv-music/assets/106578262/86e5d3c1-25fd-42e9-96e8-8660537a31fa
+
+**[Demo Link](https://okv-music.netlify.app/)**
 
 ## Features
 
@@ -67,9 +69,10 @@ Runs the app in the development mode.\
 Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 The page will reload when you make changes.
 
-
 ### Sample code for backend to get audio url with youtube id
-- setup backend with nodejs, expressjs and install Ytdl-core package 
+
+- setup backend with nodejs, expressjs and install Ytdl-core package
+
 ```
 const express = require("express");
 const app = express();
@@ -96,8 +99,6 @@ app.get("/song/:id", async (req, res) => {
       res.status(500).send(`internal server error "${err.message}"`);
   }
 ```
-
-
 
 ## Queries
 

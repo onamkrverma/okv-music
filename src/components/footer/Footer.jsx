@@ -48,6 +48,8 @@ const Footer = () => {
     },
   ];
 
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="container footer-container">
       <nav className="footer-content-wrapper">
@@ -73,9 +75,7 @@ const Footer = () => {
       </nav>
 
       <div className="footer-copyright">
-        <small>
-          © {new Date().getFullYear()} Okv-Music All rights reserved.
-        </small>
+        <small>© 2023-{currentYear} Okv-Music All rights reserved.</small>
       </div>
     </footer>
   );
