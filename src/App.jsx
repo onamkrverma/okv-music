@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Home from "./page/home/Home";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Outlet,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SearchResult from "./page/searchResult/SearchResult";
 import PlaylistSongs from "./page/playlistSongs/PlaylistSongs";
 import ScrollToTop from "./utils/ScrollToUp";
@@ -20,6 +14,7 @@ import Feedback from "./page/feedback/Feedback";
 import About from "./page/about/About";
 import OfflineBanner from "./components/offlineBanner/OfflineBanner";
 import Footer from "./components/footer/Footer";
+import RedirectToOrigin from "./utils/RedirectToOrigin";
 
 function App() {
   const currentSong = useSelector(
@@ -51,6 +46,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <RedirectToOrigin />
       <ScrollToTop />
       <Header />
       <Routes>
