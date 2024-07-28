@@ -21,6 +21,7 @@ input[type="range"] {
   border-radius: 15px;
   overflow: hidden;
   background: rgb(144 144 144 / 50%);
+  height: 8px;
 }
 
 /* Thumb: webkit */
@@ -125,11 +126,9 @@ input[type="range"]::-moz-range-thumb {
   position: absolute;
   left: 10px;
   bottom: 10px;
+  width: 90px;
 }
 
-.volume-input {
-  width: 70% !important;
-}
 .audio-volume-btn {
   border: none;
   background: none;
