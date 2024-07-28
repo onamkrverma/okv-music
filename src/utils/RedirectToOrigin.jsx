@@ -3,6 +3,9 @@ import { useEffect } from "react";
 const RedirectToOrigin = () => {
   useEffect(() => {
     if (process.env.NODE_ENV !== "production") return;
+    const origin = "https://okv-music.netlify.app";
+
+    if (window.location.origin === origin) return;
 
     const metaTag = document.createElement("meta");
     metaTag.httpEquiv = "refresh";
