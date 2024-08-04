@@ -1,6 +1,8 @@
 import React from "react";
 import "./HeroBanner.css";
 import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import NextArrow from "./NextArrow";
 import PrevArrow from "./PrevArrow";
 import HeroBannerSkeleton from "./HeroBannerSkeleton";

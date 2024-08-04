@@ -23,6 +23,8 @@ const Home = ({ miniPlayerActive }) => {
     newRelesedId: "RDCLAK5uy_nNhhgRET3NcJ4SJBvqhAIJ6t7vjsQYowc",
     trendingSongsId: "OLAK5uy_lSTp1DIuzZBUyee3kDsXwPgP25WdfwB40",
     bollywoodHitsId: "RDCLAK5uy_n9Fbdw7e6ap-98_A-8JYBmPv64v-Uaq1g",
+    bollywoodRomance90sId: "RDCLAK5uy_lnm4v4arFrmL63NUzIdoXJe-E7G4_sriU",
+    motivationalTracksId: "RDCLAK5uy_nyta-kQ65CIZc84rEbmNVk7y2oZt4HB1A",
   };
   // local playlist
   const myLocalPlaylist = useSelector(
@@ -45,6 +47,14 @@ const Home = ({ miniPlayerActive }) => {
     playlistId.bollywoodHitsId,
     { skip: !miniPlayerActive }
   );
+  const bollywoodRomance90sSongs = useGetPlaylistItemsQuery(
+    playlistId.bollywoodRomance90sId,
+    { skip: !miniPlayerActive }
+  );
+  const motivationalTracks = useGetPlaylistItemsQuery(
+    playlistId.motivationalTracksId,
+    { skip: !miniPlayerActive }
+  );
 
   const localPlaylist0 = useGetPlaylistItemsQuery(
     myLocalPlaylist[0]?.playlistId,
@@ -57,7 +67,13 @@ const Home = ({ miniPlayerActive }) => {
   );
 
   useEffect(() => {
-    if (trendingSongs.data && newSongs.data && bollywoodHitsSongs.data) {
+    if (
+      trendingSongs.data &&
+      newSongs.data &&
+      bollywoodHitsSongs.data &&
+      bollywoodRomance90sSongs.data &&
+      motivationalTracks.data
+    ) {
       dispatch(
         addSongs([
           {
@@ -85,12 +101,34 @@ const Home = ({ miniPlayerActive }) => {
               isLoading: bollywoodHitsSongs.isLoading,
             },
           },
+          {
+            data: bollywoodRomance90sSongs.data,
+            metaData: {
+              title: "90s Bollywood Romance",
+              playlist: playlistId.bollywoodRomance90sId,
+              isLoading: bollywoodRomance90sSongs.isLoading,
+            },
+          },
+          {
+            data: motivationalTracks.data,
+            metaData: {
+              title: "Motivational Tracks",
+              playlist: playlistId.motivationalTracksId,
+              isLoading: motivationalTracks.isLoading,
+            },
+          },
         ])
       );
     }
 
     // eslint-disable-next-line
-  }, [trendingSongs.data, newSongs.data, bollywoodHitsSongs.data]);
+  }, [
+    trendingSongs.data,
+    newSongs.data,
+    bollywoodHitsSongs.data,
+    bollywoodRomance90sSongs.data,
+    motivationalTracks.data,
+  ]);
 
   // add local playlist songs
 
