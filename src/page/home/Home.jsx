@@ -19,10 +19,6 @@ const Home = ({ miniPlayerActive }) => {
   const [isPopup, setIsPopup] = useState(false);
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
 
-  useEffect(() => {
-    document.title = "Trending Songs in india • Okv Music";
-  }, []);
-
   const playlistId = {
     newRelesedId: "RDCLAK5uy_nNhhgRET3NcJ4SJBvqhAIJ6t7vjsQYowc",
     trendingSongsId: "OLAK5uy_lSTp1DIuzZBUyee3kDsXwPgP25WdfwB40",
