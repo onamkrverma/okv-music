@@ -55,10 +55,10 @@ const Player = () => {
         setSongUrl(data.audioFormatLow);
       }
     } catch (error) {
-      setAlertMessage(error.message);
+      setAlertMessage("Internal Server Error");
       setTimeout(() => {
         setAlertMessage("");
-      }, 3000);
+      }, 5000);
     } finally {
       setIsPlaying(false);
     }
