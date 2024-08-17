@@ -1,34 +1,26 @@
 {
-  "name": "okv-music",
-  "version": "2.0.0",
+  "name": "frontend",
+  "version": "0.1.0",
   "private": true,
-  "type": "module",
-  "dependencies": {
-    "@reduxjs/toolkit": "^1.9.2",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@vitejs/plugin-react-swc": "^3.6.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.7.1",
-    "react-loading-skeleton": "^3.2.0",
-    "react-redux": "^8.0.5",
-    "react-router-dom": "^6.8.0",
-    "react-slick": "^0.29.0",
-    "slick-carousel": "^1.8.1",
-    "vite": "^5.1.7",
-    "vite-plugin-svgr": "^4.2.0",
-    "web-vitals": "^2.1.4"
-  },
   "scripts": {
-    "dev": "vite",
-    "start": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "react": "^18",
+    "react-dom": "^18",
+    "next": "14.2.5"
   },
   "devDependencies": {
-    "vite-plugin-pwa": "^0.19.8",
-    "workbox-window": "^7.1.0"
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5"
   }
 }
