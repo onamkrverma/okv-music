@@ -16,6 +16,10 @@ import Popup from "../../components/popup/Popup";
 import { HiOutlineTrash } from "react-icons/hi2";
 
 const Home = ({ miniPlayerActive }) => {
+  useEffect(() => {
+    document.title = "Top Trending Songs in India • Okv Music";
+  }, []);
+
   const [isPopup, setIsPopup] = useState(false);
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
 
