@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+*,
+::before,
+::after {
+  @apply border-neutral-600;
+}
+
 body {
   background-color: #0d0d0d;
   -ms-overflow-style: none; /* Internet Explorer 10+ */
@@ -24,7 +30,7 @@ body {
 }
 .page-container {
   width: 100%;
-  margin: 5rem auto;
+  margin: 1rem auto;
   padding: 0 1rem;
   max-width: 1200px;
 }
