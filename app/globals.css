@@ -5,7 +5,7 @@
 *,
 ::before,
 ::after {
-  @apply border-neutral-600;
+  @apply border-neutral-700;
 }
 
 body {
