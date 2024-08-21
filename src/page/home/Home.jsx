@@ -9,7 +9,6 @@ import {
   removePlaylist,
   removePlaylistSongs,
 } from "../../reduxtool/slice/songsSlice";
-import HeroBanner from "./heroBanner/HeroBanner";
 import AddPlaylist from "../../components/addPlaylist/AddPlaylist";
 import { MdDeleteForever } from "react-icons/md";
 import Popup from "../../components/popup/Popup";
@@ -181,11 +180,6 @@ const Home = ({ miniPlayerActive }) => {
 
   return (
     <div className="home-section">
-      <HeroBanner
-        songsData={songsData[0]?.data?.items}
-        isLoading={songsData[0]?.metaData?.isLoading}
-      />
-
       {!songsData.length ? (
         <>
           <SongsList isLoading={newSongs.isLoading} />
