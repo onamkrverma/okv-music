@@ -13,7 +13,8 @@ const PlayerControls = ({
   audioRef,
   progress,
   audioLoading,
-  setAlertMessage,
+  volumeLevel,
+  setVolumeLevel,
   handleNext,
   handlePrev,
   isPlaying,
@@ -22,32 +23,15 @@ const PlayerControls = ({
   setAutoPlay,
   mapVideoId,
   currentIndex,
+  isReactPlayerActive,
 }) => {
-  const localVolume = localStorage.getItem("localVolume");
-  const [volumeLevel, setVolumeLevel] = useState(localVolume ?? 1.0);
   const [seekTime, setSeekTime] = useState(0);
   const [bufferedAmount, setBufferedAmount] = useState(0);
 
-  useEffect(() => {
-    audioRef.current.volume = volumeLevel;
-    // eslint-disable-next-line
-  }, [volumeLevel]);
+  const duration = audioRef?.current?.getDuration();
 
+  const currentTime = progress?.played * audioRef.current?.getDuration();
   localStorage.setItem("localVolume", volumeLevel);
-
-  useEffect(() => {
-    try {
-      if (!isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
-    } catch (error) {
-      setAlertMessage(error.message);
-    }
-
-    // eslint-disable-next-line
-  }, [isPlaying]);
 
   //set auto play property
   useEffect(() => {
@@ -60,23 +44,15 @@ const PlayerControls = ({
   }, [autoPlay]);
 
   useEffect(() => {
-    audioRef.current.currentTime = seekTime;
+    audioRef.current.seekTo(seekTime);
     // eslint-disable-next-line
   }, [seekTime]);
 
   // get audio buffered end amount
   useEffect(() => {
-    const bufferedLength = audioRef.current?.buffered?.length;
-    const bufferedLoaded =
-      typeof audioRef.current?.buffered !== "undefined" && bufferedLength > 0;
-
-    if (!bufferedLoaded) return;
-    const bufferedEnd = audioRef?.current?.buffered?.end(bufferedLength - 1);
-    const bufferedAmount = Math.floor(
-      (bufferedEnd / audioRef.current?.duration) * 100
-    );
+    const bufferedAmount = Math.floor(progress.loaded * 100);
     setBufferedAmount(bufferedAmount);
-  }, [audioRef?.current?.currentTime]);
+  }, [progress.loaded]);
 
   return (
     <div className="player-controls-container">
@@ -86,9 +62,9 @@ const PlayerControls = ({
           title="seekbar"
           step="any"
           className="seekbar"
-          value={audioRef.current?.currentTime || 0}
+          value={currentTime || 0}
           min={0}
-          max={audioRef.current?.duration || 0}
+          max={duration || 0}
           onInput={(e) => setSeekTime(e.target.value)}
           style={{
             "--buffered-width": `${bufferedAmount}%`,
@@ -97,27 +73,19 @@ const PlayerControls = ({
       </div>
       <div className="player-durations-wrapper">
         <p>
-          {!audioRef.current?.currentTime
+          {!currentTime
             ? "00:00"
-            : audioRef?.current?.currentTime > 3600
-            ? new Date(audioRef.current?.currentTime * 1000)
-                .toISOString()
-                .substring(11, 19)
-            : new Date(audioRef.current?.currentTime * 1000)
-                .toISOString()
-                .substring(14, 19)}
+            : currentTime > 3600
+            ? new Date(currentTime * 1000).toISOString().substring(11, 19)
+            : new Date(currentTime * 1000).toISOString().substring(14, 19)}
         </p>
-        {!audioRef.current?.duration ? (
+        {!duration ? (
           "00:00"
         ) : (
           <p>
-            {audioRef.current?.duration > 3600
-              ? new Date(audioRef.current?.duration * 1000)
-                  .toISOString()
-                  .substring(11, 19)
-              : new Date(audioRef.current?.duration * 1000)
-                  .toISOString()
-                  .substring(14, 19)}
+            {duration > 3600
+              ? new Date(duration * 1000).toISOString().substring(11, 19)
+              : new Date(duration * 1000).toISOString().substring(14, 19)}
           </p>
         )}
       </div>
@@ -136,7 +104,7 @@ const PlayerControls = ({
             className="audio-play-pause  cur-pointer"
             onClick={() => setIsPlaying(!isPlaying)}
           >
-            {(!isPlaying || progress === 100) && audioRef.current?.paused ? (
+            {!isPlaying || progress.played === 1 ? (
               <BsPlayCircleFill
                 style={{
                   width: "100%",

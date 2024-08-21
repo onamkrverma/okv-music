@@ -1,0 +1,36 @@
+.toggle-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--secondary-bg);
+  border-radius: 15px;
+  width: 130px;
+  border: 1px solid var(--border-color);
+  position: relative;
+}
+
+.toggle-button {
+  border: none;
+  padding: 8px 10px;
+  border-radius: inherit;
+  background: none;
+  color: var(--primary-text-color);
+  font-weight: bold;
+  font-size: 14px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.toggle-bg {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  background: var(--gradient);
+  border-radius: inherit;
+  transition: all 0.3s ease-in-out;
+  transform: translateX(1px);
+}
+
+.translate-full {
+  transform: translate(99%);
+}

@@ -1,5 +1,5 @@
 .player-controls-container {
-  width: 100%;
+  width: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,7 +7,7 @@
 }
 
 .player-progress-bar-wrapper {
-  width: 80%;
+  width: 100%;
 }
 
 input[type="range"] {
@@ -72,7 +72,7 @@ input[type="range"]::-moz-range-thumb {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 80%;
+  width: 100%;
   margin: 5px 0;
 }
 
@@ -188,4 +188,10 @@ input:checked + .autoplay-slider {
 
 input:checked + .autoplay-slider .autoplay-icons {
   transform: translateX(26px);
+}
+
+@media (max-width: 426px) {
+  .player-controls-container {
+    width: 90%;
+  }
 }

@@ -80,7 +80,7 @@ const MiniPlayer = ({
               className="audio-play-pause  cur-pointer"
               onClick={() => setIsPlaying(!isPlaying)}
             >
-              {(!isPlaying || progress === 100) && audioRef.current?.paused ? (
+              {!isPlaying || progress.played === 1 ? (
                 <BsPlayCircleFill
                   style={{
                     width: "100%",

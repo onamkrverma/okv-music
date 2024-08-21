@@ -8,6 +8,7 @@ import Player from "../../components/player/Player";
 import { addSongInfo } from "../../reduxtool/slice/currentSongSlice";
 import PlaylistSongsSkeleton from "../playlistSongs/PlaylistSongsSkeleton";
 import { useSearchParams } from "react-router-dom";
+import Toggle from "../../components/toggle/Toggle";
 
 const Trending = ({ miniPlayerActive }) => {
   useEffect(() => {
@@ -20,8 +21,8 @@ const Trending = ({ miniPlayerActive }) => {
   const [activeToggle, setActiveToggle] = useState(location || "india");
 
   const toggleList = [
-    { title: "India", value: "india" },
-    { title: "Global", value: "global" },
+    { name: "India", value: "india" },
+    { name: "Global", value: "global" },
   ];
 
   const playlists = [
@@ -68,21 +69,11 @@ const Trending = ({ miniPlayerActive }) => {
           <div className="playlist-songs-header trending-header">
             <h1 className="playlist-title">Top Trending music on YouTube</h1>
 
-            <div className="toggle-box">
-              {toggleList.map((toggle) => (
-                <button
-                  key={toggle.value}
-                  type="button"
-                  title={toggle.title}
-                  className={`toggle-button ${
-                    toggle.value === activeToggle ? "active-toggle" : ""
-                  }`}
-                  onClick={() => setActiveToggle(toggle.value)}
-                >
-                  {toggle.title}
-                </button>
-              ))}
-            </div>
+            <Toggle
+              toggleList={toggleList}
+              activeToggle={activeToggle}
+              setActiveToggle={setActiveToggle}
+            />
           </div>
 
           {playlistInfo?.map((songs) => (
