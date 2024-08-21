@@ -7,13 +7,13 @@ const SongDetailsModel = ({
   playerInfo,
   songsInfo,
   setPlayerInfo,
-  songUrl,
+  audioUrl,
 }) => {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = () => {
-    if (!songUrl) return;
-    navigator.clipboard.writeText(songUrl);
+    if (!audioUrl) return;
+    navigator.clipboard.writeText(audioUrl);
     setIsCopied(true);
     setTimeout(() => {
       setIsCopied(false);
@@ -58,7 +58,7 @@ const SongDetailsModel = ({
         </p>
         <div className="song-details ">
           <div className="song-url-wrapper">
-            <p>SongUrl:</p>
+            <p>AudioUrl:</p>
             <button
               type="button"
               className="copy-btn"
@@ -71,7 +71,7 @@ const SongDetailsModel = ({
               <HiOutlineClipboardDocumentCheck size={20} color="white" />
             </button>
           </div>
-          <p>{songUrl}</p>
+          <p>{audioUrl}</p>
         </div>
       </div>
     </div>

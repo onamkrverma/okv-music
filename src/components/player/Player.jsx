@@ -18,7 +18,7 @@ import ReactPlayer from "react-player";
 import Toggle from "../toggle/Toggle";
 
 const Player = () => {
-  const [songUrl, setSongUrl] = useState("");
+  const [audioUrl, setAudioUrl] = useState("");
   const [songsInfo, setSongsInfo] = useState([]);
   const [audioLoading, setAudioLoading] = useState(false);
   const [songsList, setSongsList] = useState([]);
@@ -64,9 +64,9 @@ const Player = () => {
       const response = await getAudioUrls({ id });
       const data = await response.json();
       if (audioFormat === "high") {
-        setSongUrl(data.audioFormatHigh);
+        setAudioUrl(data.audioFormatHigh);
       } else {
-        setSongUrl(data.audioFormatLow);
+        setAudioUrl(data.audioFormatLow);
       }
     } catch (error) {
       // setIsReactPlayerActive(true);
@@ -267,7 +267,7 @@ const Player = () => {
         id={id}
         playerInfo={playerInfo}
         setPlayerInfo={setPlayerInfo}
-        songUrl={songUrl}
+        audioUrl={audioUrl}
         songsInfo={songsInfo}
       />
 
@@ -310,7 +310,7 @@ const Player = () => {
               url={
                 activeToggle === "video"
                   ? `https://www.youtube.com/watch?v=${id}`
-                  : songUrl
+                  : audioUrl
               }
               ref={reactPlayerRef}
               volume={volumeLevel}
@@ -334,7 +334,7 @@ const Player = () => {
                   !e.target.error.message.length
                 ) {
                   // Handle the 403 error
-                  setSongUrl("");
+                  setAudioUrl("");
                   setAlertMessage(
                     "Can't play this audio, Switch to video mode"
                   );
