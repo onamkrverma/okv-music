@@ -12,9 +12,10 @@
 .footer-content {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
 }
 .footer-content h6 {
+  font-size: 16px;
   font-weight: bold;
   text-transform: uppercase;
 }

@@ -102,6 +102,9 @@
   opacity: 0.7;
   font-size: 12px;
   margin: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: clip;
 }
 
 @media (max-width: 1024px) {
