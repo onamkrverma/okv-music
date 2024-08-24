@@ -68,15 +68,17 @@ const Player = () => {
       } else {
         setAudioUrl(data.audioFormatLow);
       }
+      setIsPlaying(autoPlay);
     } catch (error) {
       // setIsReactPlayerActive(true);
       setAlertMessage("Unable to get audio link, Please switch to video mode");
     }
   };
   useEffect(() => {
+    if (activeToggle === "video") return;
     getSongAudioUrls();
     // eslint-disable-next-line
-  }, [id, audioFormat]);
+  }, [id, audioFormat, activeToggle]);
 
   useEffect(() => {
     if (data) {
@@ -226,6 +228,13 @@ const Player = () => {
     setIsPlaying(false);
   }, [activeToggle]);
 
+  // reset on song id change
+  useEffect(() => {
+    setProgress({ loaded: 0, played: 0 });
+    setAudioUrl("");
+    setIsPlaying(autoPlay);
+  }, [id]);
+
   return (
     <div
       className={`player-page-section ${
@@ -335,9 +344,7 @@ const Player = () => {
                 ) {
                   // Handle the 403 error
                   setAudioUrl("");
-                  setAlertMessage(
-                    "Can't play this audio, Switch to video mode"
-                  );
+                  activeToggle === "audio" ? getSongAudioUrls() : null;
                 }
               }}
             />

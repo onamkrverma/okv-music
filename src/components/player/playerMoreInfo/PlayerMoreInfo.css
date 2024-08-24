@@ -45,4 +45,5 @@
 .watch-video {
   color: var(--primary-text-color);
   text-decoration: none;
+  font-size: 14px;
 }

@@ -33,16 +33,6 @@ const PlayerControls = ({
   const currentTime = progress?.played * audioRef.current?.getDuration();
   localStorage.setItem("localVolume", volumeLevel);
 
-  //set auto play property
-  useEffect(() => {
-    if (autoPlay) {
-      audioRef.current.autoplay = true;
-    } else {
-      audioRef.current.autoplay = false;
-    }
-    // eslint-disable-next-line
-  }, [autoPlay]);
-
   useEffect(() => {
     audioRef.current.seekTo(seekTime);
     // eslint-disable-next-line
