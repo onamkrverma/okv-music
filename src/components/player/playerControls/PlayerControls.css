@@ -92,11 +92,15 @@ input[type="range"]::-moz-range-thumb {
   height: 50px;
   border: none;
   background: none;
+  color: var(--primary-text-color);
 }
 
 .next-prev-icons {
   width: 30px;
   height: 30px;
+  border: none;
+  background: none;
+  color: var(--primary-text-color);
 }
 
 .loading-spin {

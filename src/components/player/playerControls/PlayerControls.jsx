@@ -79,17 +79,20 @@ const PlayerControls = ({
       </div>
 
       <div className="audio-controls-wrapper absolute-center">
-        <div
+        <button
+          type="button"
+          title="prev"
           className="audio-prev-wrapper next-prev-icons cur-pointer"
           style={{ opacity: currentIndex <= 0 && "0.5" }}
           onClick={handlePrev}
         >
           <BsFillSkipStartFill style={{ width: "100%", height: "100%" }} />
-        </div>
+        </button>
 
         <div className="audio-play-pause-wrapper">
           <button
             type="button"
+            title="play/pause"
             className="audio-play-pause  cur-pointer"
             onClick={() =>
               setPlayerState({ ...playerState, playing: !playerState.playing })
@@ -123,13 +126,15 @@ const PlayerControls = ({
           ) : null}
         </div>
 
-        <div
+        <button
+          type="button"
+          title="next"
           className="audio-next-wrapper next-prev-icons cur-pointer"
           style={{ opacity: currentIndex >= mapVideoId.length - 1 && "0.5" }}
           onClick={handleNext}
         >
           <BsFillSkipEndFill style={{ width: "100%", height: "100%" }} />
-        </div>
+        </button>
       </div>
 
       <div className="audio-volume-wrapper">
