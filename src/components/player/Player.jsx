@@ -14,16 +14,16 @@ import PlayerMoreInfo from "./playerMoreInfo/PlayerMoreInfo";
 import SongDetailsModel from "./songDetailsModel/SongDetailsModel";
 import { useLocation } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
-import ReactPlayer from "react-player";
 import Toggle from "../toggle/Toggle";
+import CustomPlayer from "./customPlayer/CustomPlayer";
 
 const Player = () => {
-  const [audioUrl, setAudioUrl] = useState("");
+  // const [audioUrl, setAudioUrl] = useState("");
   const [songsInfo, setSongsInfo] = useState([]);
   const [audioLoading, setAudioLoading] = useState(false);
   const [songsList, setSongsList] = useState([]);
   const [alertMessage, setAlertMessage] = useState("");
-  const [isPlaying, setIsPlaying] = useState(false);
+  // const [isPlaying, setIsPlaying] = useState(false);
   const [autoPlay, setAutoPlay] = useState(false);
   const [playerInfo, setPlayerInfo] = useState({
     isMoreInfoClick: false,
@@ -33,9 +33,6 @@ const Player = () => {
   const localAudioFormat = localStorage.getItem("audioQuality");
   const [audioFormat, setAudioFormat] = useState(localAudioFormat ?? "high");
   const localVolume = localStorage.getItem("localVolume");
-  const [volumeLevel, setVolumeLevel] = useState(
-    parseFloat(localVolume) ?? 1.0
-  );
 
   const [activeToggle, setActiveToggle] = useState("audio");
 
@@ -52,10 +49,19 @@ const Player = () => {
 
   const { data, isLoading } = useGetSongsByIdQuery(id);
 
-  const [progress, setProgress] = useState({ played: 0, loaded: 0 });
+  // const [progress, setProgress] = useState({ played: 0, loaded: 0 });
 
-  const audioRef = useRef();
   const reactPlayerRef = useRef();
+
+  const [playerState, setPlayerState] = useState({
+    url: null,
+    playing: false,
+    controls: false,
+    volume: parseFloat(localVolume) ?? 1.0,
+    muted: false,
+    played: 0,
+    loaded: 0,
+  });
 
   // get songs audio url
   const getSongAudioUrls = async () => {
@@ -64,11 +70,10 @@ const Player = () => {
       const response = await getAudioUrls({ id });
       const data = await response.json();
       if (audioFormat === "high") {
-        setAudioUrl(data.audioFormatHigh);
+        setPlayerState({ ...playerState, url: data.audioFormatHigh });
       } else {
-        setAudioUrl(data.audioFormatLow);
+        setPlayerState({ ...playerState, url: data.audioFormatLow });
       }
-      setIsPlaying(autoPlay);
     } catch (error) {
       // setIsReactPlayerActive(true);
       setAlertMessage("Unable to get audio link, Please switch to video mode");
@@ -100,7 +105,6 @@ const Player = () => {
         addSongInfo({ ...currentSong, id: mapVideoId[currentIndex + 1] })
       );
       setAutoPlay(true);
-      setIsPlaying(true);
     } else {
       setAlertMessage("you reached at end");
     }
@@ -161,12 +165,10 @@ const Player = () => {
       });
 
       navigator.mediaSession.setActionHandler("play", () => {
-        audioRef.current.play();
-        setIsPlaying(true);
+        setPlayerState({ ...playerState, playing: true });
       });
       navigator.mediaSession.setActionHandler("pause", () => {
-        audioRef.current.pause();
-        setIsPlaying(false);
+        setPlayerState({ ...playerState, playing: false });
       });
 
       if (currentIndex > 0) {
@@ -187,7 +189,7 @@ const Player = () => {
         navigator.mediaSession.setActionHandler("nexttrack", null);
       }
     }
-  }, [currentSong, songsInfo, currentIndex]);
+  }, [currentSong, songsInfo, currentIndex, playerState]);
 
   useEffect(() => {
     if (!miniPlayerActive) {
@@ -225,14 +227,18 @@ const Player = () => {
 
   // pause on toggle changes
   useEffect(() => {
-    setIsPlaying(false);
+    setPlayerState({ ...playerState, playing: false });
   }, [activeToggle]);
 
   // reset on song id change
   useEffect(() => {
-    setProgress({ loaded: 0, played: 0 });
-    setAudioUrl("");
-    setIsPlaying(autoPlay);
+    setPlayerState({
+      ...playerState,
+      url: null,
+      loaded: 0,
+      played: 0,
+      playing: autoPlay,
+    });
   }, [id]);
 
   return (
@@ -248,7 +254,6 @@ const Player = () => {
           alt="song poster"
         />
       </div>
-      {/* <Header /> */}
       {!miniPlayerActive ? (
         <div className="top-player-controll-wrapper">
           <button
@@ -276,7 +281,7 @@ const Player = () => {
         id={id}
         playerInfo={playerInfo}
         setPlayerInfo={setPlayerInfo}
-        audioUrl={audioUrl}
+        audioUrl={playerState.url}
         songsInfo={songsInfo}
       />
 
@@ -291,64 +296,19 @@ const Player = () => {
             activeToggle={activeToggle}
             setActiveToggle={setActiveToggle}
           />
-          <div
-            className={`player-song-image-wrapper ${
-              !songsInfo[0]?.snippet.thumbnails?.maxres ? "small-hq-image" : ""
-            }`}
-          >
-            {!isLoading && songsInfo.length ? (
-              <img
-                src={
-                  songsInfo[0]?.snippet.thumbnails?.maxres
-                    ? `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`
-                    : `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
-                }
-                alt="song-poster"
-                className="player-song-image"
-              />
-            ) : (
-              <SkeletonTheme
-                baseColor="#747070"
-                highlightColor="#615e5e"
-                duration={2}
-              >
-                <Skeleton height={"200px"} />
-              </SkeletonTheme>
-            )}
-            <ReactPlayer
-              url={
-                activeToggle === "video"
-                  ? `https://www.youtube.com/watch?v=${id}`
-                  : audioUrl
-              }
-              ref={reactPlayerRef}
-              volume={volumeLevel}
-              onReady={() => setAudioLoading(false)}
-              playing={isPlaying}
-              onPlay={() => setIsPlaying(true)}
-              onPause={() => setIsPlaying(false)}
-              width={"100%"}
-              height={"100%"}
-              style={{
-                position: "absolute",
-                top: "0px",
-              }}
-              onProgress={(state) => setProgress(state)}
-              onEnded={() => (autoPlay ? handleNext() : null)}
-              onError={(e) => {
-                // Check the error code
-                console.log(e.target.error);
-                if (
-                  e.target.error.code === 4 ||
-                  !e.target.error.message.length
-                ) {
-                  // Handle the 403 error
-                  setAudioUrl("");
-                  activeToggle === "audio" ? getSongAudioUrls() : null;
-                }
-              }}
-            />
-          </div>
+          <CustomPlayer
+            songId={id}
+            playerRef={reactPlayerRef}
+            songsInfo={songsInfo}
+            setAudioLoading={setAudioLoading}
+            playerState={playerState}
+            setPlayerState={setPlayerState}
+            handleNext={handleNext}
+            activeToggle={activeToggle}
+            isLoading={isLoading}
+            autoPlay={autoPlay}
+            setAlertMessage={setAlertMessage}
+          />
 
           {!isLoading && songsInfo.length ? (
             <div
@@ -380,20 +340,19 @@ const Player = () => {
           )}
 
           <PlayerControls
-            audioRef={reactPlayerRef}
-            progress={progress}
+            playerRef={reactPlayerRef}
             audioLoading={audioLoading}
             songsList={songsList}
-            volumeLevel={volumeLevel}
-            setVolumeLevel={setVolumeLevel}
-            isPlaying={isPlaying}
-            setIsPlaying={setIsPlaying}
+            playerState={playerState}
+            setPlayerState={setPlayerState}
             handleNext={handleNext}
             handlePrev={handlePrev}
             autoPlay={autoPlay}
             setAutoPlay={setAutoPlay}
             currentIndex={currentIndex}
             mapVideoId={mapVideoId}
+            activeToggle={activeToggle}
+            setAlertMessage={setAlertMessage}
           />
 
           <div className={`${alertMessage ? "alert-message-wrapper" : "hide"}`}>
@@ -418,16 +377,15 @@ const Player = () => {
         <MiniPlayer
           songsInfo={songsInfo}
           videoId={id}
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
+          playerState={playerState}
+          setPlayerState={setPlayerState}
           handleNext={handleNext}
           handlePrev={handlePrev}
           audioLoading={audioLoading}
-          audioRef={reactPlayerRef}
+          playerRef={reactPlayerRef}
           songsList={songsList}
           mapVideoId={mapVideoId}
           currentIndex={currentIndex}
-          progress={progress}
         />
       ) : null}
     </div>

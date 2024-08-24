@@ -10,39 +10,37 @@ import {
 } from "react-icons/bs";
 
 const PlayerControls = ({
-  audioRef,
-  progress,
+  playerRef,
   audioLoading,
-  volumeLevel,
-  setVolumeLevel,
   handleNext,
   handlePrev,
-  isPlaying,
-  setIsPlaying,
+  playerState,
+  setPlayerState,
   autoPlay,
   setAutoPlay,
   mapVideoId,
   currentIndex,
-  isReactPlayerActive,
+  activeToggle,
+  setAlertMessage,
 }) => {
   const [seekTime, setSeekTime] = useState(0);
   const [bufferedAmount, setBufferedAmount] = useState(0);
 
-  const duration = audioRef?.current?.getDuration();
+  const duration = playerRef?.current?.getDuration();
 
-  const currentTime = progress?.played * audioRef.current?.getDuration();
-  localStorage.setItem("localVolume", volumeLevel);
+  const currentTime = playerState?.played * playerRef.current?.getDuration();
+  localStorage.setItem("localVolume", playerState.volume);
 
   useEffect(() => {
-    audioRef.current.seekTo(seekTime);
+    playerRef.current?.seekTo(seekTime);
     // eslint-disable-next-line
   }, [seekTime]);
 
   // get audio buffered end amount
   useEffect(() => {
-    const bufferedAmount = Math.floor(progress.loaded * 100);
+    const bufferedAmount = Math.floor(playerState.loaded * 100);
     setBufferedAmount(bufferedAmount);
-  }, [progress.loaded]);
+  }, [playerState.loaded]);
 
   return (
     <div className="player-controls-container">
@@ -90,11 +88,14 @@ const PlayerControls = ({
         </div>
 
         <div className="audio-play-pause-wrapper">
-          <div
+          <button
+            type="button"
             className="audio-play-pause  cur-pointer"
-            onClick={() => setIsPlaying(!isPlaying)}
+            onClick={() =>
+              setPlayerState({ ...playerState, playing: !playerState.playing })
+            }
           >
-            {!isPlaying || progress.played === 1 ? (
+            {!playerState.playing || playerState.played === 1 ? (
               <BsPlayCircleFill
                 style={{
                   width: "100%",
@@ -105,7 +106,7 @@ const PlayerControls = ({
             ) : (
               <BsPauseCircleFill style={{ width: "100%", height: "100%" }} />
             )}
-          </div>
+          </button>
 
           {audioLoading ? (
             <div className="loading-spin">
@@ -136,9 +137,14 @@ const PlayerControls = ({
           type="button"
           title="mute/unmute"
           className="audio-volume-btn next-prev-icons"
-          onClick={() => setVolumeLevel(volumeLevel > 0 ? 0 : 0.5)}
+          onClick={() =>
+            setPlayerState({
+              ...playerState,
+              volume: playerState.volume > 0 ? 0 : 0.5,
+            })
+          }
         >
-          {volumeLevel > 0 ? (
+          {playerState.volume > 0 ? (
             <BsFillVolumeUpFill style={{ width: "100%", height: "100%" }} />
           ) : (
             <BsFillVolumeMuteFill style={{ width: "100%", height: "100%" }} />
@@ -153,8 +159,10 @@ const PlayerControls = ({
             min={0.0}
             max={1.0}
             step={0.01}
-            value={volumeLevel}
-            onChange={(e) => setVolumeLevel(e.target.valueAsNumber)}
+            value={playerState.volume}
+            onChange={(e) =>
+              setPlayerState({ ...playerState, volume: e.target.valueAsNumber })
+            }
           />
         </div>
       </div>

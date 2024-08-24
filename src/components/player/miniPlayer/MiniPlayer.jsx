@@ -13,13 +13,11 @@ import "../playerControls/PlayerControls.css";
 
 const MiniPlayer = ({
   songsInfo,
-  progress,
-  isPlaying,
-  setIsPlaying,
+  playerState,
+  setPlayerState,
   handleNext,
   handlePrev,
   audioLoading,
-  audioRef,
   mapVideoId,
   currentIndex,
 }) => {
@@ -76,11 +74,17 @@ const MiniPlayer = ({
           </div>
 
           <div className="audio-play-pause-wrapper">
-            <div
+            <button
+              type="button"
               className="audio-play-pause  cur-pointer"
-              onClick={() => setIsPlaying(!isPlaying)}
+              onClick={() =>
+                setPlayerState({
+                  ...playerState,
+                  playing: !playerState.playing,
+                })
+              }
             >
-              {!isPlaying || progress.played === 1 ? (
+              {!playerState.playing || playerState.played === 1 ? (
                 <BsPlayCircleFill
                   style={{
                     width: "100%",
@@ -91,7 +95,7 @@ const MiniPlayer = ({
               ) : (
                 <BsPauseCircleFill style={{ width: "100%", height: "100%" }} />
               )}
-            </div>
+            </button>
 
             {audioLoading ? (
               <div className="loading-spin">
