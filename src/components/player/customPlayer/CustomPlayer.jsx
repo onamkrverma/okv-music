@@ -94,7 +94,9 @@ const CustomPlayer = ({
           if (e.target.error.code === 4 || !e.target.error.message.length) {
             // Handle the 403 error
             setPlayerState({ ...playerState, url: null });
-            activeToggle === "audio" ? getSongAudioUrls() : null;
+            activeToggle === "audio"
+              ? setAlertMessage("Try reloading or switching to video.")
+              : null;
           }
         }}
       />

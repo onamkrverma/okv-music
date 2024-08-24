@@ -20,8 +20,6 @@ const PlayerControls = ({
   setAutoPlay,
   mapVideoId,
   currentIndex,
-  activeToggle,
-  setAlertMessage,
 }) => {
   const [seekTime, setSeekTime] = useState(0);
   const [bufferedAmount, setBufferedAmount] = useState(0);

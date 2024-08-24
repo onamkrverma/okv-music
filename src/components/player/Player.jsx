@@ -76,7 +76,7 @@ const Player = () => {
       }
     } catch (error) {
       // setIsReactPlayerActive(true);
-      setAlertMessage("Unable to get audio link, Please switch to video mode");
+      setAlertMessage("Audio unavailable. Switch to video.");
     }
   };
   useEffect(() => {
@@ -93,7 +93,7 @@ const Player = () => {
 
   useEffect(() => {
     if (songsInfo[0]?.snippet?.liveBroadcastContent === "live") {
-      setAlertMessage("can't play live stream");
+      setAlertMessage("Live stream can't play");
     }
   }, [songsInfo]);
 
@@ -106,7 +106,7 @@ const Player = () => {
       );
       setAutoPlay(true);
     } else {
-      setAlertMessage("you reached at end");
+      setAlertMessage("End of track list");
     }
   };
 
@@ -116,7 +116,7 @@ const Player = () => {
         addSongInfo({ ...currentSong, id: mapVideoId[currentIndex - 1] })
       );
     } else {
-      setAlertMessage("you reached at first");
+      setAlertMessage("Start of track list.");
     }
   };
 
@@ -351,8 +351,6 @@ const Player = () => {
             setAutoPlay={setAutoPlay}
             currentIndex={currentIndex}
             mapVideoId={mapVideoId}
-            activeToggle={activeToggle}
-            setAlertMessage={setAlertMessage}
           />
 
           <div className={`${alertMessage ? "alert-message-wrapper" : "hide"}`}>
