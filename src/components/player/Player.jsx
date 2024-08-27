@@ -18,12 +18,10 @@ import Toggle from "../toggle/Toggle";
 import CustomPlayer from "./customPlayer/CustomPlayer";
 
 const Player = () => {
-  // const [audioUrl, setAudioUrl] = useState("");
   const [songsInfo, setSongsInfo] = useState([]);
   const [audioLoading, setAudioLoading] = useState(false);
   const [songsList, setSongsList] = useState([]);
   const [alertMessage, setAlertMessage] = useState("");
-  // const [isPlaying, setIsPlaying] = useState(false);
   const [autoPlay, setAutoPlay] = useState(false);
   const [playerInfo, setPlayerInfo] = useState({
     isMoreInfoClick: false,
@@ -49,8 +47,6 @@ const Player = () => {
 
   const { data, isLoading } = useGetSongsByIdQuery(id);
 
-  // const [progress, setProgress] = useState({ played: 0, loaded: 0 });
-
   const reactPlayerRef = useRef();
 
   const [playerState, setPlayerState] = useState({
@@ -70,9 +66,17 @@ const Player = () => {
       const response = await getAudioUrls({ id });
       const data = await response.json();
       if (audioFormat === "high") {
-        setPlayerState({ ...playerState, url: data.audioFormatHigh });
+        setPlayerState({
+          ...playerState,
+          url: data.audioFormatHigh,
+          playing: autoPlay,
+        });
       } else {
-        setPlayerState({ ...playerState, url: data.audioFormatLow });
+        setPlayerState({
+          ...playerState,
+          url: data.audioFormatLow,
+          playing: autoPlay,
+        });
       }
     } catch (error) {
       // setIsReactPlayerActive(true);

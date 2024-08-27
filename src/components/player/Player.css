@@ -107,7 +107,6 @@
   padding: 5px 8px;
   border-radius: 10px;
   text-transform: capitalize;
-  width: 80%;
 }
 .alert-message {
   display: flex;
