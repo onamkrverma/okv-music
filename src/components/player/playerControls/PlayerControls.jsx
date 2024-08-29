@@ -42,41 +42,43 @@ const PlayerControls = ({
 
   return (
     <div className="player-controls-container">
-      <div className="player-progress-bar-wrapper cur-pointer">
-        <input
-          type="range"
-          title="seekbar"
-          step="any"
-          className="seekbar"
-          value={currentTime || 0}
-          min={0}
-          max={duration || 0}
-          onInput={(e) => setSeekTime(e.target.value)}
-          style={{
-            "--buffered-width": `${bufferedAmount}%`,
-          }}
-        />
-      </div>
-      <div className="player-durations-wrapper">
-        <p>
-          {!currentTime
-            ? "00:00"
-            : currentTime > 3600
-            ? new Date(currentTime * 1000).toISOString().substring(11, 19)
-            : new Date(currentTime * 1000).toISOString().substring(14, 19)}
-        </p>
-        {!duration ? (
-          "00:00"
-        ) : (
+      <div className="progress-duration-wrapper">
+        <div className="player-progress-bar-wrapper cur-pointer">
+          <input
+            type="range"
+            title="seekbar"
+            step="any"
+            className="seekbar"
+            value={currentTime || 0}
+            min={0}
+            max={duration || 0}
+            onInput={(e) => setSeekTime(e.target.value)}
+            style={{
+              "--buffered-width": `${bufferedAmount}%`,
+            }}
+          />
+        </div>
+        <div className="player-durations-wrapper">
           <p>
-            {duration > 3600
-              ? new Date(duration * 1000).toISOString().substring(11, 19)
-              : new Date(duration * 1000).toISOString().substring(14, 19)}
+            {!currentTime
+              ? "00:00"
+              : currentTime > 3600
+              ? new Date(currentTime * 1000).toISOString().substring(11, 19)
+              : new Date(currentTime * 1000).toISOString().substring(14, 19)}
           </p>
-        )}
+          {!duration ? (
+            "00:00"
+          ) : (
+            <p>
+              {duration > 3600
+                ? new Date(duration * 1000).toISOString().substring(11, 19)
+                : new Date(duration * 1000).toISOString().substring(14, 19)}
+            </p>
+          )}
+        </div>
       </div>
 
-      <div className="audio-controls-wrapper absolute-center">
+      <div className="player-controls-wrapper absolute-center">
         <button
           type="button"
           title="prev"
@@ -135,62 +137,69 @@ const PlayerControls = ({
         </button>
       </div>
 
-      <div className="audio-volume-wrapper">
-        <button
-          type="button"
-          title="mute/unmute"
-          className="audio-volume-btn next-prev-icons"
-          onClick={() =>
-            setPlayerState({
-              ...playerState,
-              volume: playerState.volume > 0 ? 0 : 0.5,
-            })
-          }
-        >
-          {playerState.volume > 0 ? (
-            <BsFillVolumeUpFill style={{ width: "100%", height: "100%" }} />
-          ) : (
-            <BsFillVolumeMuteFill style={{ width: "100%", height: "100%" }} />
-          )}
-        </button>
-
-        <div className="audio-volume">
-          <input
-            type="range"
-            title="volume"
-            className="volume-input cur-pointer"
-            min={0.0}
-            max={1.0}
-            step={0.01}
-            value={playerState.volume}
-            onChange={(e) =>
-              setPlayerState({ ...playerState, volume: e.target.valueAsNumber })
+      <div className="volume-autoplay-wrapper">
+        <div className="audio-volume-wrapper">
+          <button
+            type="button"
+            title="mute/unmute"
+            className="audio-volume-btn"
+            onClick={() =>
+              setPlayerState({
+                ...playerState,
+                volume: playerState.volume > 0 ? 0 : 0.5,
+              })
             }
-          />
-        </div>
-      </div>
+          >
+            {playerState.volume > 0 ? (
+              <BsFillVolumeUpFill style={{ width: "100%", height: "100%" }} />
+            ) : (
+              <BsFillVolumeMuteFill style={{ width: "100%", height: "100%" }} />
+            )}
+          </button>
 
-      <div className="audio-autoplay-wrapper">
-        <div className="audio-autoplay-title">AutoPlay</div>
-        <label className="audio-autoplay">
-          <input
-            type="checkbox"
-            title="autoplay"
-            aria-label="autoplay"
-            placeholder="autoplay"
-            checked={autoPlay}
-            onChange={() => setAutoPlay(!autoPlay)}
-          />
-          <span className="autoplay-slider" title="autoplay">
-            <span className="autoplay-icons">
-              {autoPlay ? (
-                <BsPlayCircleFill style={{ width: "100%", height: "100%" }} />
-              ) : (
-                <BsPauseCircleFill style={{ width: "100%", height: "100%" }} />
-              )}
+          <div className="audio-volume">
+            <input
+              type="range"
+              title="volume"
+              className="volume-input cur-pointer"
+              min={0.0}
+              max={1.0}
+              step={0.01}
+              value={playerState.volume}
+              onChange={(e) =>
+                setPlayerState({
+                  ...playerState,
+                  volume: e.target.valueAsNumber,
+                })
+              }
+            />
+          </div>
+        </div>
+
+        <div className="audio-autoplay-wrapper">
+          <div className="audio-autoplay-title">AutoPlay</div>
+          <label className="audio-autoplay">
+            <input
+              type="checkbox"
+              title="autoplay"
+              aria-label="autoplay"
+              placeholder="autoplay"
+              checked={autoPlay}
+              onChange={() => setAutoPlay(!autoPlay)}
+            />
+            <span className="autoplay-slider" title="autoplay">
+              <span className="autoplay-icons">
+                {autoPlay ? (
+                  <BsPlayCircleFill style={{ width: "100%", height: "100%" }} />
+                ) : (
+                  <BsPauseCircleFill
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                )}
+              </span>
             </span>
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
     </div>
   );

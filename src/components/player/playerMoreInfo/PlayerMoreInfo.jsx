@@ -52,7 +52,7 @@ const PlayerMoreInfo = ({
       </button>
       <div
         className="player-more-info"
-        style={{ top: playerInfo.isMoreInfoClick ? "50px" : "" }}
+        style={{ top: playerInfo.isMoreInfoClick ? "20px" : "" }}
       >
         <div className="audio-quality-wrapper  ">
           <button

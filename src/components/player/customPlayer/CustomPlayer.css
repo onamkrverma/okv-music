@@ -1,6 +1,6 @@
 .player-song-image-wrapper {
-  width: 400px;
-  height: 225px;
+  width: 100%;
+  height: auto;
   border-radius: 10px;
   position: relative;
 }
@@ -25,10 +25,6 @@ button.fullscreen-btn {
 }
 
 @media (max-width: 426px) {
-  .player-song-image-wrapper {
-    width: 90%;
-    height: auto;
-  }
   .player-song-image-wrapper.small-hq-image {
     height: 170px;
   }

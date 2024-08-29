@@ -33,10 +33,6 @@
   flex-direction: column;
   gap: 5px;
   width: 75%;
-  background: rgb(0 0 0 / 30%);
-  padding: 8px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px 2px var(--border-color);
 }
 
 .mini-player-song-title {

@@ -247,7 +247,7 @@ const Player = () => {
 
   return (
     <div
-      className={`player-page-section ${
+      className={`player-section ${
         miniPlayerActive ? "miniplayer-active" : ""
       }`}
     >
@@ -259,7 +259,7 @@ const Player = () => {
         />
       </div>
       {!miniPlayerActive ? (
-        <div className="top-player-controll-wrapper">
+        <div className="top-player-controll-wrapper container">
           <button
             type="button"
             title="minimize"
@@ -290,7 +290,7 @@ const Player = () => {
       />
 
       <div
-        className={`player-section container ${
+        className={`main-player container ${
           miniPlayerActive ? "hide-main-player" : ""
         } `}
       >
@@ -300,63 +300,64 @@ const Player = () => {
             activeToggle={activeToggle}
             setActiveToggle={setActiveToggle}
           />
-          <CustomPlayer
-            songId={id}
-            playerRef={reactPlayerRef}
-            songsInfo={songsInfo}
-            setAudioLoading={setAudioLoading}
-            playerState={playerState}
-            setPlayerState={setPlayerState}
-            handleNext={handleNext}
-            activeToggle={activeToggle}
-            isLoading={isLoading}
-            autoPlay={autoPlay}
-            setAlertMessage={setAlertMessage}
-          />
+          <div className="player-container-inner">
+            <CustomPlayer
+              songId={id}
+              playerRef={reactPlayerRef}
+              songsInfo={songsInfo}
+              setAudioLoading={setAudioLoading}
+              playerState={playerState}
+              setPlayerState={setPlayerState}
+              handleNext={handleNext}
+              activeToggle={activeToggle}
+              isLoading={isLoading}
+              autoPlay={autoPlay}
+              setAlertMessage={setAlertMessage}
+            />
 
-          {!isLoading && songsInfo.length ? (
-            <div
-              className="player-song-title-channel-wrapper absolute-center"
-              ref={titleContainerRef}
-            >
-              <p
-                className={`player-song-title ${
-                  isScrollTitle ? "player-song-title-scrolling" : ""
-                }`}
-                ref={titleRef}
+            {!isLoading && songsInfo.length ? (
+              <div
+                className="player-song-title-channel-wrapper absolute-center"
+                ref={titleContainerRef}
               >
-                {songsInfo[0]?.snippet?.title}
-              </p>
-              <p className="player-song-channel">
-                • {songsInfo[0]?.snippet?.channelTitle}
-              </p>
-            </div>
-          ) : (
-            <div className="player-song-title-channel-wrapper absolute-center">
-              <SkeletonTheme
-                baseColor="#747070"
-                highlightColor="#615e5e"
-                duration={2}
-              >
-                <Skeleton width={"250px"} />
-              </SkeletonTheme>
-            </div>
-          )}
+                <p
+                  className={`player-song-title ${
+                    isScrollTitle ? "player-song-title-scrolling" : ""
+                  }`}
+                  ref={titleRef}
+                >
+                  {songsInfo[0]?.snippet?.title}
+                </p>
+                <p className="player-song-channel">
+                  • {songsInfo[0]?.snippet?.channelTitle}
+                </p>
+              </div>
+            ) : (
+              <div className="player-song-title-channel-wrapper absolute-center">
+                <SkeletonTheme
+                  baseColor="#747070"
+                  highlightColor="#615e5e"
+                  duration={2}
+                >
+                  <Skeleton width={"250px"} />
+                </SkeletonTheme>
+              </div>
+            )}
 
-          <PlayerControls
-            playerRef={reactPlayerRef}
-            audioLoading={audioLoading}
-            songsList={songsList}
-            playerState={playerState}
-            setPlayerState={setPlayerState}
-            handleNext={handleNext}
-            handlePrev={handlePrev}
-            autoPlay={autoPlay}
-            setAutoPlay={setAutoPlay}
-            currentIndex={currentIndex}
-            mapVideoId={mapVideoId}
-          />
-
+            <PlayerControls
+              playerRef={reactPlayerRef}
+              audioLoading={audioLoading}
+              songsList={songsList}
+              playerState={playerState}
+              setPlayerState={setPlayerState}
+              handleNext={handleNext}
+              handlePrev={handlePrev}
+              autoPlay={autoPlay}
+              setAutoPlay={setAutoPlay}
+              currentIndex={currentIndex}
+              mapVideoId={mapVideoId}
+            />
+          </div>
           <div className={`${alertMessage ? "alert-message-wrapper" : "hide"}`}>
             <div className="alert-message">
               <small>{alertMessage}</small>
