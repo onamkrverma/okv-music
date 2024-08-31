@@ -101,7 +101,7 @@ body {
   right: 0;
   bottom: 0;
   color: transparent;
-  filter: blur(250px);
+  filter: blur(200px);
   z-index: -5;
 }
 .bg-poster-wrapper .bg-poster-image {
