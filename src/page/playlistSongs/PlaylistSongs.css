@@ -6,7 +6,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 25px;
-  margin-top: 85px;
+  /* margin-top: 85px; */
   margin-bottom: 30px;
   position: relative;
 }

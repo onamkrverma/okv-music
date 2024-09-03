@@ -3,7 +3,7 @@ import "./AddPlaylist.css";
 import { BsYoutube } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
-import { addPlaylist } from "../../reduxtool/slice/songsSlice";
+import { addPlaylistInfo } from "../../reduxtool/slice/songsSlice";
 
 const AddPlaylist = () => {
   const [isAddPlaylist, setIsAddPlaylist] = useState(false);
@@ -12,7 +12,7 @@ const AddPlaylist = () => {
   const dispatch = useDispatch();
   // local playlist
   const myLocalPlaylist = useSelector(
-    (state) => state.songsSlice.myPlaylistData
+    (state) => state.songsSlice.myPlaylistInfo
   );
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const AddPlaylist = () => {
         const url = new URL(playlistLink);
         const playlistId = url.searchParams.get("list");
         if (!playlistId) return setErrorMessage("Playlist id Not Found");
-        dispatch(addPlaylist([...myLocalPlaylist, { title, playlistId }]));
+        dispatch(addPlaylistInfo({ title, id: playlistId }));
       }
       e.target.reset();
       setIsAddPlaylist(false);
@@ -44,11 +44,7 @@ const AddPlaylist = () => {
   };
   localStorage.setItem("myPlaylist", JSON.stringify(myLocalPlaylist));
   return (
-    <div
-      className={`add-your-playlist-container container ${
-        myLocalPlaylist.length >= 2 ? "hide" : ""
-      } `}
-    >
+    <div className={`add-your-playlist-container container `}>
       <button
         type="button"
         title="add-palylist"

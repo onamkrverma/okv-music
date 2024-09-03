@@ -114,7 +114,6 @@ const Trending = ({ miniPlayerActive }) => {
           ))}
         </div>
       )}
-      {id ? <Player /> : null}
     </div>
   );
 };

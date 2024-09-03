@@ -22,7 +22,7 @@ function App() {
   );
   const { id, miniPlayerActive } = currentSong;
 
-  const isMiniPlayerActive = miniPlayerActive ?? true;
+  const isMiniPlayerActive = miniPlayerActive ?? false;
 
   // offline status
   const [isOffline, setIsOffline] = useState(!navigator.onLine);

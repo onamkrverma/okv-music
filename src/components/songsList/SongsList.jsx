@@ -3,15 +3,34 @@ import SongsCard from "../songsCard/SongsCard";
 import SongsCardSkeleton from "../songsCard/SongsCardSkeleton";
 import "./SongsList.css";
 import { Link } from "react-router-dom";
+import {
+  useGetPlaylistItemsQuery,
+  useGetSearchItemsQuery,
+} from "../../reduxtool/services/songsApi";
+import { useSelector } from "react-redux";
 
 const SongsList = ({
-  songsData,
   title,
-  searchResult,
-  isLoading,
+  isSearchPage = false,
   playlistId,
+  searchQuery,
 }) => {
-  const urlTitle = title?.replaceAll(" ", "-").toLowerCase();
+  const currentSong = useSelector(
+    (state) => state.currentSongSlice.currentSongInfo
+  );
+  const { miniPlayerActive } = currentSong;
+
+  const isMiniPlayerActive = miniPlayerActive ?? false;
+
+  const { data, isLoading } = !isSearchPage
+    ? useGetPlaylistItemsQuery(playlistId, {
+        skip: !isMiniPlayerActive,
+      })
+    : useGetSearchItemsQuery(searchQuery, { skip: !isMiniPlayerActive });
+
+  const urlTitle = !isSearchPage
+    ? title?.replaceAll(" ", "-").toLowerCase()
+    : null;
 
   return (
     <div className="songs-list-container container">
@@ -27,16 +46,26 @@ const SongsList = ({
       <div
         className="songs-list-wrapper"
         style={{
-          flexWrap: searchResult && "wrap",
-          justifyContent: searchResult && "center",
+          flexWrap: isSearchPage ? "wrap" : "nowrap",
+          justifyContent: isSearchPage ? "center" : "flex-start",
         }}
       >
-        {isLoading || !songsData ? (
+        {isLoading || !data ? (
           <SongsCardSkeleton amount={6} />
         ) : (
-          songsData.map((songs) => <SongsCard songs={songs} key={songs.etag} />)
+          data.items?.map((songs) => (
+            <SongsCard songs={songs} key={songs.etag} />
+          ))
         )}
       </div>
+
+      {data?.pageInfo?.totalResults === 0 ? (
+        <div className="search-not-found-wrapper container">
+          <h1>404</h1>
+          <p className="search-query-text">Search Query: {searchQuery}</p>
+          <p>Opps... This search query could not be found!</p>
+        </div>
+      ) : null}
     </div>
   );
 };

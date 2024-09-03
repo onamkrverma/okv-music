@@ -2,24 +2,13 @@ import React from "react";
 import "./ExploreCard.css";
 import { Link } from "react-router-dom";
 
-const ExploreCard = ({ item, dataType }) => {
+const ExploreCard = ({ playlistId, poster, title, description }) => {
   const words = ["Discover", "Listen", "Explore"];
   const randomIndex = Math.floor(Math.random() * words.length);
   const shuffledWord = words[randomIndex];
+  const urlSlug = title?.replaceAll(" ", "-").toLowerCase();
 
-  const playlistId = dataType === "localFetch" ? item.playlistId : item.id;
-  const urlSlug = (dataType === "localFetch" ? item.title : item.snippet.title)
-    ?.replaceAll(" ", "-")
-    .toLowerCase();
-  const poster =
-    dataType === "localFetch"
-      ? item.poster
-      : item.snippet.thumbnails.standard.url;
-  const title = dataType === "localFetch" ? item.title : item.snippet.title;
-  const description =
-    dataType === "localFetch"
-      ? `${shuffledWord} ${title.toLowerCase()} of the moment`
-      : item.snippet.description;
+  const defaultDescription = `${shuffledWord} ${title.toLowerCase()} of the moment`;
 
   return (
     <Link to={`/${urlSlug}/${playlistId}`} className="explore-card">
@@ -28,7 +17,9 @@ const ExploreCard = ({ item, dataType }) => {
       </div>
       <div className="explore-card-metadata-wrapper">
         <h6 className="explore-card-title">{title}</h6>
-        <p className="explore-card-description">{description}</p>
+        <p className="explore-card-description">
+          {description ?? defaultDescription}
+        </p>
       </div>
     </Link>
   );
