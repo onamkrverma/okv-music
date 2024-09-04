@@ -12,7 +12,7 @@ const Explore = () => {
     <section className="explore-section">
       <div className="explore-container container">
         <div>
-          <h1>Discover New Music</h1>
+          <h2>Discover New Music</h2>
           <div className="explore-inside">
             {latestPlaylists.map((playlist, index) => (
               <ExploreList

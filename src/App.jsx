@@ -15,14 +15,13 @@ import About from "./page/about/About";
 import OfflineBanner from "./components/offlineBanner/OfflineBanner";
 import Footer from "./components/footer/Footer";
 import RedirectToOrigin from "./utils/RedirectToOrigin";
+import ImportedPlaylist from "./page/importedPlaylist/ImportedPlaylist";
 
 function App() {
   const currentSong = useSelector(
     (state) => state.currentSongSlice.currentSongInfo
   );
-  const { id, miniPlayerActive } = currentSong;
-
-  const isMiniPlayerActive = miniPlayerActive ?? false;
+  const { id } = currentSong;
 
   // offline status
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
@@ -37,11 +36,7 @@ function App() {
   }, []);
 
   const OnlineRoute = (PageRoute) => {
-    return !isOffline ? (
-      <PageRoute miniPlayerActive={isMiniPlayerActive} />
-    ) : (
-      <OfflineBanner />
-    );
+    return !isOffline ? <PageRoute /> : <OfflineBanner />;
   };
 
   return (
@@ -58,6 +53,10 @@ function App() {
         <Route path="/search/:q" element={OnlineRoute(SearchResult)} />
         <Route path="/trending" element={OnlineRoute(Trending)} />
         <Route path="/explore" element={OnlineRoute(Explore)} />
+        <Route
+          path="/imported-playlist"
+          element={OnlineRoute(ImportedPlaylist)}
+        />
         <Route path="/feedback" element={<Feedback />} />
         <Route path="/about" element={<About />} />
 

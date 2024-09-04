@@ -1,0 +1,36 @@
+.imported-playlist {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.imported-playlist h2 {
+  font-size: 20;
+  font-weight: 600;
+}
+.imported-playlist-wrapper {
+  position: relative;
+}
+.playlist-delete-btn {
+  border: none;
+  color: var(--primary-text-color);
+  cursor: pointer;
+  background: red;
+  border-radius: 12px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.playlist-delete-btn:disabled {
+  opacity: 0.7;
+}
+
+.checkbox-input {
+  position: absolute;
+  left: -5px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: red;
+}

@@ -4,22 +4,12 @@ import ExploreCard from "../exploreCard/ExploreCard";
 import ExploreCardSkeleton from "../exploreCard/ExploreCardSkeleton";
 import { useGetMyplaylistInfoQuery } from "../../reduxtool/services/myApi";
 import { useGetPlaylistQuery } from "../../reduxtool/services/songsApi";
-import { useSelector } from "react-redux";
 
 const ExploreList = ({ playlistId, serverType }) => {
-  const currentSong = useSelector(
-    (state) => state.currentSongSlice.currentSongInfo
-  );
-  const { miniPlayerActive } = currentSong;
-
-  const isMiniPlayerActive = miniPlayerActive ?? false;
-
   const { data, isLoading } =
     serverType === "myServer"
-      ? useGetMyplaylistInfoQuery({ skip: !miniPlayerActive })
-      : useGetPlaylistQuery(playlistId, {
-          skip: !isMiniPlayerActive,
-        });
+      ? useGetMyplaylistInfoQuery()
+      : useGetPlaylistQuery(playlistId);
 
   return (
     <div className="explore-list-container">
@@ -27,7 +17,7 @@ const ExploreList = ({ playlistId, serverType }) => {
         !isLoading && data.localPlaylistsInfo.length ? (
           data.localPlaylistsInfo?.map((playlist, index) => (
             <div key={index} className="explore-card-wrapper">
-              <h1>{playlist?.playlistTitle}</h1>
+              <h2>{playlist?.playlistTitle}</h2>
               <div className="explore-card-list">
                 {playlist.data.map((item) => (
                   <ExploreCard

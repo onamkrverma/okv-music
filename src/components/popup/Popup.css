@@ -31,6 +31,7 @@
 }
 .popup-btn-wrapper .popup-primary-btn {
   background: var(--gradient);
+  border: 1px solid transparent;
 }
 .popup-btn-wrapper .popup-secondary-btn {
   background: none;

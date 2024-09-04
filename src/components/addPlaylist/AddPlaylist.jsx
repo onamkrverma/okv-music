@@ -52,7 +52,7 @@ const AddPlaylist = () => {
         onClick={() => setIsAddPlaylist(true)}
       >
         <BsYoutube style={{ width: "30%", height: "30%", color: "#171717" }} />
-        <span>Import Youtube Playlist</span>
+        <span>Add Youtube Playlist</span>
       </button>
 
       {/* add playlist model */}

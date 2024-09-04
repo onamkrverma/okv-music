@@ -10,7 +10,7 @@ import PlaylistSongsSkeleton from "../playlistSongs/PlaylistSongsSkeleton";
 import { useSearchParams } from "react-router-dom";
 import Toggle from "../../components/toggle/Toggle";
 
-const Trending = ({ miniPlayerActive }) => {
+const Trending = () => {
   useEffect(() => {
     document.title = "Trending Songs • Okv Music";
   }, []);
@@ -34,9 +34,7 @@ const Trending = ({ miniPlayerActive }) => {
     (item) => item.name === activeToggle
   )?.playlistId;
 
-  const { data, isLoading } = useGetAllPlaylistItemsQuery(activePlaylistId, {
-    skip: !miniPlayerActive,
-  });
+  const { data, isLoading } = useGetAllPlaylistItemsQuery(activePlaylistId);
 
   const currentSong = useSelector(
     (state) => state.currentSongSlice.currentSongInfo

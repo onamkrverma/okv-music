@@ -15,18 +15,9 @@ const SongsList = ({
   playlistId,
   searchQuery,
 }) => {
-  const currentSong = useSelector(
-    (state) => state.currentSongSlice.currentSongInfo
-  );
-  const { miniPlayerActive } = currentSong;
-
-  const isMiniPlayerActive = miniPlayerActive ?? false;
-
   const { data, isLoading } = !isSearchPage
-    ? useGetPlaylistItemsQuery(playlistId, {
-        skip: !isMiniPlayerActive,
-      })
-    : useGetSearchItemsQuery(searchQuery, { skip: !isMiniPlayerActive });
+    ? useGetPlaylistItemsQuery(playlistId)
+    : useGetSearchItemsQuery(searchQuery);
 
   const urlTitle = !isSearchPage
     ? title?.replaceAll(" ", "-").toLowerCase()

@@ -3,6 +3,7 @@
   min-height: 200px;
   padding-top: 30px;
   padding-bottom: 150px;
+  margin-top: 50px;
 }
 .footer-content-wrapper {
   display: grid;

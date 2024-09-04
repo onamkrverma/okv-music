@@ -8,6 +8,7 @@ import { HiHome, HiBars3BottomRight } from "react-icons/hi2";
 import { IoCompass, IoTrendingUp } from "react-icons/io5";
 import { AiFillInfoCircle } from "react-icons/ai";
 import { MdFeedback } from "react-icons/md";
+import { PiPlaylist } from "react-icons/pi";
 
 const Header = () => {
   const [isSearchClick, setIsSearchClick] = useState(false);
@@ -45,6 +46,11 @@ const Header = () => {
       title: "Explore",
       link: "/explore",
       icon: <IoCompass size="100%" />,
+    },
+    {
+      title: "Playlist",
+      link: "/imported-playlist",
+      icon: <PiPlaylist size="100%" />,
     },
     { title: "More", icon: <HiBars3BottomRight size="100%" /> },
   ];
