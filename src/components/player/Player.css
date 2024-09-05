@@ -115,6 +115,7 @@
   padding: 5px 8px;
   border-radius: 10px;
   text-transform: capitalize;
+  z-index: 2;
 }
 .alert-message {
   display: flex;
