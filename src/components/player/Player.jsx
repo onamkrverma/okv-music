@@ -229,21 +229,25 @@ const Player = () => {
     // eslint-disable-next-line
   }, [pathname]);
 
-  // pause on toggle changes
-  useEffect(() => {
-    setPlayerState({ ...playerState, playing: false });
-  }, [activeToggle]);
-
-  // reset on song id change
+  // reset on song id or toggle change
   useEffect(() => {
     setPlayerState({
       ...playerState,
       url: null,
       loaded: 0,
       played: 0,
-      playing: autoPlay,
+      playing: false,
     });
-  }, [id]);
+    setAlertMessage("");
+  }, [id, activeToggle]);
+
+  // pause playing on song loading
+  useEffect(() => {
+    setPlayerState({
+      ...playerState,
+      playing: audioLoading ? false : autoPlay,
+    });
+  }, [audioLoading]);
 
   return (
     <div
@@ -358,19 +362,21 @@ const Player = () => {
               mapVideoId={mapVideoId}
             />
           </div>
-          <div className={`${alertMessage ? "alert-message-wrapper" : "hide"}`}>
-            <div className="alert-message">
-              <small>{alertMessage}</small>
-              <button
-                type="button"
-                title="close"
-                className="absolute-center"
-                onClick={() => setAlertMessage("")}
-              >
-                <RxCross2 size={15} />
-              </button>
+          {alertMessage ? (
+            <div className={`alert-message-wrapper`}>
+              <div className="alert-message">
+                <small>{alertMessage}</small>
+                <button
+                  type="button"
+                  title="close"
+                  className="absolute-center"
+                  onClick={() => setAlertMessage("")}
+                >
+                  <RxCross2 size={15} />
+                </button>
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
 
         <RelatedSongs songsList={songsList} setSongsList={setSongsList} />

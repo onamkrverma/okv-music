@@ -109,7 +109,7 @@
 
 .alert-message-wrapper {
   position: absolute;
-  bottom: 15px;
+  bottom: 50px;
   background: var(--primary-text-color);
   color: var(--primary-bg);
   padding: 5px 8px;
@@ -142,8 +142,5 @@
   .player-container-inner {
     width: 100%;
     gap: 15px;
-  }
-  .alert-message-wrapper {
-    bottom: -40px;
   }
 }
