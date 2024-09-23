@@ -276,6 +276,7 @@ const Player = () => {
           </button>
           <PlayerMoreInfo
             id={id}
+            audioUrl={playerState.url}
             playerInfo={playerInfo}
             setPlayerInfo={setPlayerInfo}
             audioFormat={audioFormat}
