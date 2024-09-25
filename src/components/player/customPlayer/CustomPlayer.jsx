@@ -79,6 +79,7 @@ const CustomPlayer = ({
         style={{
           position: "absolute",
           top: "0px",
+          transform: "scale(1.01)",
         }}
         onProgress={(state) =>
           setPlayerState({

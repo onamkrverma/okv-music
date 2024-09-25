@@ -14,6 +14,7 @@ const PlayerMoreInfo = ({
   audioFormat,
   setAudioFormat,
   setAlertMessage,
+  audioUrl,
 }) => {
   localStorage.setItem("audioQuality", audioFormat);
   const [isDownloadServerActive, setIsDownloadServerActive] = useState(false);
@@ -65,6 +66,7 @@ const PlayerMoreInfo = ({
                 isAudioQualityClick: !playerInfo.isAudioQualityClick,
               })
             }
+            disabled={!audioUrl}
           >
             <div className="player-more-info-icons">
               <AiFillSetting style={{ width: "100%", height: "100%" }} />
@@ -106,7 +108,7 @@ const PlayerMoreInfo = ({
           title="download"
           className="player-more-info-btn absolute-center cur-pointer"
           onClick={handleDownload}
-          disabled={!isDownloadServerActive || isDownloadStart}
+          disabled={!isDownloadServerActive || isDownloadStart || !audioUrl}
         >
           <span className="player-more-info-icons">
             {!isDownloadStart ? (
