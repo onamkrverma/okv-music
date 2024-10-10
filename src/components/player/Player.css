@@ -131,6 +131,12 @@
   padding: 2px;
   border-radius: 5px;
 }
+.announcement-content {
+  text-align: center;
+}
+.announcement-content a {
+  color: white;
+}
 
 @media (max-width: 426px) {
   .player-container {
@@ -143,5 +149,8 @@
   .player-container-inner {
     width: 100%;
     gap: 15px;
+  }
+  .announcement-content {
+    font-size: small;
   }
 }
