@@ -53,7 +53,7 @@ const Player = () => {
     url: null,
     playing: false,
     controls: false,
-    volume: parseFloat(localVolume) ?? 1.0,
+    volume: parseFloat(localVolume) || 1.0,
     muted: false,
     played: 0,
     loaded: 0,
