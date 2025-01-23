@@ -14,9 +14,12 @@ const RelatedSongs = ({ songsList, setSongsList }) => {
   const { id } = currentSong;
   const [isUpClick, setIsUpClick] = useState(false);
 
-  const { data, isLoading, isError, error } = useGetRelatedSongsQuery(id, {
-    skip: songsList.length,
-  });
+  const { data, isLoading, isError, error, refetch } = useGetRelatedSongsQuery(
+    id,
+    {
+      skip: songsList.length,
+    }
+  );
 
   useEffect(() => {
     if (data) {
@@ -93,6 +96,13 @@ const RelatedSongs = ({ songsList, setSongsList }) => {
                 {isError ? (
                   <p className="error-message">Error: {error?.data?.error}</p>
                 ) : null}
+                <button
+                  type="button"
+                  className="cur-pointer refetch-button"
+                  onClick={() => refetch()}
+                >
+                  Refetch
+                </button>
               </div>
             )}
           </>

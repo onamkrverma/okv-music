@@ -122,6 +122,13 @@
   display: none;
 }
 
+.refetch-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 15px;
+  font-weight: bold;
+}
+
 @media (max-width: 769px) {
   .related-songs-container {
     width: 100%;
