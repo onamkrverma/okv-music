@@ -103,7 +103,7 @@ const PlayerMoreInfo = ({
           Watch Video
         </a>
 
-        <button
+        {/*   <button
           type="button"
           title="download"
           className="player-more-info-btn absolute-center cur-pointer"
@@ -122,7 +122,7 @@ const PlayerMoreInfo = ({
             : isDownloadStart
             ? "Downloading.."
             : "Download"}
-        </button>
+        </button>*/}
 
         <button
           type="button"
