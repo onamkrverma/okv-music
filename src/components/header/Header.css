@@ -188,9 +188,15 @@
 .more-option:hover {
   background: var(--secondary-bg);
 }
+.mic-container {
+  border: none;
+  background: none;
+  padding: 0 8px;
+  color: var(--border-color);
+}
 
 /* responsive css */
-@media (max-width: 426px) {
+@media (max-width: 640px) {
   .header-section {
     position: sticky;
   }

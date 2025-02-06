@@ -14,7 +14,11 @@ const SearchResult = () => {
 
   return (
     <div className="search-result-container ">
-      <SongsList title={"Search results"} isSearchPage={true} searchQuery={q} />
+      <SongsList
+        title={`Search results for "${q}"`}
+        isSearchPage={true}
+        searchQuery={q}
+      />
     </div>
   );
 };
