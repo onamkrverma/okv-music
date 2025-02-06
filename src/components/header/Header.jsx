@@ -89,6 +89,7 @@ const Header = () => {
       navigate(`/search/${transcript}`);
       stopListening({ isClearResult: true });
       setIsPopup(false);
+      setIsSearchClick(false);
     }
   }, [isListening]);
 
