@@ -8,13 +8,25 @@ import { HiHome, HiBars3BottomRight } from "react-icons/hi2";
 import { IoCompass, IoTrendingUp } from "react-icons/io5";
 import { AiFillInfoCircle } from "react-icons/ai";
 import { MdFeedback } from "react-icons/md";
-import { PiPlaylist } from "react-icons/pi";
+import { PiPlaylist, PiMicrophoneFill } from "react-icons/pi";
+import Popup from "../popup/Popup";
+import useSpeechToText from "../../utils/useSpeechToText";
 
 const Header = () => {
   const [isSearchClick, setIsSearchClick] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef(null);
   const [isMoreOptions, setIsMoreOptions] = useState(false);
+  const [isPopup, setIsPopup] = useState(false);
+
+  const {
+    isListening,
+    startListening,
+    stopListening,
+    transcript,
+    speakText,
+    error,
+  } = useSpeechToText();
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -71,6 +83,16 @@ const Header = () => {
     document.body.style.overflow = isMoreOptions ? "hidden" : "";
   }, [isMoreOptions]);
 
+  useEffect(() => {
+    if (!isListening && transcript.length) {
+      speakText(transcript);
+      navigate(`/search/${transcript}`);
+      stopListening({ isClearResult: true });
+      setIsPopup(false);
+      setIsSearchClick(false);
+    }
+  }, [isListening]);
+
   return (
     <>
       <header className="header-section">
@@ -107,6 +129,13 @@ const Header = () => {
               placeholder="Search songs"
               ref={inputRef}
             />
+            <button
+              type="button"
+              className="mic-container absolute-center cur-pointer"
+              onClick={() => setIsPopup(true)}
+            >
+              <PiMicrophoneFill size={25} />
+            </button>
             <button type="submit" className="search-btn cur-pointer">
               Search
             </button>
@@ -202,6 +231,20 @@ const Header = () => {
           </div>
         </div>
       </div>
+
+      {isPopup && (
+        <Popup
+          isPopup={isPopup}
+          setIsPopup={setIsPopup}
+          title={"Speak to Search"}
+          subtitle={transcript}
+          isListening={isListening}
+          startListening={startListening}
+          stopListening={stopListening}
+          variant="voice-search"
+          errorMessage={error}
+        />
+      )}
     </>
   );
 };

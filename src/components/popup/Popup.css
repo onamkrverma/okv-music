@@ -37,3 +37,11 @@
   background: none;
   border: 1px solid var(--primary-text-color);
 }
+
+.mic-btn {
+  border: none;
+  padding: 15px;
+  border-radius: 50%;
+  background: var(--border-color);
+  color: white;
+}

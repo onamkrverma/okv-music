@@ -137,6 +137,7 @@
   background: var(--secondary-bg);
   padding: 3px 10px;
   border-radius: 10px;
+  font-size: small;
 }
 .announcement-content a {
   color: white;
@@ -154,8 +155,5 @@
   .player-container-inner {
     width: 100%;
     gap: 15px;
-  }
-  .announcement-content {
-    font-size: small;
   }
 }
