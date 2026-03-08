@@ -114,7 +114,7 @@ const RelatedSongs = ({ songsList, setSongsList }) => {
                   <div className="related-songs-title-channel-wrapper">
                     <p className="related-songs-title-wrapper">{song?.title}</p>
                     <p className="related-songs-channel-wrapper">
-                      • {song?.artistInfo.artist[0]?.text}
+                      • {song?.artistInfo.artist[0]?.name}
                     </p>
                   </div>
                 </div>
