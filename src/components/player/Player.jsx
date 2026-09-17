@@ -60,32 +60,39 @@ const Player = () => {
   });
 
   // get songs audio url
-  const getSongAudioUrls = async () => {
-    setAudioLoading(true);
-    try {
-      const response = await getAudioUrls({ id });
-      const data = await response.json();
-      if (audioFormat === "high") {
-        setPlayerState({
-          ...playerState,
-          url: data.audioFormatHigh,
-          playing: autoPlay,
-        });
-      } else {
-        setPlayerState({
-          ...playerState,
-          url: data.audioFormatLow,
-          playing: autoPlay,
-        });
-      }
-    } catch (error) {
-      // setIsReactPlayerActive(true);
-      setAlertMessage("Audio unavailable. Switch to video.");
-    }
-  };
   useEffect(() => {
     if (activeToggle === "video") return;
+    let ignore = false;
+
+    const getSongAudioUrls = async () => {
+      setAudioLoading(true);
+      try {
+        const data = await getAudioUrls({ id });
+        if (ignore) return;
+        if (audioFormat === "high") {
+          setPlayerState({
+            ...playerState,
+            url: data.audioFormatHigh,
+            playing: autoPlay,
+          });
+        } else {
+          setPlayerState({
+            ...playerState,
+            url: data.audioFormatLow,
+            playing: autoPlay,
+          });
+        }
+      } catch (error) {
+        if (ignore) return;
+        // setIsReactPlayerActive(true);
+        setAlertMessage("Audio unavailable. Switch to video.");
+      }
+    };
+
     getSongAudioUrls();
+    return () => {
+      ignore = true;
+    };
     // eslint-disable-next-line
   }, [id, audioFormat, activeToggle]);
 

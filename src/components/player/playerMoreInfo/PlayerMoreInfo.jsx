@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AiFillInfoCircle, AiFillSetting } from "react-icons/ai";
-import { BiSolidDownload } from "react-icons/bi";
 import { BsThreeDotsVertical, BsYoutube } from "react-icons/bs";
 import "./PlayerMoreInfo.css";
-import { getDownloadAudio } from "../../../api/downloadAudio";
-import { useGetServerStatusQuery } from "../../../reduxtool/services/activateDownloadApi";
-import DownloadIcon from "../../../assets/downloading.svg?react";
 
 const PlayerMoreInfo = ({
   id,
@@ -13,31 +9,9 @@ const PlayerMoreInfo = ({
   setPlayerInfo,
   audioFormat,
   setAudioFormat,
-  setAlertMessage,
   audioUrl,
 }) => {
   localStorage.setItem("audioQuality", audioFormat);
-  const [isDownloadServerActive, setIsDownloadServerActive] = useState(false);
-  const [isDownloadStart, setIsDownloadStart] = useState(false);
-  const { isSuccess } = useGetServerStatusQuery({
-    skip: isDownloadServerActive,
-  });
-
-  useEffect(() => {
-    if (isSuccess) {
-      setIsDownloadServerActive(isSuccess);
-    }
-  }, [isSuccess]);
-
-  const handleDownload = () => {
-    setIsDownloadStart(true);
-    setAlertMessage("Download may take a moment. Please be patient 😊");
-    getDownloadAudio({ id: id });
-    setTimeout(() => {
-      setAlertMessage("");
-      setIsDownloadStart(false);
-    }, 120 * 1000);
-  };
 
   return (
     <div>

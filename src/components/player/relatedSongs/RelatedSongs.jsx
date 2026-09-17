@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { BsPlayCircleFill } from "react-icons/bs";
 import { TbRefresh } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetRelatedSongsQuery } from "../../../reduxtool/services/myApi";
+import { getRelatedSongs } from "../../../api/getRelated";
 import { addSongInfo } from "../../../reduxtool/slice/currentSongSlice";
 import "./RelatedSongs.css";
 import RelatedSongsSkeleton from "./RelatedSongsSkeleton";
@@ -14,22 +14,38 @@ const RelatedSongs = ({ songsList, setSongsList }) => {
   );
   const { id } = currentSong;
   const [isUpClick, setIsUpClick] = useState(false);
-  const [shouldFetch, setShouldFetch] = useState(songsList.length === 0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const latestRequestId = useRef(null);
 
-  const { data, isLoading, isError, error, refetch } = useGetRelatedSongsQuery(
-    id,
-    {
-      skip: !shouldFetch,
+  // Guards against a stale response (e.g. from a superseded request when
+  // the song changes mid-fetch) overwriting state for the current song.
+  const fetchRelated = async () => {
+    const requestId = id;
+    latestRequestId.current = requestId;
+    setIsLoading(true);
+    setIsError(false);
+    setErrorMessage("");
+    try {
+      const result = await getRelatedSongs(requestId);
+      if (latestRequestId.current !== requestId) return;
+      setSongsList(result);
+    } catch (error) {
+      if (latestRequestId.current !== requestId) return;
+      setIsError(true);
+      setErrorMessage(error.message);
+    } finally {
+      if (latestRequestId.current === requestId) setIsLoading(false);
     }
-  );
+  };
 
   useEffect(() => {
-    if (data) {
-      setSongsList(data.result);
-      setShouldFetch(false);
+    if (songsList.length === 0) {
+      fetchRelated();
     }
     // eslint-disable-next-line
-  }, [data]);
+  }, [id]);
 
   const handleRedirect = (videoId) => {
     dispatch(addSongInfo({ ...currentSong, id: videoId }));
@@ -48,11 +64,7 @@ const RelatedSongs = ({ songsList, setSongsList }) => {
   };
 
   const handleRefetch = () => {
-    if (!shouldFetch) {
-      setShouldFetch(true);
-    } else {
-      refetch();
-    }
+    fetchRelated();
   };
 
   return (
@@ -80,7 +92,7 @@ const RelatedSongs = ({ songsList, setSongsList }) => {
           >
             <TbRefresh
               size={20}
-              className={`${shouldFetch ? "rotate-circle" : ""}`}
+              className={`${isLoading ? "rotate-circle" : ""}`}
             />
             Refresh
           </button>
@@ -124,12 +136,12 @@ const RelatedSongs = ({ songsList, setSongsList }) => {
                 <p className="sorry-emoji">😢</p>
                 <p>Sorry! Not able to fetch related songs</p>
                 {isError ? (
-                  <p className="error-message">Error: {error?.data?.error}</p>
+                  <p className="error-message">Error: {errorMessage}</p>
                 ) : null}
                 <button
                   type="button"
                   className="cur-pointer refetch-button"
-                  onClick={() => refetch()}
+                  onClick={fetchRelated}
                 >
                   Refetch
                 </button>

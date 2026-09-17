@@ -13,12 +13,6 @@ export const myApi = createApi({
         method: "GET",
       }),
     }),
-    getRelatedSongs: builder.query({
-      query: (videoId) => ({
-        url: `related/${videoId}`,
-        method: "GET",
-      }),
-    }),
     getMyplaylistInfo: builder.query({
       query: () => ({
         url: "localplaylistinfo",
@@ -28,8 +22,4 @@ export const myApi = createApi({
   }),
 });
 
-export const {
-  useGetSongAudioUrlsQuery,
-  useGetMyplaylistInfoQuery,
-  useGetRelatedSongsQuery,
-} = myApi;
+export const { useGetSongAudioUrlsQuery, useGetMyplaylistInfoQuery } = myApi;
