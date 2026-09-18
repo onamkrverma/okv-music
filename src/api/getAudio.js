@@ -60,8 +60,14 @@ const trySource = async (name, type, url) => {
 // last resort in case a mirror ever blocks browser-origin CORS requests.
 const resolveFromMirrors = async (id) => {
   for (const { name, type, base } of SOURCES) {
+    // Invidious's raw adaptiveFormats URLs point straight at googlevideo.com,
+    // IP-locked to the mirror server that fetched them rather than the
+    // browser that will play them, so playback fails despite a successful
+    // metadata fetch. local=true makes Invidious proxy the stream through
+    // its own domain instead, avoiding the IP mismatch.
+    const url = type === "invidious" ? `${base}/${id}?local=true` : `${base}/${id}`;
     try {
-      const urls = await trySource(name, type, `${base}/${id}`);
+      const urls = await trySource(name, type, url);
       return { audioFormatHigh: urls[0], audioFormatLow: urls[1] ?? urls[0] };
     } catch (error) {
       console.warn(`${name} failed: ${error.message}`);
