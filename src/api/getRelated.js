@@ -98,21 +98,30 @@ const resolveFromBackend = async (id) => {
   });
   if (!res.ok) throw new Error("Backend related-songs response not OK");
   const data = await res.json();
+  if (!data.result?.length) throw new Error("Backend returned no related videos");
   return data.result;
 };
 
 // Dedupe concurrent calls for the same id (e.g. React StrictMode's double
-// effect invocation) into a single network round-trip against these
-// already rate-limited public mirrors.
+// effect invocation) into a single network round-trip.
 const inFlight = new Map();
 
+// Backend uses YouTube Music's own "up next" recommendations (via
+// youtubei.js), which are noticeably more relevant than the generic
+// related-videos lists public Invidious/Piped mirrors return. Mirrors are
+// kept only as a fallback for when the backend is cold-starting or down.
 export const getRelatedSongs = async (id) => {
   if (inFlight.has(id)) return inFlight.get(id);
 
   const promise = (async () => {
-    const mirrorResult = await resolveFromMirrors(id);
-    if (mirrorResult) return mirrorResult;
-    return resolveFromBackend(id);
+    try {
+      return await resolveFromBackend(id);
+    } catch (error) {
+      console.warn(`Backend related-songs failed: ${error.message}`);
+      const mirrorResult = await resolveFromMirrors(id);
+      if (mirrorResult) return mirrorResult;
+      throw error;
+    }
   })();
 
   inFlight.set(id, promise);
