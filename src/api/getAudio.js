@@ -55,9 +55,8 @@ const trySource = async (name, type, url) => {
   return urls;
 };
 
-// Try each public mirror directly from the browser, falling back to the
-// backend's own resolver (which tries the same mirrors server-side) as a
-// last resort in case a mirror ever blocks browser-origin CORS requests.
+// Try each public mirror directly from the browser. Used only when the
+// backend (ytify first, then the same mirrors) could not resolve the song.
 const resolveFromMirrors = async (id) => {
   for (const { name, type, base } of SOURCES) {
     // Invidious's raw adaptiveFormats URLs point straight at googlevideo.com,
@@ -107,9 +106,18 @@ export const getAudioUrls = async ({ id }) => {
   if (inFlight.has(id)) return inFlight.get(id);
 
   const promise = (async () => {
+    // Backend first (it resolves via ytify, then the same mirrors server-side),
+    // then the browser-side mirrors as a fallback.
+    try {
+      const backendResult = await resolveFromBackend(id);
+      if (backendResult?.audioFormatHigh) return backendResult;
+    } catch (error) {
+      console.warn("Backend resolve failed:", error.message ?? error);
+    }
+
     const mirrorResult = await resolveFromMirrors(id);
     if (mirrorResult) return mirrorResult;
-    return resolveFromBackend(id);
+    throw new Error("All audio sources failed");
   })();
 
   inFlight.set(id, promise);
